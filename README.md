@@ -68,6 +68,9 @@ policy:
   The [mapset](https://github.com/deckarep/golang-set) can be used when writing
   policies.
 
+Last but not least, this policy takes advantage of helper functions provided
+by [Kubewarden's Go SDK](https://github.com/kubewarden/policy-sdk-go).
+
 ## Testing
 
 This policy comes with a set of unit tests implemented using the Go testing
