@@ -1,0 +1,16 @@
+github.com/deckarep/golang-set v1.7.1 h1:SCQV0S6gTtp6itiFrTqI+pfmJ4LN85S1YzhDf9rTHJQ=
+github.com/deckarep/golang-set v1.7.1/go.mod h1:93vsz/8Wt4joVM7c2AVqh+YRMiUSc14yDtF28KmMOgQ=
+github.com/kubewarden/gjson v1.7.2 h1:+cLRfPqyvjwrkgE68cGdNfUy1Z6L45DjvuFH9/ofwQ0=
+github.com/kubewarden/gjson v1.7.2/go.mod h1:jSlxpubGqBG5HHe4v8kwcc8z1JF2reJ7AJAUojw66AY=
+github.com/kubewarden/policy-sdk-go v0.0.2 h1:H39qPQvsbTXq+hgeRha8h+YgYduSZyfDPyaVIyujrtY=
+github.com/kubewarden/policy-sdk-go v0.0.2/go.mod h1:gRwvddR/wKCTvZNCzSF0NBEsCD0/WZJe4daVzvkDwAc=
+github.com/kubewarden/policy-sdk-go v0.0.3 h1:pMr47J+X41rUC688JEw3m9j60CopMeOQEs5ugCvmjrs=
+github.com/kubewarden/policy-sdk-go v0.0.3/go.mod h1:gRwvddR/wKCTvZNCzSF0NBEsCD0/WZJe4daVzvkDwAc=
+github.com/kubewarden/policy-sdk-go v0.0.4 h1:o+jTdwn0pfnn138Utl0qQJ83jQmsMZThOBiq5ngGQwY=
+github.com/kubewarden/policy-sdk-go v0.0.4/go.mod h1:gRwvddR/wKCTvZNCzSF0NBEsCD0/WZJe4daVzvkDwAc=
+github.com/tidwall/match v1.0.3 h1:FQUVvBImDutD8wJLN6c5eMzWtjgONK9MwIBCOrUJKeE=
+github.com/tidwall/match v1.0.3/go.mod h1:eRSPERbgtNPcGhD8UCthc6PmLEQXEWd3PRB5JTxsfmM=
+github.com/tidwall/pretty v1.0.2 h1:Z7S3cePv9Jwm1KwS0513MRaoUe3S01WPbLNV40pwWZU=
+github.com/tidwall/pretty v1.0.2/go.mod h1:XNkn88O1ChpSDQmQeStsy+sBenx6DDtFZJxhVysOjyk=
+github.com/wapc/wapc-guest-tinygo v0.3.0 h1:nBbzqjntOSA4jXamwhfCDQhlOtfneGNPxRG0dI5MZVE=
+github.com/wapc/wapc-guest-tinygo v0.3.0/go.mod h1:Jssn+ovE+Y2oueUgVeLyGZf2ipUPngVnWTNPM8zmhn0=

@@ -1,0 +1,17 @@
+# github.com/deckarep/golang-set v1.7.1
+## explicit
+github.com/deckarep/golang-set
+# github.com/kubewarden/gjson v1.7.2
+## explicit
+github.com/kubewarden/gjson
+# github.com/kubewarden/policy-sdk-go v0.0.4
+## explicit
+github.com/kubewarden/policy-sdk-go
+github.com/kubewarden/policy-sdk-go/testing
+# github.com/tidwall/match v1.0.3
+github.com/tidwall/match
+# github.com/tidwall/pretty v1.0.2
+github.com/tidwall/pretty
+# github.com/wapc/wapc-guest-tinygo v0.3.0
+## explicit
+github.com/wapc/wapc-guest-tinygo

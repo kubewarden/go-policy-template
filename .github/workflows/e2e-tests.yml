@@ -1,0 +1,33 @@
+name: end to end tests
+
+on: [push, pull_request]
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Setup BATS
+        uses: mig4/setup-bats@v1
+        with:
+          bats-version: 1.2.1
+
+      - name: Download policy-testdrive
+        uses: i3h/download-release-asset@v1
+        with:
+          owner: kubewarden
+          repo: policy-server
+          tag: v0.1.1
+          file: policy-testdrive-linux-amd64
+
+      - name: build policy
+        uses: docker://tinygo/tinygo-dev:latest
+        with:
+          args: tinygo build -o ingress-policy.wasm -target=wasi -no-debug .
+
+      - name: run e2e tests
+        run: |
+          chmod 755 policy-testdrive-linux-amd64
+          ln -s policy-testdrive-linux-amd64 policy-testdrive
+          PATH=${PWD}:${PATH} make e2e-tests

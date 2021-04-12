@@ -1,0 +1,92 @@
+on:
+  push:
+    branches:
+    - main
+    tags:
+    - 'v*'
+
+name: publish Wasm module
+
+jobs:
+  build:
+    name: Create new release with Wasm artifact
+    runs-on: ubuntu-latest
+    env:
+      # TODO: change these variables to match your preferences
+      WASM_BINARY_NAME: policy.wasm
+      OCI_TARGET: ghcr.io/kubewarden/policies/demo-policy
+    steps:
+      -
+        name: Checkout code
+        uses: actions/checkout@v2
+      -
+        name: Download wasm-to-oci
+        uses: i3h/download-release-asset@v1
+        with:
+          owner: engineerd
+          repo: wasm-to-oci
+          tag: v0.1.1
+          file: linux-amd64-wasm-to-oci
+      -
+        name: fix wasm-to-oci permissions
+        run: |
+          chmod 755 linux-amd64-wasm-to-oci
+
+      # TODO: uncomment once tinygo 0.18.0 is released
+      #-
+      #  name: Install tinygo
+      #  run: |
+      #    wget https://github.com/tinygo-org/tinygo/releases/download/v0.17.0/tinygo_0.17.0_amd64.deb
+      #    sudo dpkg -i tinygo_0.17.0_amd64.deb
+      #-
+      #  name: Build Wasm module
+      #  run: |
+      #    tinygo build -o ingress-policy.wasm -target=wasi -no-debug .
+
+      - name: Build Wasm module
+        uses: docker://tinygo/tinygo-dev:latest
+        with:
+          args: tinygo build -o ${WASM_BINARY_NAME} -target=wasi -no-debug .
+
+      -
+        name: Login to GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.repository_owner }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+      -
+        name: Publish Wasm policy artifact to OCI registry with the 'latest' tag
+        if: ${{ startsWith(github.ref, 'refs/heads/') }}
+        run: |
+          ./linux-amd64-wasm-to-oci push ${WASM_BINARY_NAME} ${OCI_TARGET}:latest
+      -
+        name: Publish Wasm policy artifact to OCI registry with the version tag and 'latest'
+        if: ${{ startsWith(github.ref, 'refs/tags/') }}
+        run: |
+          export OCI_TAG=$(echo $GITHUB_REF | sed -e "s|refs/tags/||")
+          ./linux-amd64-wasm-to-oci push ${WASM_BINARY_NAME} ${OCI_TARGET}:${OCI_TAG}
+      -
+        name: Create Release
+        if: ${{ startsWith(github.ref, 'refs/tags/') }}
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          draft: false
+          prerelease: false
+      -
+        name: Upload Release Asset
+        if: ${{ startsWith(github.ref, 'refs/tags/') }}
+        id: upload-release-asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }}
+          asset_path: ${{ env.WASM_BINARY_NAME }}
+          asset_name: policy.wasm
+          asset_content_type: application/wasm
