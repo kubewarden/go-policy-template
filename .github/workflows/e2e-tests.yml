@@ -24,7 +24,7 @@ jobs:
       - name: build policy
         uses: docker://tinygo/tinygo-dev:latest
         with:
-          args: tinygo build -o ingress-policy.wasm -target=wasi -no-debug .
+          args: tinygo build -o policy.wasm -target=wasi -no-debug .
 
       - name: run e2e tests
         run: |
