@@ -1,0 +1,86 @@
+name: CI
+
+on:
+  push:
+    branches:
+    - main
+    tags:
+    - 'v*'
+  pull_request: {}
+
+jobs:
+  unit-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: setup Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: '1.15'
+
+      - name: run Go unit tests
+        run: make test
+
+  e2e-tests:
+    needs: unit-tests
+    runs-on: ubuntu-latest
+    env:
+      WASM_BINARY_NAME: policy.wasm
+    steps:
+      #############################
+      # Preparing the environment
+      #############################
+      - uses: actions/checkout@v2
+
+      - name: Download policy-testdrive
+        uses: i3h/download-release-asset@v1
+        with:
+          owner: kubewarden
+          repo: policy-server
+          tag: v0.1.1
+          file: policy-testdrive-linux-amd64
+
+      - name: Setup BATS
+        uses: mig4/setup-bats@v1
+        with:
+          bats-version: 1.2.1
+
+      #############################
+      # Building the Wasm module
+      #############################
+
+      # TODO: uncomment once tinygo 0.18.0 is released
+      #-
+      #  name: Install tinygo
+      #  run: |
+      #    wget https://github.com/tinygo-org/tinygo/releases/download/v0.17.0/tinygo_0.17.0_amd64.deb
+      #    sudo dpkg -i tinygo_0.17.0_amd64.deb
+      #-
+      #  name: Build Wasm module
+      #  run: |
+      #    tinygo build -o ingress-policy.wasm -target=wasi -no-debug .
+      - name: build policy
+        uses: docker://ghcr.io/kubewarden/tinygo/tinygo-dev:w14-2021
+        with:
+          args: tinygo build -o ${{ env.WASM_BINARY_NAME }} -target=wasi -no-debug .
+
+
+      #############################
+      # Test Wasm module
+      #############################
+      - name: run e2e tests
+        run: |
+          chmod 755 policy-testdrive-linux-amd64
+          ln -s policy-testdrive-linux-amd64 policy-testdrive
+          PATH=${PWD}:${PATH} make e2e-tests
+
+      #############################
+      # Upload policy as an artifact
+      #############################
+      - uses: actions/upload-artifact@v2
+        with:
+          name: policy.wasm
+          path: ${{ env.WASM_BINARY_NAME }}
+          if-no-files-found: error
+
