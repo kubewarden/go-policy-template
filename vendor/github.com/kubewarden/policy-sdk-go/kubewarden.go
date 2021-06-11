@@ -3,6 +3,8 @@ package sdk
 import (
 	"fmt"
 	"strings"
+
+	_ "github.com/kubewarden/policy-sdk-go/protocol"
 )
 
 // Message is the optional string used to build validation responses
