@@ -27,19 +27,19 @@ jobs:
     runs-on: ubuntu-latest
     env:
       WASM_BINARY_NAME: policy.wasm
+      KWCTL_VERSION: v0.1.9
+      TINYGO_VERSION: 0.18.0
     steps:
       #############################
       # Preparing the environment
       #############################
       - uses: actions/checkout@v2
 
-      - name: Download policy-testdrive
-        uses: i3h/download-release-asset@v1
-        with:
-          owner: kubewarden
-          repo: policy-server
-          tag: v0.1.1
-          file: policy-testdrive-linux-amd64
+      - name: Download kwctl
+        run: |
+          curl -L https://github.com/kubewarden/kwctl/releases/download/${{env.KWCTL_VERSION}}/kwctl-linux-amd64.zip -o kwctl.zip
+          unzip kwctl.zip
+          chmod 755 kwctl
 
       - name: Setup BATS
         uses: mig4/setup-bats@v1
@@ -50,29 +50,29 @@ jobs:
       # Building the Wasm module
       #############################
 
-      # TODO: uncomment once tinygo 0.18.0 is released
-      #-
-      #  name: Install tinygo
-      #  run: |
-      #    wget https://github.com/tinygo-org/tinygo/releases/download/v0.17.0/tinygo_0.17.0_amd64.deb
-      #    sudo dpkg -i tinygo_0.17.0_amd64.deb
-      #-
-      #  name: Build Wasm module
-      #  run: |
-      #    tinygo build -o ingress-policy.wasm -target=wasi -no-debug .
-      - name: build policy
-        uses: docker://ghcr.io/kubewarden/tinygo/tinygo-dev:w14-2021
-        with:
-          args: tinygo build -o ${{ env.WASM_BINARY_NAME }} -target=wasi -no-debug .
+      -
+        name: Install tinygo
+        run: |
+          wget https://github.com/tinygo-org/tinygo/releases/download/v${{ env.TINYGO_VERSION }}/tinygo_${{ env.TINYGO_VERSION }}_amd64.deb
+          sudo dpkg -i tinygo_${{ env.TINYGO_VERSION}}_amd64.deb
+      -
+        name: Build Wasm module
+        run: |
+          tinygo build -o ${{ env.WASM_BINARY_NAME }} -target=wasi -no-debug .
 
+      #############################
+      # Annotate policy
+      #############################
+      - name: annotate policy
+        run: |
+          PATH=${PWD}:${PATH} make annotate
+          mv annotated.wasm policy.wasm
 
       #############################
       # Test Wasm module
       #############################
       - name: run e2e tests
         run: |
-          chmod 755 policy-testdrive-linux-amd64
-          ln -s policy-testdrive-linux-amd64 policy-testdrive
           PATH=${PWD}:${PATH} make e2e-tests
 
       #############################
@@ -92,6 +92,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       OCI_TARGET: #TODO: change to something like ghcr.io/kubewarden/policies/safe-labels
+      KWCTL_VERSION: v0.1.9
 
     steps:
       - name: Download artifact
@@ -106,27 +107,22 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Download wasm-to-oci
-        uses: i3h/download-release-asset@v1
-        with:
-          owner: engineerd
-          repo: wasm-to-oci
-          tag: v0.1.1
-          file: linux-amd64-wasm-to-oci
-      - name: fix wasm-to-oci permissions
+      - name: Download kwctl
         run: |
-          chmod 755 linux-amd64-wasm-to-oci
+          curl -L https://github.com/kubewarden/kwctl/releases/download/${{env.KWCTL_VERSION}}/kwctl-linux-amd64.zip -o kwctl.zip
+          unzip kwctl.zip
+          chmod 755 kwctl
 
       - name: Publish Wasm policy artifact to OCI registry with the 'latest' tag
         if: startsWith(github.ref, 'refs/heads/')
         run: |
-          ./linux-amd64-wasm-to-oci push policy.wasm ${OCI_TARGET}:latest
+          ./kwctl push policy.wasm ${{ env.OCI_TARGET}}:latest
 
       - name: Publish Wasm policy artifact to OCI registry with the version tag and 'latest'
         if: startsWith(github.ref, 'refs/tags/')
         run: |
           export OCI_TAG=$(echo $GITHUB_REF | sed -e "s|refs/tags/||")
-          ./linux-amd64-wasm-to-oci push policy.wasm ${OCI_TARGET}:${OCI_TAG}
+          ./kwctl push policy.wasm ${{ env.OCI_TARGET }}:${OCI_TAG}
 
   release:
     needs: e2e-tests
