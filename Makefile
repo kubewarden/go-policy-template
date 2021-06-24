@@ -1,5 +1,5 @@
 wasm: go.mod go.sum *.go
-	docker run --rm -v ${PWD}:/src -w /src tinygo/tinygo-dev:latest tinygo build -o policy.wasm -target=wasi -no-debug .
+	docker run --rm -v ${PWD}:/src -w /src tinygo/tinygo-dev::0.18.0 tinygo build -o policy.wasm -target=wasi -no-debug .
 
 test:
 	go test -v
