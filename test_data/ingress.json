@@ -11,7 +11,7 @@
       "name": "tls-example-ingress",
       "labels": {
         "cc-center": "123",
-        "owner": "some-owner"
+        "owner": "team-alpha"
       }
     },
     "spec": {
