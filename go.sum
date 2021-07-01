@@ -4,6 +4,8 @@ github.com/kubewarden/gjson v1.7.2 h1:+cLRfPqyvjwrkgE68cGdNfUy1Z6L45DjvuFH9/ofwQ
 github.com/kubewarden/gjson v1.7.2/go.mod h1:jSlxpubGqBG5HHe4v8kwcc8z1JF2reJ7AJAUojw66AY=
 github.com/kubewarden/policy-sdk-go v0.1.1 h1:s9tiiIPeFk1BO25Em8pG2UqmphVZgAOb4O1T4prC1lk=
 github.com/kubewarden/policy-sdk-go v0.1.1/go.mod h1:al4TDTgzhRB1jTyjLuWibPLChvMJkLmn0rKTAlL90pU=
+github.com/kubewarden/policy-sdk-go v0.1.2 h1:83inLJlfDDE0/gvCS3a9ntDNC3+dEbYODkt+0J4kbdc=
+github.com/kubewarden/policy-sdk-go v0.1.2/go.mod h1:al4TDTgzhRB1jTyjLuWibPLChvMJkLmn0rKTAlL90pU=
 github.com/tidwall/match v1.0.3 h1:FQUVvBImDutD8wJLN6c5eMzWtjgONK9MwIBCOrUJKeE=
 github.com/tidwall/match v1.0.3/go.mod h1:eRSPERbgtNPcGhD8UCthc6PmLEQXEWd3PRB5JTxsfmM=
 github.com/tidwall/pretty v1.0.2 h1:Z7S3cePv9Jwm1KwS0513MRaoUe3S01WPbLNV40pwWZU=

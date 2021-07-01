@@ -1,3 +1,6 @@
+// This package provides helper functions and structs for writing
+// https://kubewarden.io policies using the Go programming
+// language.
 package sdk
 
 import (
