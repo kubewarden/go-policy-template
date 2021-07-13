@@ -1,7 +1,7 @@
 package main
 
 import (
-	"github.com/deckarep/golang-set"
+	mapset "github.com/deckarep/golang-set"
 	"github.com/kubewarden/gjson"
 	kubewarden "github.com/kubewarden/policy-sdk-go"
 
@@ -21,9 +21,6 @@ type Settings struct {
 //    }
 // }
 func NewSettingsFromValidationReq(payload []byte) (Settings, error) {
-	// Note well: we don't validate the input JSON now, this has
-	// already done inside of the `validate` function
-
 	return newSettings(
 		payload,
 		"settings.denied_names")
@@ -35,10 +32,6 @@ func NewSettingsFromValidationReq(payload []byte) (Settings, error) {
 //    "denied_names": ...
 // }
 func NewSettingsFromValidateSettingsPayload(payload []byte) (Settings, error) {
-	if !gjson.ValidBytes(payload) {
-		return Settings{}, fmt.Errorf("denied JSON payload")
-	}
-
 	return newSettings(
 		payload,
 		"denied_names")
@@ -68,13 +61,18 @@ func (s *Settings) Valid() bool {
 }
 
 func validateSettings(payload []byte) ([]byte, error) {
+	logger.Info("validating settings")
+
 	settings, err := NewSettingsFromValidateSettingsPayload(payload)
 	if err != nil {
 		return []byte{}, err
 	}
 
 	if settings.Valid() {
+		logger.Info("accepting settings")
 		return kubewarden.AcceptSettings()
 	}
+
+	logger.Warn("rejecting settings")
 	return kubewarden.RejectSettings(kubewarden.Message("Provided settings are not valid"))
 }
