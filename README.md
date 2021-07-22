@@ -8,7 +8,7 @@ for more information about writing policies.
 
 ## Introduction
 
-Thist repository contains a working policy written in Go.
+This repository contains a working policy written in Go.
 
 The policy looks at the `name` of a Kubernetes resource and rejects the request
 if the name is on a deny list.
