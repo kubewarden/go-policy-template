@@ -27,7 +27,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       WASM_BINARY_NAME: policy.wasm
-      KWCTL_VERSION: v0.1.9
+      KWCTL_VERSION: v0.1.10
       TINYGO_VERSION: 0.18.0
     steps:
       #############################
@@ -92,7 +92,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       OCI_TARGET: #TODO: change to something like ghcr.io/kubewarden/policies/safe-labels
-      KWCTL_VERSION: v0.1.9
+      KWCTL_VERSION: v0.1.10
 
     steps:
       - name: Download artifact
