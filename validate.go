@@ -46,6 +46,5 @@ func validate(payload []byte) ([]byte, error) {
 			kubewarden.NoCode)
 	}
 
-	logger.Info("accepting ingress object")
 	return kubewarden.AcceptRequest()
 }

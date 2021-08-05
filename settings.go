@@ -69,7 +69,6 @@ func validateSettings(payload []byte) ([]byte, error) {
 	}
 
 	if settings.Valid() {
-		logger.Info("accepting settings")
 		return kubewarden.AcceptSettings()
 	}
 
