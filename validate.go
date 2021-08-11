@@ -16,8 +16,6 @@ func validate(payload []byte) ([]byte, error) {
 			kubewarden.Code(400))
 	}
 
-	logger.Info("validating request")
-
 	data := gjson.GetBytes(
 		payload,
 		"request.object.metadata.name")
