@@ -5,6 +5,7 @@ rules:
   operations: ["CREATE"]
 mutating: false
 contextAware: false
+executionMode: kubewarden-wapc
 annotations:
   io.kubewarden.policy.title: policy-name
   io.kubewarden.policy.description: Short description
