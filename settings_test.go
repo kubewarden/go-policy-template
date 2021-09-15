@@ -60,7 +60,7 @@ func TestSettingsAreValid(t *testing.T) {
 		t.Errorf("Unexpected error %+v", err)
 	}
 
-	if !settings.Valid() {
+	if valid, err := settings.Valid(); !valid && err != nil {
 		t.Errorf("Settings are reported as not valid")
 	}
 }
