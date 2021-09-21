@@ -91,7 +91,7 @@ It's also important the test the final result of the TinyGo compilation:
 the actual WebAssembly module.
 
 This is done by a second set of end-to-end tests. These tests use the
-`policicy-testdrive` cli provided by the Kubewarden project to load and execute
+`kwctl` cli provided by the Kubewarden project to load and execute
 the policy.
 
 The e2e tests are implemented using [bats](https://github.com/sstephenson/bats):
