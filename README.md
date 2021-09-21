@@ -1,6 +1,6 @@
 # go-policy-template
 
-This is a template repository that can be used to to quickly scaffold a
+This is a template repository that can be used to quickly scaffold a
 Kubewarden policy written with Go language.
 
 Don't forget to checkout Kubewarden's [official documentation](https://docs.kubewarden.io)
