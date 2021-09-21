@@ -98,7 +98,7 @@ The e2e tests are implemented using [bats](https://github.com/bats-core/bats-cor
 the Bash Automated Testing System.
 
 The end-to-end tests are defined inside of the `e2e.bats` file and can
-be run via this commmand:
+be run via this command:
 
 ```shell
 make e2e-tests
