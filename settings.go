@@ -68,7 +68,11 @@ func validateSettings(payload []byte) ([]byte, error) {
 		return kubewarden.RejectSettings(kubewarden.Message(err.Error()))
 	}
 
-	if valid, _ := settings.Valid(); valid {
+	valid, err := settings.Valid()
+	if err != nil {
+		return kubewarden.RejectSettings(kubewarden.Message(fmt.Sprintf("Provided settings are not valid: %v", err)))
+	}
+	if valid {
 		return kubewarden.AcceptSettings()
 	}
 
