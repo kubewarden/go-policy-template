@@ -56,8 +56,8 @@ func newSettings(payload []byte, paths ...string) (Settings, error) {
 }
 
 // No special check has to be done
-func (s *Settings) Valid() bool {
-	return true
+func (s *Settings) Valid() (bool, error) {
+	return true, nil
 }
 
 func validateSettings(payload []byte) ([]byte, error) {
@@ -68,7 +68,11 @@ func validateSettings(payload []byte) ([]byte, error) {
 		return kubewarden.RejectSettings(kubewarden.Message(err.Error()))
 	}
 
-	if settings.Valid() {
+	valid, err := settings.Valid()
+	if err != nil {
+		return kubewarden.RejectSettings(kubewarden.Message(fmt.Sprintf("Provided settings are not valid: %v", err)))
+	}
+	if valid {
 		return kubewarden.AcceptSettings()
 	}
 
