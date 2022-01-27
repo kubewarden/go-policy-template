@@ -1,7 +1,7 @@
 #!/usr/bin/env bats
 
 @test "reject because name is on deny list" {
-  run kwctl run policy.wasm -r test_data/ingress.json --settings-json '{"denied_names": ["foo", "tls-example-ingress"]}'
+  run kwctl run annotated-policy.wasm -r test_data/ingress.json --settings-json '{"denied_names": ["foo", "tls-example-ingress"]}'
 
   # this prints the output when one the checks below fails
   echo "output = ${output}"
@@ -13,7 +13,7 @@
 }
 
 @test "accept because name is not on the deny list" {
-  run kwctl run policy.wasm -r test_data/ingress.json --settings-json '{"denied_names": ["foo"]}'
+  run kwctl run annotated-policy.wasm -r test_data/ingress.json --settings-json '{"denied_names": ["foo"]}'
   # this prints the output when one the checks below fails
   echo "output = ${output}"
 
@@ -23,7 +23,7 @@
 }
 
 @test "accept because the deny list is empty" {
-  run kwctl run policy.wasm -r test_data/ingress.json
+  run kwctl run annotated-policy.wasm -r test_data/ingress.json
   # this prints the output when one the checks below fails
   echo "output = ${output}"
 
