@@ -1,0 +1,30 @@
+on:
+  push:
+    branches:
+    - main
+    tags:
+    - 'v*'
+
+name: Release policy
+
+jobs:
+
+  test:
+    name: run tests and linters
+    uses: kubewarden/github-actions/.github/workflows/reusable-test-policy-go.yml@v1
+
+  release:
+    needs: test
+    permissions:
+      # Required to create GH releases
+      contents: write
+      # Required to push to GHCR
+      packages: write
+      # Required by cosign keyless signing
+      id-token: write
+
+    uses: kubewarden/github-actions/.github/workflows/reusable-release-policy-go.yml@v1
+    with:
+      oci-target: #FIXME: change to something like ghcr.io/${{ github.repository_owner }}/policies/safe-labels
+    secrets:
+      workflow-pat: ${{ secrets.WORKFLOW_PAT }}
