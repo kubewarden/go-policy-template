@@ -9,7 +9,7 @@ github.com/francoispqt/onelog
 # github.com/kubewarden/gjson v1.7.2
 ## explicit
 github.com/kubewarden/gjson
-# github.com/kubewarden/policy-sdk-go v0.1.2
+# github.com/kubewarden/policy-sdk-go v0.1.3
 ## explicit
 github.com/kubewarden/policy-sdk-go
 github.com/kubewarden/policy-sdk-go/constants
@@ -19,6 +19,6 @@ github.com/kubewarden/policy-sdk-go/testing
 github.com/tidwall/match
 # github.com/tidwall/pretty v1.0.2
 github.com/tidwall/pretty
-# github.com/wapc/wapc-guest-tinygo v0.3.0
+# github.com/wapc/wapc-guest-tinygo v0.3.1
 ## explicit
 github.com/wapc/wapc-guest-tinygo
