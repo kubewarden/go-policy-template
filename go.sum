@@ -2,6 +2,8 @@ github.com/davecgh/go-spew v1.1.1 h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c
 github.com/davecgh/go-spew v1.1.1/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/deckarep/golang-set v1.7.1 h1:SCQV0S6gTtp6itiFrTqI+pfmJ4LN85S1YzhDf9rTHJQ=
 github.com/deckarep/golang-set v1.7.1/go.mod h1:93vsz/8Wt4joVM7c2AVqh+YRMiUSc14yDtF28KmMOgQ=
+github.com/deckarep/golang-set v1.8.0 h1:sk9/l/KqpunDwP7pSjUg0keiOOLEnOBHzykLrsPppp4=
+github.com/deckarep/golang-set v1.8.0/go.mod h1:5nI87KwE7wgsBU1F4GKAw2Qod7p5kyS383rP6+o6qqo=
 github.com/francoispqt/gojay v0.0.0-20181220093123-f2cc13a668ca h1:F2BD6Vhei4w0rtm4eNpzylNsB07CcCbpYA+xlqMx3mA=
 github.com/francoispqt/gojay v0.0.0-20181220093123-f2cc13a668ca/go.mod h1:H8Wgri1Asi1VevY3ySdpIK5+KCpqzToVswNq8g2xZj4=
 github.com/francoispqt/onelog v0.0.0-20190304085423-060a273d6185 h1:EPOFlRpdU2+9wDoJeLNGyg9JPZGoBXMg7JReK/phXK8=
@@ -10,6 +12,8 @@ github.com/kubewarden/gjson v1.7.2 h1:+cLRfPqyvjwrkgE68cGdNfUy1Z6L45DjvuFH9/ofwQ
 github.com/kubewarden/gjson v1.7.2/go.mod h1:jSlxpubGqBG5HHe4v8kwcc8z1JF2reJ7AJAUojw66AY=
 github.com/kubewarden/policy-sdk-go v0.1.2 h1:83inLJlfDDE0/gvCS3a9ntDNC3+dEbYODkt+0J4kbdc=
 github.com/kubewarden/policy-sdk-go v0.1.2/go.mod h1:al4TDTgzhRB1jTyjLuWibPLChvMJkLmn0rKTAlL90pU=
+github.com/kubewarden/policy-sdk-go v0.1.3 h1:VI6XZBkbBGS2GUiG1SZhsoRza7/RSsM3WFPm9FFnE7g=
+github.com/kubewarden/policy-sdk-go v0.1.3/go.mod h1:wpqkMFHBJ1mvzGLyV0rDNDTj3n/RRq6kzEeJGHbs/Rc=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
 github.com/pmezard/go-difflib v1.0.0/go.mod h1:iKH77koFhYxTK1pcRnkKkqfTogsbg7gZNVY4sRDYZ/4=
 github.com/stretchr/testify v1.2.2 h1:bSDNvY7ZPG5RlJ8otE/7V6gMiyenm9RtJ7IUVIAoJ1w=
@@ -20,3 +24,5 @@ github.com/tidwall/pretty v1.0.2 h1:Z7S3cePv9Jwm1KwS0513MRaoUe3S01WPbLNV40pwWZU=
 github.com/tidwall/pretty v1.0.2/go.mod h1:XNkn88O1ChpSDQmQeStsy+sBenx6DDtFZJxhVysOjyk=
 github.com/wapc/wapc-guest-tinygo v0.3.0 h1:nBbzqjntOSA4jXamwhfCDQhlOtfneGNPxRG0dI5MZVE=
 github.com/wapc/wapc-guest-tinygo v0.3.0/go.mod h1:Jssn+ovE+Y2oueUgVeLyGZf2ipUPngVnWTNPM8zmhn0=
+github.com/wapc/wapc-guest-tinygo v0.3.1 h1:ecmT4W+ynsNvRvLolPw2rQRafCAoLMh7L/u6ZxVSWXU=
+github.com/wapc/wapc-guest-tinygo v0.3.1/go.mod h1:Jssn+ovE+Y2oueUgVeLyGZf2ipUPngVnWTNPM8zmhn0=
