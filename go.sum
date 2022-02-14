@@ -8,6 +8,8 @@ github.com/francoispqt/gojay v0.0.0-20181220093123-f2cc13a668ca h1:F2BD6Vhei4w0r
 github.com/francoispqt/gojay v0.0.0-20181220093123-f2cc13a668ca/go.mod h1:H8Wgri1Asi1VevY3ySdpIK5+KCpqzToVswNq8g2xZj4=
 github.com/francoispqt/onelog v0.0.0-20190304085423-060a273d6185 h1:EPOFlRpdU2+9wDoJeLNGyg9JPZGoBXMg7JReK/phXK8=
 github.com/francoispqt/onelog v0.0.0-20190304085423-060a273d6185/go.mod h1:v1Il1fkBpjiYPpEJcGxqgrPUPcHuTC7eHh9zBV3CLBE=
+github.com/francoispqt/onelog v0.0.0-20190306043706-8c2bb31b10a4 h1:N9eG+1y9e3tnNPXKjssLMa8MumIBDWWoJQWM7htGWUc=
+github.com/francoispqt/onelog v0.0.0-20190306043706-8c2bb31b10a4/go.mod h1:v1Il1fkBpjiYPpEJcGxqgrPUPcHuTC7eHh9zBV3CLBE=
 github.com/kubewarden/gjson v1.7.2 h1:+cLRfPqyvjwrkgE68cGdNfUy1Z6L45DjvuFH9/ofwQ0=
 github.com/kubewarden/gjson v1.7.2/go.mod h1:jSlxpubGqBG5HHe4v8kwcc8z1JF2reJ7AJAUojw66AY=
 github.com/kubewarden/policy-sdk-go v0.1.2 h1:83inLJlfDDE0/gvCS3a9ntDNC3+dEbYODkt+0J4kbdc=
