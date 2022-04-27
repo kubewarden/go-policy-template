@@ -2,7 +2,7 @@ package main
 
 import (
 	mapset "github.com/deckarep/golang-set"
-	"github.com/kubewarden/gjson"
+	"github.com/tidwall/gjson"
 	kubewarden "github.com/kubewarden/policy-sdk-go"
 
 	"fmt"
