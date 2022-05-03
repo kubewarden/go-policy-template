@@ -1,8 +1,12 @@
 SOURCE_FILES := $(shell find . -type f -name '*.go')
 
 policy.wasm: $(SOURCE_FILES) go.mod go.sum
-	docker run --rm -v ${PWD}:/src -w /src tinygo/tinygo:0.18.0 tinygo build \
-		-o policy.wasm -target=wasi -no-debug .
+	docker run \
+		--rm \
+		-e GOFLAGS="-buildvcs=false" \
+		-v ${PWD}:/src \
+		-w /src tinygo/tinygo:0.23.0 \
+		tinygo build -o policy.wasm -target=wasi -no-debug .
 
 annotated-policy.wasm: policy.wasm metadata.yml
 	kwctl annotate -m metadata.yml -o annotated-policy.wasm policy.wasm
