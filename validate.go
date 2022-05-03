@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	onelog "github.com/francoispqt/onelog"
-	"github.com/tidwall/gjson"
+	"github.com/kubewarden/gjson"
 	kubewarden "github.com/kubewarden/policy-sdk-go"
 )
 
