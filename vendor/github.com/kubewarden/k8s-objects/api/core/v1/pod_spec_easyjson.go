@@ -2627,6 +2627,8 @@ func easyjsonA34d1d2dDecodeGithubComKubewardenK8sObjectsApiCoreV12(in *jlexer.Le
 				}
 				*out.MaxSkew = int32(in.Int32())
 			}
+		case "minDomains":
+			out.MinDomains = int32(in.Int32())
 		case "topologyKey":
 			if in.IsNull() {
 				in.Skip()
@@ -2680,6 +2682,11 @@ func easyjsonA34d1d2dEncodeGithubComKubewardenK8sObjectsApiCoreV12(out *jwriter.
 		} else {
 			out.Int32(int32(*in.MaxSkew))
 		}
+	}
+	if in.MinDomains != 0 {
+		const prefix string = ",\"minDomains\":"
+		out.RawString(prefix)
+		out.Int32(int32(in.MinDomains))
 	}
 	{
 		const prefix string = ",\"topologyKey\":"

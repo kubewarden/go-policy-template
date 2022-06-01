@@ -10,10 +10,10 @@ package v1
 // swagger:model PhotonPersistentDiskVolumeSource
 type PhotonPersistentDiskVolumeSource struct {
 
-	// Filesystem type to mount. Must be a filesystem type supported by the host operating system. Ex. "ext4", "xfs", "ntfs". Implicitly inferred to be "ext4" if unspecified.
+	// fsType is the filesystem type to mount. Must be a filesystem type supported by the host operating system. Ex. "ext4", "xfs", "ntfs". Implicitly inferred to be "ext4" if unspecified.
 	FsType string `json:"fsType,omitempty"`
 
-	// ID that identifies Photon Controller persistent disk
+	// pdID is the ID that identifies Photon Controller persistent disk
 	// Required: true
 	PdID *string `json:"pdID"`
 }

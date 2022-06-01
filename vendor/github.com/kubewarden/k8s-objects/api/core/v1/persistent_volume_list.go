@@ -17,7 +17,7 @@ type PersistentVolumeList struct {
 	// APIVersion defines the versioned schema of this representation of an object. Servers should convert recognized schemas to the latest internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
 	APIVersion string `json:"apiVersion,omitempty"`
 
-	// List of persistent volumes. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes
+	// items is a list of persistent volumes. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes
 	// Required: true
 	Items []*PersistentVolume `json:"items"`
 

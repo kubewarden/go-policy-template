@@ -10,9 +10,9 @@ package v1
 // swagger:model SecretReference
 type SecretReference struct {
 
-	// Name is unique within a namespace to reference a secret resource.
+	// name is unique within a namespace to reference a secret resource.
 	Name string `json:"name,omitempty"`
 
-	// Namespace defines the space within which the secret name must be unique.
+	// namespace defines the space within which the secret name must be unique.
 	Namespace string `json:"namespace,omitempty"`
 }

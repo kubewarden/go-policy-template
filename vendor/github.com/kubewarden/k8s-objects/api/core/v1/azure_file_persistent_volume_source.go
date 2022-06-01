@@ -10,17 +10,17 @@ package v1
 // swagger:model AzureFilePersistentVolumeSource
 type AzureFilePersistentVolumeSource struct {
 
-	// Defaults to false (read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.
+	// readOnly defaults to false (read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.
 	ReadOnly bool `json:"readOnly,omitempty"`
 
-	// the name of secret that contains Azure Storage Account Name and Key
+	// secretName is the name of secret that contains Azure Storage Account Name and Key
 	// Required: true
 	SecretName *string `json:"secretName"`
 
-	// the namespace of the secret that contains Azure Storage Account Name and Key default is the same as the Pod
+	// secretNamespace is the namespace of the secret that contains Azure Storage Account Name and Key default is the same as the Pod
 	SecretNamespace string `json:"secretNamespace,omitempty"`
 
-	// Share Name
+	// shareName is the azure Share Name
 	// Required: true
 	ShareName *string `json:"shareName"`
 }

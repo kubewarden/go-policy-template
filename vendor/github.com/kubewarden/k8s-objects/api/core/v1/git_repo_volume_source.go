@@ -12,13 +12,13 @@ package v1
 // swagger:model GitRepoVolumeSource
 type GitRepoVolumeSource struct {
 
-	// Target directory name. Must not contain or start with '..'.  If '.' is supplied, the volume directory will be the git repository.  Otherwise, if specified, the volume will contain the git repository in the subdirectory with the given name.
+	// directory is the target directory name. Must not contain or start with '..'.  If '.' is supplied, the volume directory will be the git repository.  Otherwise, if specified, the volume will contain the git repository in the subdirectory with the given name.
 	Directory string `json:"directory,omitempty"`
 
-	// Repository URL
+	// repository is the URL
 	// Required: true
 	Repository *string `json:"repository"`
 
-	// Commit hash for the specified revision.
+	// revision is the commit hash for the specified revision.
 	Revision string `json:"revision,omitempty"`
 }

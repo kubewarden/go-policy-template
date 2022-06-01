@@ -10,13 +10,13 @@ package v1
 // swagger:model PortworxVolumeSource
 type PortworxVolumeSource struct {
 
-	// FSType represents the filesystem type to mount Must be a filesystem type supported by the host operating system. Ex. "ext4", "xfs". Implicitly inferred to be "ext4" if unspecified.
+	// fSType represents the filesystem type to mount Must be a filesystem type supported by the host operating system. Ex. "ext4", "xfs". Implicitly inferred to be "ext4" if unspecified.
 	FsType string `json:"fsType,omitempty"`
 
-	// Defaults to false (read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.
+	// readOnly defaults to false (read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.
 	ReadOnly bool `json:"readOnly,omitempty"`
 
-	// VolumeID uniquely identifies a Portworx volume
+	// volumeID uniquely identifies a Portworx volume
 	// Required: true
 	VolumeID *string `json:"volumeID"`
 }

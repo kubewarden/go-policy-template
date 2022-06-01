@@ -10,14 +10,14 @@ package v1
 // swagger:model AzureFileVolumeSource
 type AzureFileVolumeSource struct {
 
-	// Defaults to false (read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.
+	// readOnly defaults to false (read/write). ReadOnly here will force the ReadOnly setting in VolumeMounts.
 	ReadOnly bool `json:"readOnly,omitempty"`
 
-	// the name of secret that contains Azure Storage Account Name and Key
+	// secretName is the  name of secret that contains Azure Storage Account Name and Key
 	// Required: true
 	SecretName *string `json:"secretName"`
 
-	// Share Name
+	// shareName is the azure share Name
 	// Required: true
 	ShareName *string `json:"shareName"`
 }

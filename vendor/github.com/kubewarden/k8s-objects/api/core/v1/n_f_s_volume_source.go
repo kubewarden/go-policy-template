@@ -10,14 +10,14 @@ package v1
 // swagger:model NFSVolumeSource
 type NFSVolumeSource struct {
 
-	// Path that is exported by the NFS server. More info: https://kubernetes.io/docs/concepts/storage/volumes#nfs
+	// path that is exported by the NFS server. More info: https://kubernetes.io/docs/concepts/storage/volumes#nfs
 	// Required: true
 	Path *string `json:"path"`
 
-	// ReadOnly here will force the NFS export to be mounted with read-only permissions. Defaults to false. More info: https://kubernetes.io/docs/concepts/storage/volumes#nfs
+	// readOnly here will force the NFS export to be mounted with read-only permissions. Defaults to false. More info: https://kubernetes.io/docs/concepts/storage/volumes#nfs
 	ReadOnly bool `json:"readOnly,omitempty"`
 
-	// Server is the hostname or IP address of the NFS server. More info: https://kubernetes.io/docs/concepts/storage/volumes#nfs
+	// server is the hostname or IP address of the NFS server. More info: https://kubernetes.io/docs/concepts/storage/volumes#nfs
 	// Required: true
 	Server *string `json:"server"`
 }

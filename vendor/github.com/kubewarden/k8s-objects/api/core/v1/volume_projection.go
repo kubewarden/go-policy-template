@@ -10,15 +10,15 @@ package v1
 // swagger:model VolumeProjection
 type VolumeProjection struct {
 
-	// information about the configMap data to project
+	// configMap information about the configMap data to project
 	ConfigMap *ConfigMapProjection `json:"configMap,omitempty"`
 
-	// information about the downwardAPI data to project
+	// downwardAPI information about the downwardAPI data to project
 	DownwardAPI *DownwardAPIProjection `json:"downwardAPI,omitempty"`
 
-	// information about the secret data to project
+	// secret information about the secret data to project
 	Secret *SecretProjection `json:"secret,omitempty"`
 
-	// information about the serviceAccountToken data to project
+	// serviceAccountToken is information about the serviceAccountToken data to project
 	ServiceAccountToken *ServiceAccountTokenProjection `json:"serviceAccountToken,omitempty"`
 }

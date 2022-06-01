@@ -25,10 +25,6 @@ type ContainerPort struct {
 
 	// Protocol for port. Must be UDP, TCP, or SCTP. Defaults to "TCP".
 	//
-	// Possible enum values:
-	//  - `"SCTP"` is the SCTP protocol.
-	//  - `"TCP"` is the TCP protocol.
-	//  - `"UDP"` is the UDP protocol.
-	// Enum: [SCTP TCP UDP]
+	//
 	Protocol string `json:"protocol,omitempty"`
 }

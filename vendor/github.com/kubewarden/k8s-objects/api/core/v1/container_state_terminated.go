@@ -14,7 +14,7 @@ import (
 // swagger:model ContainerStateTerminated
 type ContainerStateTerminated struct {
 
-	// Container's ID in the format 'docker://<container_id>'
+	// Container's ID in the format '<type>://<container_id>'
 	ContainerID string `json:"containerID,omitempty"`
 
 	// Exit status from the last termination of the container

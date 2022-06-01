@@ -1,5 +1,8 @@
 [![GoDoc](https://godoc.org/github.com/kubewarden/policy-sdk-go?status.svg)](https://godoc.org/github.com/kubewarden/policy-sdk-go)
 
+> Don't forget to take a look at [Kubewarden's official documentation](https://docs.kubewarden.io).
+> The docs cover step-by-step instructions about how to write policies.
+
 # Kubewarden Go Policy SDK
 
 This module provides a SDK that can be used to write [Kubewarden
@@ -9,13 +12,168 @@ language.
 Due to current Go compiler limitations, Go policies must be built
 using [TinyGo](https://github.com/tinygo-org/tinygo).
 
-## Validation
+## Known limitations of TinyGo
+
+TinyGo doesn't have full support of the Go Standard Library. However, this
+shouldn't pose a limit to policy authors.
+
+The biggest drawback of TinyGo is the limited (as of TinyGo v0.23) support
+of Go Reflection. Because of that the `encoding/json` package from the Standard
+Library is **not usable**. The code will compile just fine, but at **runtime**
+a panic will be occur.
+
+# Validation
 
 This SDK provides helper methods to accept and reject validation requests.
 
-Mutation policies cannot be written using this SDK yet.
+A validation policy consists of these steps:
 
-## Logging
+1. Extract the object to inspect from the incoming payload
+2. (Optional) Extract the settings object from the incoming payload.
+3. Validation code
+4. Communicate the outcome of the validation: accept/reject
+
+The 4th step is done using helper functions provided by this SDK.
+
+As for the 1st step, there are two approaches that can be used.
+
+## Perform "jq-like" searches
+
+The policy receives as input a `payload` parameter of type `[]byte`. This
+contains the JSON document described [here](https://docs.kubewarden.io/writing-policies/spec/validating-policies#the-validationrequest-object).
+
+Policy authors can leverage the [`github.com/tidwall/gjson`](https://github.com/tidwall/gjson)
+package to search for data inside of this JSON document.
+
+For example, assume you want to validate the `labels` that are inside of
+a Kubernetes object. This can be done with this snippet:
+
+```go
+data := gjson.GetBytes(
+  payload,
+  "request.object.metadata.labels")
+
+labels := mapset.NewThreadUnsafeSet()
+denied_labels_violations := []string{}
+constrained_labels_violations := []string{}
+
+data.ForEach(func(key, value gjson.Result) bool {
+  label := key.String()
+  labelValue := value.String()
+  // do something with label and labelValue
+
+  return true
+})
+```
+
+This *"jq-like"* approach can be pretty handy when the policy has to look
+deep inside of a Kubernetes object. This is especially helpful when dealing with
+inner objects that are optional.
+
+### Use native Go types
+
+The majority of policies target a specific type of Kubernetes resource, like
+Pod, Ingress, Service and similar. Because of that, another possible approach
+is to unmarshal the incoming object into a native Go type.
+
+Because of the current TinyGo limitations, both the usage of the `encoding/json`
+package and the usage of the official Kubernetes Go types defined
+under the `k8s.io` pacakges (e.g. `k8s.io/api/core/v1`) is not possible.
+
+To circumvent these issues, Kubewarden relies on [easyjson](https://github.com/mailru/easyjson/)
+to marshal and unmarshal Kubernetes (and Kubewarden) types.
+Moreover, Kubewarden provides TinyGo friendly Go types for all the Kubernetes
+types inside of the [`github.com/kubewarden/k8s-objects`](https://github.com/kubewarden/k8s-objects)
+package.
+
+This snippet shows how to implement a `validation` function that uses the
+"native Go types" approach:
+
+```go
+// Create a ValidationRequest instance from the incoming payload
+validationRequest := kubewarden_protocol.ValidationRequest{}
+err := easyjson.Unmarshal(payload, &validationRequest)
+if err != nil {
+	return kubewarden.RejectRequest(
+		kubewarden.Message(err.Error()),
+		kubewarden.Code(400))
+}
+
+// Access the **raw** JSON that describes the object
+ingressJSON := validationRequest.Request.Object
+
+// Try to create an Ingress instance using the RAW JSON we got from the
+// ValidationRequest.
+// This policy works only against Ingress objects, if the creation fails
+// we reject the request and provide a meaningful error.
+ingress := &networkingv1.Ingress{}
+if err := easyjson.Unmarshal([]byte(ingressJSON), ingress); err != nil {
+	return kubewarden.RejectRequest(
+		kubewarden.Message(
+		fmt.Sprintf("Cannot decode Ingress object: %s", err.Error())),
+		kubewarden.Code(400))
+}
+
+// the validation logic
+```
+
+**Note:** the `github.com/kubewarden/k8s-objects` package is organized
+in the same way as the official `k8s.io` one.
+
+# Mutating policy
+
+Mutation policies works exactly like the validation ones. The only difference
+is that, when a request has to be accepted AND mutated, the policy must return
+the input object with all the required changes applied.
+
+Mutation policies can be done by leveraging the Kubernetes Go types
+defined inside of the `github.com/kubewarden/k8s-objects` package and
+the helper methods provided by this SDK.
+
+The following example defines a mutating policy that always changes the name of
+Ingress objects:
+
+```go 
+import (
+	"fmt"
+
+	networkingv1 "github.com/kubewarden/k8s-objects/api/networking/v1"
+	kubewarden "github.com/kubewarden/policy-sdk-go"
+	"github.com/mailru/easyjson"
+)
+
+func validate(payload []byte) ([]byte, error) {
+  // Create a ValidationRequest instance from the incoming payload
+  validationRequest := kubewarden_protocol.ValidationRequest{}
+  err := easyjson.Unmarshal(payload, &validationRequest)
+  if err != nil {
+    return kubewarden.RejectRequest(
+      kubewarden.Message(err.Error()),
+      kubewarden.Code(400))
+  }
+
+  // Access the **raw** JSON that describes the object
+  ingressJSON := validationRequest.Request.Object
+
+  // Try to create a Ingress instance using the RAW JSON we got from the
+  // ValidationRequest.
+  // This policy works only against Ingress objects, if the creation fails
+  // we reject the request and provide a meaningful error.
+  ingress := &networkingv1.Ingress{}
+  if err := easyjson.Unmarshal([]byte(ingressJSON), ingress); err != nil {
+    return kubewarden.RejectRequest(
+      kubewarden.Message(
+      fmt.Sprintf("Cannot decode Ingress object: %s", err.Error())),
+      kubewarden.Code(400))
+  }
+
+  ingress.Metadata.Name = fmt.Sprintf("%s-changed", ingress.Metadata.Name)
+
+  return kubewarden.AcceptAndMutateRequest(ingress)
+}
+```
+
+# Logging
 
 Policies can generate log messages that are then propagated to the host
 environment (eg: [kwctl](https://github.com/kubewarden/kwctl),
@@ -31,7 +189,7 @@ This logging solution has been chosen because:
   * It provides [good performance](https://github.com/francoispqt/onelog#benchmarks)
   * It supports structured logging.
 
-### Usage
+## Usage
 
 The instructions provided by the official
 [onelog](https://github.com/francoispqt/onelog) project apply also to Kubewarden
@@ -60,13 +218,70 @@ object.
 	})
 ```
 
+# Host capabilities
 
-## Testing
+The policy executor exposes additional capabilities that can be leveraged by the
+guest.
+
+These capabilities are exposed to the Go policies via this SDK, through the `Host`
+type defined inside of `github.com/kubewarden/policy-sdk-go/host_capabilities`.
+
+## Get OCI manifest digest
+
+The policy can request the digest of an OCI manifest. This can be used to
+get the immutable reference of a container Image or anything that is stored
+inside of a container registry (e.g. Kubewarden Policies, Helm charts,...).
+
+```go
+host := host_capabilities.NewHost()
+digest, err := host.GetOCIManifestDigest("busybox:latest")
+```
+
+## Hostname DNS lookup
+
+The policy can lookup the addresses for a given hostname by using the
+DNS resolvers of the host that is evaluating the policy.
+
+```go
+host := host_capabilities.NewHost()
+ips, err := host.LookupHost("kubewarden.io")
+```
+
+## Sigstore verification
+
+The policy can ask the host to perform verification operations against
+objects stored inside of container registries (e.g. container image, kubewarden
+policy, helm chart,...) leveraging the [Sigstore](https://sigstore.dev) primitives.
+
+Currently this SDK exposes helper function that can perform verification using
+public keys and using the Sigstore keyless mechanism.
+
+# Testing
 
 [![GoDoc](https://godoc.org/github.com/kubewarden/policy-sdk-go/testing?status.svg)](https://godoc.org/github.com/kubewarden/policy-sdk-go/testing)
 
 The `kubewarden/policy-sdk-go/testing` module provides some test helpers
 that simplify the process of writing unit tests.
+
+## Host capabilities
+
+The Go unit tests of a policy are **not** run inside of a WebAssembly environment,
+they are instead built into a native executable using the official Go compiler.
+
+Because of that, at test time the host capabilities have to be mocked. This is also
+useful to write ad-hoc tests that can handle different kind of responses coming
+from the host.
+
+The `Host` type described above relies on an internal `waPC` client that
+interacts with the host. At test time, the client is an instance of 
+`MockWapcClient`.
+
+Developers can create `MockWapcClient` instances using these two helper methods:
+
+* `NewSuccessfulMockWapcClient`: the client never fails, and always return the
+  response payload provided by the user.
+* `NewFailingMockWapcClient`: the client always fails with the error
+  provided by the user.
 
 # Project template
 

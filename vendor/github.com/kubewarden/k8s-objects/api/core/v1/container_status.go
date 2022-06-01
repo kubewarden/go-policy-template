@@ -10,7 +10,7 @@ package v1
 // swagger:model ContainerStatus
 type ContainerStatus struct {
 
-	// Container's ID in the format 'docker://<container_id>'.
+	// Container's ID in the format '<type>://<container_id>'.
 	ContainerID string `json:"containerID,omitempty"`
 
 	// The image the container is running. More info: https://kubernetes.io/docs/concepts/containers/images.

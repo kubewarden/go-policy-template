@@ -28,14 +28,6 @@ type NamespaceCondition struct {
 	Status *string `json:"status"`
 
 	// Type of namespace controller condition.
-	//
-	// Possible enum values:
-	//  - `"NamespaceContentRemaining"` contains information about resources remaining in a namespace.
-	//  - `"NamespaceDeletionContentFailure"` contains information about namespace deleter errors during deletion of resources.
-	//  - `"NamespaceDeletionDiscoveryFailure"` contains information about namespace deleter errors during resource discovery.
-	//  - `"NamespaceDeletionGroupVersionParsingFailure"` contains information about namespace deleter errors parsing GV for legacy types.
-	//  - `"NamespaceFinalizersRemaining"` contains information about which finalizers are on resources remaining in a namespace.
 	// Required: true
-	// Enum: [NamespaceContentRemaining NamespaceDeletionContentFailure NamespaceDeletionDiscoveryFailure NamespaceDeletionGroupVersionParsingFailure NamespaceFinalizersRemaining]
 	Type *string `json:"type"`
 }

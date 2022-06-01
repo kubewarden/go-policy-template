@@ -18,7 +18,7 @@ type NodeSystemInfo struct {
 	// Required: true
 	BootID *string `json:"bootID"`
 
-	// ContainerRuntime Version reported by the node through runtime remote API (e.g. docker://1.5.0).
+	// ContainerRuntime Version reported by the node through runtime remote API (e.g. containerd://1.4.2).
 	// Required: true
 	ContainerRuntimeVersion *string `json:"containerRuntimeVersion"`
 

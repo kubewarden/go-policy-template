@@ -10,6 +10,6 @@ package v1
 // swagger:model VolumeNodeAffinity
 type VolumeNodeAffinity struct {
 
-	// Required specifies hard node constraints that must be met.
+	// required specifies hard node constraints that must be met.
 	Required *NodeSelector `json:"required,omitempty"`
 }

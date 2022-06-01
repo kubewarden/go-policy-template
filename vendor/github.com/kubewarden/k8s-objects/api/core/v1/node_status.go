@@ -40,11 +40,7 @@ type NodeStatus struct {
 
 	// NodePhase is the recently observed lifecycle phase of the node. More info: https://kubernetes.io/docs/concepts/nodes/node/#phase The field is never populated, and now is deprecated.
 	//
-	// Possible enum values:
-	//  - `"Pending"` means the node has been created/added by the system, but not configured.
-	//  - `"Running"` means the node has been configured and has Kubernetes components running.
-	//  - `"Terminated"` means the node has been removed from the cluster.
-	// Enum: [Pending Running Terminated]
+	//
 	Phase string `json:"phase,omitempty"`
 
 	// List of volumes that are attached to the node.
