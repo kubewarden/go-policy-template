@@ -4,10 +4,8 @@
 package sdk
 
 import (
-	"fmt"
-	"strings"
-
-	_ "github.com/kubewarden/policy-sdk-go/protocol"
+	"github.com/kubewarden/policy-sdk-go/protocol"
+	"github.com/mailru/easyjson"
 )
 
 // Message is the optional string used to build validation responses
@@ -26,19 +24,14 @@ const (
 	NoCode Code = 0
 )
 
-type keyValue struct {
-	key   string
-	value string
-}
-
-func (kv keyValue) String() string {
-	return fmt.Sprintf(`"%s":%s`, kv.key, kv.value)
-}
-
 // AcceptRequest can be used inside of the `validate` function to accept the
 // incoming request
 func AcceptRequest() ([]byte, error) {
-	return []byte(`{"accepted":true}`), nil
+	response := protocol.ValidationResponse{
+		Accepted: true,
+	}
+
+	return easyjson.Marshal(response)
 }
 
 // RejectRequest can be used inside of the `validate` function to reject the
@@ -46,37 +39,52 @@ func AcceptRequest() ([]byte, error) {
 // * `message`: optional message to show to the user
 // * `code`: optional error code to show to the user
 func RejectRequest(message Message, code Code) ([]byte, error) {
-	result := []keyValue{{key: "accepted", value: "false"}}
+	response := protocol.ValidationResponse{
+		Accepted: false,
+	}
 	if message != NoMessage {
-		result = append(result, keyValue{key: "message", value: fmt.Sprintf(`"%s"`, string(message))})
+		msg := string(message)
+		response.Message = &msg
 	}
 	if code != NoCode {
-		result = append(result, keyValue{key: "code", value: fmt.Sprintf("%d", code)})
+		c := uint16(code)
+		response.Code = &c
 	}
-	stringResult := []string{}
-	for _, keyValue := range result {
-		stringResult = append(stringResult, keyValue.String())
+
+	return easyjson.Marshal(response)
+}
+
+// Accept the request and mutate the final object to match the
+// one provided via the `newObject` param
+func MutateRequest(newObject easyjson.Marshaler) ([]byte, error) {
+	response := protocol.ValidationResponse{
+		Accepted:      true,
+		MutatedObject: newObject,
 	}
-	return []byte(fmt.Sprintf("{%s}", strings.Join(stringResult, ","))), nil
+
+	return easyjson.Marshal(response)
 }
 
 // AcceptSettings can be used inside of the `validate_settings` function to
 // mark the user provided settings as valid
 func AcceptSettings() ([]byte, error) {
-	return []byte(`{"valid":true}`), nil
+	response := protocol.SettingsValidationResponse{
+		Valid: true,
+	}
+	return easyjson.Marshal(response)
 }
 
 // RejectSettings can be used inside of the `validate_settings` function to
 // mark the user provided settings as invalid
 // * `message`: optional message to show to the user
 func RejectSettings(message Message) ([]byte, error) {
-	result := []keyValue{{key: "valid", value: "false"}}
+	response := protocol.SettingsValidationResponse{
+		Valid: false,
+	}
+
 	if message != NoMessage {
-		result = append(result, keyValue{key: "message", value: fmt.Sprintf(`"%s"`, string(message))})
+		msg := string(message)
+		response.Message = &msg
 	}
-	stringResult := []string{}
-	for _, keyValue := range result {
-		stringResult = append(stringResult, keyValue.String())
-	}
-	return []byte(fmt.Sprintf("{%s}", strings.Join(stringResult, ","))), nil
+	return easyjson.Marshal(response)
 }
