@@ -1,71 +1,43 @@
 package main
 
 import (
-	mapset "github.com/deckarep/golang-set"
-	"github.com/tidwall/gjson"
 	kubewarden "github.com/kubewarden/policy-sdk-go"
+	kubewarden_protocol "github.com/kubewarden/policy-sdk-go/protocol"
+	"github.com/mailru/easyjson"
 
 	"fmt"
 )
 
-type Settings struct {
-	DeniedNames mapset.Set `json:"denied_names"`
-}
+// The Settings class is defined inside of the `types.go` file
 
-// Builds a new Settings instance starting from a validation
-// request payload:
-// {
-//    "request": ...,
-//    "settings": {
-//       "denied_names": [...]
-//    }
-// }
-func NewSettingsFromValidationReq(payload []byte) (Settings, error) {
-	return newSettings(
-		payload,
-		"settings.denied_names")
-}
-
-// Builds a new Settings instance starting from a Settings
-// payload:
-// {
-//    "denied_names": ...
-// }
-func NewSettingsFromValidateSettingsPayload(payload []byte) (Settings, error) {
-	return newSettings(
-		payload,
-		"denied_names")
-}
-
-func newSettings(payload []byte, paths ...string) (Settings, error) {
-	if len(paths) != 1 {
-		return Settings{}, fmt.Errorf("wrong number of json paths")
-	}
-
-	data := gjson.GetManyBytes(payload, paths...)
-
-	deniedNames := mapset.NewThreadUnsafeSet()
-	data[0].ForEach(func(_, entry gjson.Result) bool {
-		deniedNames.Add(entry.String())
-		return true
-	})
-
-	return Settings{
-		DeniedNames: deniedNames,
-	}, nil
-}
-
-// No special check has to be done
+// No special checks have to be done
 func (s *Settings) Valid() (bool, error) {
 	return true, nil
+}
+
+func (s *Settings) IsNameDenied(name string) bool {
+	for _, deniedName := range s.DeniedNames {
+		if deniedName == name {
+			return true
+		}
+	}
+
+	return false
+}
+
+func NewSettingsFromValidationReq(validationReq *kubewarden_protocol.ValidationRequest) (Settings, error) {
+	settings := Settings{}
+	err := easyjson.Unmarshal(validationReq.Settings, &settings)
+	return settings, err
 }
 
 func validateSettings(payload []byte) ([]byte, error) {
 	logger.Info("validating settings")
 
-	settings, err := NewSettingsFromValidateSettingsPayload(payload)
+	settings := Settings{}
+	err := easyjson.Unmarshal(payload, &settings)
 	if err != nil {
-		return kubewarden.RejectSettings(kubewarden.Message(err.Error()))
+		return kubewarden.RejectSettings(kubewarden.Message(fmt.Sprintf("Provided settings are not valid: %v", err)))
 	}
 
 	valid, err := settings.Valid()

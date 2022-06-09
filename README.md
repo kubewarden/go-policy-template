@@ -10,7 +10,7 @@ for more information about writing policies.
 
 This repository contains a working policy written in Go.
 
-The policy looks at the `name` of a Kubernetes resource and rejects the request
+The policy looks at the `name` of a Kubernetes Pod and rejects the request
 if the name is on a deny list.
 
 The deny list is configurable by the user via the runtime settings of the policy.
@@ -55,12 +55,15 @@ libraries.
 This is a list of libraries that can be useful when writing a Kubewarden
 policy:
 
+* [Kubernetes Go types](https://github.com/kubewarden/k8s-objects) for TinyGo:
+  the official Kubernetes Go Types cannot be used with TinyGo. This module provides all the
+  Kubernetes Types in a TinyGo-friendly way.
+* [easyjson](https://github.com/mailru/easyjson/): this provides a way to
+  marshal and unmarshal Go types without using reflection.
 * Parsing JSON: queries against JSON documents can be written using the
   [gjson](https://github.com/tidwall/gjson) library. The library features a
   powerful query language that allows quick navigation of JSON documents and
   data retrieval.
-* Mutating JSON: changing the contents of a JSON document can be done using the
-  [sjson](https://github.com/tidwall/sjson) library.
 * Generic `set` implementation: using [Set](https://en.wikipedia.org/wiki/Set_(abstract_data_type))
   data types can significantly reduce the amount of code inside of a policy,
   see the `union`, `intersection`, `difference`,... operations provided
@@ -78,8 +81,7 @@ framework.
 
 As usual, the tests are defined inside of the `_test.go` files. Given these
 tests are not part of the final WebAssembly binary, the official Go compiler
-can be used to run them. Hence they can take advantage of the `encoding/json`
-package to reduce some testing boiler plate.
+can be used to run them.
 
 The unit tests can be run via a simple command:
 
