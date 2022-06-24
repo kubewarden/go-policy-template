@@ -4,20 +4,19 @@ github.com/francoispqt/gojay
 # github.com/francoispqt/onelog v0.0.0-20190306043706-8c2bb31b10a4
 ## explicit
 github.com/francoispqt/onelog
-# github.com/go-openapi/strfmt v0.0.0-00010101000000-000000000000 => github.com/kubewarden/strfmt v0.1.0
+# github.com/go-openapi/strfmt v0.0.0-00010101000000-000000000000 => github.com/kubewarden/strfmt v0.1.1
 ## explicit; go 1.17
 github.com/go-openapi/strfmt
 # github.com/josharian/intern v1.0.0
 ## explicit; go 1.5
 github.com/josharian/intern
-# github.com/kubewarden/k8s-objects v1.24.0-kw1
+# github.com/kubewarden/k8s-objects v1.24.0-kw2
 ## explicit; go 1.17
 github.com/kubewarden/k8s-objects/api/core/v1
 github.com/kubewarden/k8s-objects/apimachinery/pkg/api/resource
 github.com/kubewarden/k8s-objects/apimachinery/pkg/apis/meta/v1
-github.com/kubewarden/k8s-objects/apimachinery/pkg/runtime
 github.com/kubewarden/k8s-objects/apimachinery/pkg/util/intstr
-# github.com/kubewarden/policy-sdk-go v0.2.1
+# github.com/kubewarden/policy-sdk-go v0.2.3
 ## explicit; go 1.17
 github.com/kubewarden/policy-sdk-go
 github.com/kubewarden/policy-sdk-go/constants
@@ -32,4 +31,4 @@ github.com/mailru/easyjson/jwriter
 # github.com/wapc/wapc-guest-tinygo v0.3.1
 ## explicit; go 1.15
 github.com/wapc/wapc-guest-tinygo
-# github.com/go-openapi/strfmt => github.com/kubewarden/strfmt v0.1.0
+# github.com/go-openapi/strfmt => github.com/kubewarden/strfmt v0.1.1

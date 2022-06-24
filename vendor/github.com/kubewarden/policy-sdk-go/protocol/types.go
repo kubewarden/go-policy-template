@@ -148,8 +148,8 @@ type GroupVersionResource struct {
 
 // UserInfo holds information about the user who made the request
 type UserInfo struct {
-	Username string `json:"username"`
-	Groups   string `json:"groups"`
+	Username string   `json:"username"`
+	Groups   []string `json:"groups"`
 	// Note, the attributes holds the unmarshalled []bytes as found inside of
 	// original JSON object.
 	// This can then be parsed using `easyjson.Unmarshal()` into a proper

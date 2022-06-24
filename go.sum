@@ -8,10 +8,16 @@ github.com/josharian/intern v1.0.0 h1:vlS4z54oSdjm0bgjRigI+G1HpF+tI+9rE5LLzOg8Hm
 github.com/josharian/intern v1.0.0/go.mod h1:5DoeVV0s6jJacbCEi61lwdGj/aVlrQvzHFFd8Hwg//Y=
 github.com/kubewarden/k8s-objects v1.24.0-kw1 h1:1hjQwGPqZYfUdmiVJrA6lwdQIninnNSCcI+weEnQytw=
 github.com/kubewarden/k8s-objects v1.24.0-kw1/go.mod h1:ivl/aam4ddbh0TLuUZIJar1VzurE1d5Tqzjx0+06f9Y=
+github.com/kubewarden/k8s-objects v1.24.0-kw2 h1:7QyIKbV8xM0pzBvHDnjBnv6I888dY61vUUn1rPk1pn4=
+github.com/kubewarden/k8s-objects v1.24.0-kw2/go.mod h1:XOESDX+NopDKjjr90mq4jxFkhYsuK5Z1MWvUeIYrEfQ=
 github.com/kubewarden/policy-sdk-go v0.2.1 h1:IYHMGa0O9E+KDxQtnE5ecrzHvr0w705gEIvx2aGl/lg=
 github.com/kubewarden/policy-sdk-go v0.2.1/go.mod h1:Bdkvsecwifx+JdoyOds8FmGEcbVrSp09JZ3uB6TasH8=
+github.com/kubewarden/policy-sdk-go v0.2.3 h1:kjcZNbiuy3DbbLIiRKvrBqnl7JJVdJWRa3RgXo3JHaM=
+github.com/kubewarden/policy-sdk-go v0.2.3/go.mod h1:Bdkvsecwifx+JdoyOds8FmGEcbVrSp09JZ3uB6TasH8=
 github.com/kubewarden/strfmt v0.1.0 h1:rMYG+48QSckzdVhFMikgGDUJODvvMHpudraWfw0jgvc=
 github.com/kubewarden/strfmt v0.1.0/go.mod h1:G83H1PTqI8ewtrTonL/uMbx1pJooaKSbAoIpoKqT5KA=
+github.com/kubewarden/strfmt v0.1.1 h1:DsgILnn2sTtcAdWoEAyX9qyqC/95wuB5H5Rn/qBZIpc=
+github.com/kubewarden/strfmt v0.1.1/go.mod h1:sqLlis8qlm4A4pnZsRyRjNxyH86fiM+7Ee7bO+uJk94=
 github.com/mailru/easyjson v0.7.7 h1:UGYAvKxe3sBsEDzO8ZeWOSlIQfWFlxbzLZe7hwFURr0=
 github.com/mailru/easyjson v0.7.7/go.mod h1:xzfreul335JAWq5oZzymOObrkdz5UnU4kGfJJLY9Nlc=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
