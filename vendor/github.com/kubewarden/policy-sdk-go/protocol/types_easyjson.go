@@ -227,7 +227,28 @@ func easyjson6601e8cdDecodeGithubComKubewardenPolicySdkGoProtocol2(in *jlexer.Le
 		case "username":
 			out.Username = string(in.String())
 		case "groups":
-			out.Groups = string(in.String())
+			if in.IsNull() {
+				in.Skip()
+				out.Groups = nil
+			} else {
+				in.Delim('[')
+				if out.Groups == nil {
+					if !in.IsDelim(']') {
+						out.Groups = make([]string, 0, 4)
+					} else {
+						out.Groups = []string{}
+					}
+				} else {
+					out.Groups = (out.Groups)[:0]
+				}
+				for !in.IsDelim(']') {
+					var v1 string
+					v1 = string(in.String())
+					out.Groups = append(out.Groups, v1)
+					in.WantComma()
+				}
+				in.Delim(']')
+			}
 		case "extra":
 			(out.Extra).UnmarshalEasyJSON(in)
 		default:
@@ -252,7 +273,18 @@ func easyjson6601e8cdEncodeGithubComKubewardenPolicySdkGoProtocol2(out *jwriter.
 	{
 		const prefix string = ",\"groups\":"
 		out.RawString(prefix)
-		out.String(string(in.Groups))
+		if in.Groups == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
+			out.RawString("null")
+		} else {
+			out.RawByte('[')
+			for v2, v3 := range in.Groups {
+				if v2 > 0 {
+					out.RawByte(',')
+				}
+				out.String(string(v3))
+			}
+			out.RawByte(']')
+		}
 	}
 	if (in.Extra).IsDefined() {
 		const prefix string = ",\"extra\":"

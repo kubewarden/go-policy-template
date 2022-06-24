@@ -169,7 +169,7 @@ func validate(payload []byte) ([]byte, error) {
 
   ingress.Metadata.Name = fmt.Sprintf("%s-changed", ingress.Metadata.Name)
 
-  return kubewarden.AcceptAndMutateRequest(ingress)
+  return kubewarden.MutateRequest(ingress)
 }
 ```
 

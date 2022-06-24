@@ -37,13 +37,7 @@ func easyjson7275304aDecodeGithubComKubewardenK8sObjectsApimachineryPkgApisMetaV
 		}
 		switch key {
 		case "object":
-			if m, ok := out.Object.(easyjson.Unmarshaler); ok {
-				m.UnmarshalEasyJSON(in)
-			} else if m, ok := out.Object.(json.Unmarshaler); ok {
-				_ = m.UnmarshalJSON(in.Raw())
-			} else {
-				out.Object = in.Interface()
-			}
+			(out.Object).UnmarshalEasyJSON(in)
 		case "type":
 			if in.IsNull() {
 				in.Skip()
@@ -71,13 +65,7 @@ func easyjson7275304aEncodeGithubComKubewardenK8sObjectsApimachineryPkgApisMetaV
 	{
 		const prefix string = ",\"object\":"
 		out.RawString(prefix[1:])
-		if m, ok := in.Object.(easyjson.Marshaler); ok {
-			m.MarshalEasyJSON(out)
-		} else if m, ok := in.Object.(json.Marshaler); ok {
-			out.Raw(m.MarshalJSON())
-		} else {
-			out.Raw(json.Marshal(in.Object))
-		}
+		(in.Object).MarshalEasyJSON(out)
 	}
 	{
 		const prefix string = ",\"type\":"

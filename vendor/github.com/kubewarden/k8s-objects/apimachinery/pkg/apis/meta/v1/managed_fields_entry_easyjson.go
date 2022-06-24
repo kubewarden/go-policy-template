@@ -41,13 +41,7 @@ func easyjsonC7cd7324DecodeGithubComKubewardenK8sObjectsApimachineryPkgApisMetaV
 		case "fieldsType":
 			out.FieldsType = string(in.String())
 		case "fieldsV1":
-			if m, ok := out.FieldsV1.(easyjson.Unmarshaler); ok {
-				m.UnmarshalEasyJSON(in)
-			} else if m, ok := out.FieldsV1.(json.Unmarshaler); ok {
-				_ = m.UnmarshalJSON(in.Raw())
-			} else {
-				out.FieldsV1 = in.Interface()
-			}
+			(out.FieldsV1).UnmarshalEasyJSON(in)
 		case "manager":
 			out.Manager = string(in.String())
 		case "operation":
@@ -88,7 +82,7 @@ func easyjsonC7cd7324EncodeGithubComKubewardenK8sObjectsApimachineryPkgApisMetaV
 		}
 		out.String(string(in.FieldsType))
 	}
-	if in.FieldsV1 != nil {
+	if (in.FieldsV1).IsDefined() {
 		const prefix string = ",\"fieldsV1\":"
 		if first {
 			first = false
@@ -96,13 +90,7 @@ func easyjsonC7cd7324EncodeGithubComKubewardenK8sObjectsApimachineryPkgApisMetaV
 		} else {
 			out.RawString(prefix)
 		}
-		if m, ok := in.FieldsV1.(easyjson.Marshaler); ok {
-			m.MarshalEasyJSON(out)
-		} else if m, ok := in.FieldsV1.(json.Marshaler); ok {
-			out.Raw(m.MarshalJSON())
-		} else {
-			out.Raw(json.Marshal(in.FieldsV1))
-		}
+		(in.FieldsV1).MarshalEasyJSON(out)
 	}
 	if in.Manager != "" {
 		const prefix string = ",\"manager\":"
