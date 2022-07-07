@@ -210,7 +210,7 @@ func easyjson6769e492EncodeGithubComKubewardenK8sObjectsApiCoreV1(out *jwriter.W
 		}
 		easyjson6769e492EncodeGithubComKubewardenK8sObjectsApiCoreV12(out, *in.SeccompProfile)
 	}
-	{
+	if len(in.SupplementalGroups) != 0 {
 		const prefix string = ",\"supplementalGroups\":"
 		if first {
 			first = false
@@ -218,9 +218,7 @@ func easyjson6769e492EncodeGithubComKubewardenK8sObjectsApiCoreV1(out *jwriter.W
 		} else {
 			out.RawString(prefix)
 		}
-		if in.SupplementalGroups == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
-			out.RawString("null")
-		} else {
+		{
 			out.RawByte('[')
 			for v3, v4 := range in.SupplementalGroups {
 				if v3 > 0 {
@@ -231,12 +229,15 @@ func easyjson6769e492EncodeGithubComKubewardenK8sObjectsApiCoreV1(out *jwriter.W
 			out.RawByte(']')
 		}
 	}
-	{
+	if len(in.Sysctls) != 0 {
 		const prefix string = ",\"sysctls\":"
-		out.RawString(prefix)
-		if in.Sysctls == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
-			out.RawString("null")
+		if first {
+			first = false
+			out.RawString(prefix[1:])
 		} else {
+			out.RawString(prefix)
+		}
+		{
 			out.RawByte('[')
 			for v5, v6 := range in.Sysctls {
 				if v5 > 0 {
@@ -253,7 +254,12 @@ func easyjson6769e492EncodeGithubComKubewardenK8sObjectsApiCoreV1(out *jwriter.W
 	}
 	if in.WindowsOptions != nil {
 		const prefix string = ",\"windowsOptions\":"
-		out.RawString(prefix)
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
 		easyjson6769e492EncodeGithubComKubewardenK8sObjectsApiCoreV14(out, *in.WindowsOptions)
 	}
 	out.RawByte('}')

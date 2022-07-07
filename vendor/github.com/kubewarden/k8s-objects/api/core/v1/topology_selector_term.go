@@ -11,5 +11,5 @@ package v1
 type TopologySelectorTerm struct {
 
 	// A list of topology selector requirements by labels.
-	MatchLabelExpressions []*TopologySelectorLabelRequirement `json:"matchLabelExpressions"`
+	MatchLabelExpressions []*TopologySelectorLabelRequirement `json:"matchLabelExpressions,omitempty"`
 }

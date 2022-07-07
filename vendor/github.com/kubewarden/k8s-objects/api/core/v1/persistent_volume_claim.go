@@ -21,7 +21,7 @@ type PersistentVolumeClaim struct {
 	Kind string `json:"kind,omitempty"`
 
 	// Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
-	Metadata apimachinery_pkg_apis_meta_v1.ObjectMeta `json:"metadata,omitempty"`
+	Metadata *apimachinery_pkg_apis_meta_v1.ObjectMeta `json:"metadata,omitempty"`
 
 	// spec defines the desired characteristics of a volume requested by a pod author. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#persistentvolumeclaims
 	Spec *PersistentVolumeClaimSpec `json:"spec,omitempty"`

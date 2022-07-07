@@ -15,19 +15,19 @@ import (
 type PodStatus struct {
 
 	// Current service state of pod. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#pod-conditions
-	Conditions []*PodCondition `json:"conditions"`
+	Conditions []*PodCondition `json:"conditions,omitempty"`
 
 	// The list has one entry per container in the manifest. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#pod-and-container-status
-	ContainerStatuses []*ContainerStatus `json:"containerStatuses"`
+	ContainerStatuses []*ContainerStatus `json:"containerStatuses,omitempty"`
 
 	// Status for any ephemeral containers that have run in this pod. This field is beta-level and available on clusters that haven't disabled the EphemeralContainers feature gate.
-	EphemeralContainerStatuses []*ContainerStatus `json:"ephemeralContainerStatuses"`
+	EphemeralContainerStatuses []*ContainerStatus `json:"ephemeralContainerStatuses,omitempty"`
 
 	// IP address of the host to which the pod is assigned. Empty if not yet scheduled.
 	HostIP string `json:"hostIP,omitempty"`
 
 	// The list has one entry per init container in the manifest. The most recent successful init container will have ready = true, the most recently started container will have startTime set. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#pod-and-container-status
-	InitContainerStatuses []*ContainerStatus `json:"initContainerStatuses"`
+	InitContainerStatuses []*ContainerStatus `json:"initContainerStatuses,omitempty"`
 
 	// A human readable message indicating details about why the pod is in this condition.
 	Message string `json:"message,omitempty"`
@@ -48,7 +48,7 @@ type PodStatus struct {
 	PodIP string `json:"podIP,omitempty"`
 
 	// podIPs holds the IP addresses allocated to the pod. If this field is specified, the 0th entry must match the podIP field. Pods may be allocated at most 1 value for each of IPv4 and IPv6. This list is empty if no IPs have been allocated yet.
-	PodIPs []*PodIP `json:"podIPs"`
+	PodIPs []*PodIP `json:"podIPs,omitempty"`
 
 	// The Quality of Service (QOS) classification assigned to the pod based on resource requirements See PodQOSClass type for available QOS classes More info: https://git.k8s.io/community/contributors/design-proposals/node/resource-qos.md
 	//
@@ -59,5 +59,5 @@ type PodStatus struct {
 	Reason string `json:"reason,omitempty"`
 
 	// RFC 3339 date and time at which the object was acknowledged by the Kubelet. This is before the Kubelet pulled the container image(s) for the pod.
-	StartTime apimachinery_pkg_apis_meta_v1.Time `json:"startTime,omitempty"`
+	StartTime *apimachinery_pkg_apis_meta_v1.Time `json:"startTime,omitempty"`
 }

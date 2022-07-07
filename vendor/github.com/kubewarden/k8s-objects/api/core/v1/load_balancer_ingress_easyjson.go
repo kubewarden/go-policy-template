@@ -101,7 +101,7 @@ func easyjson284bb7ebEncodeGithubComKubewardenK8sObjectsApiCoreV1(out *jwriter.W
 		}
 		out.String(string(in.IP))
 	}
-	{
+	if len(in.Ports) != 0 {
 		const prefix string = ",\"ports\":"
 		if first {
 			first = false
@@ -109,9 +109,7 @@ func easyjson284bb7ebEncodeGithubComKubewardenK8sObjectsApiCoreV1(out *jwriter.W
 		} else {
 			out.RawString(prefix)
 		}
-		if in.Ports == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
-			out.RawString("null")
-		} else {
+		{
 			out.RawByte('[')
 			for v2, v3 := range in.Ports {
 				if v2 > 0 {

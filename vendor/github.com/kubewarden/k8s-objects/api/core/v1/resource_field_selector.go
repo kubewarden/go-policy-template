@@ -18,7 +18,7 @@ type ResourceFieldSelector struct {
 	ContainerName string `json:"containerName,omitempty"`
 
 	// Specifies the output format of the exposed resources, defaults to "1"
-	Divisor apimachinery_pkg_api_resource.Quantity `json:"divisor,omitempty"`
+	Divisor *apimachinery_pkg_api_resource.Quantity `json:"divisor,omitempty"`
 
 	// Required: resource to select
 	// Required: true

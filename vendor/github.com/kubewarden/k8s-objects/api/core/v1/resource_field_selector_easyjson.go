@@ -40,7 +40,15 @@ func easyjsonE98630a5DecodeGithubComKubewardenK8sObjectsApiCoreV1(in *jlexer.Lex
 		case "containerName":
 			out.ContainerName = string(in.String())
 		case "divisor":
-			out.Divisor = resource.Quantity(in.String())
+			if in.IsNull() {
+				in.Skip()
+				out.Divisor = nil
+			} else {
+				if out.Divisor == nil {
+					out.Divisor = new(resource.Quantity)
+				}
+				*out.Divisor = resource.Quantity(in.String())
+			}
 		case "resource":
 			if in.IsNull() {
 				in.Skip()
@@ -71,7 +79,7 @@ func easyjsonE98630a5EncodeGithubComKubewardenK8sObjectsApiCoreV1(out *jwriter.W
 		out.RawString(prefix[1:])
 		out.String(string(in.ContainerName))
 	}
-	if in.Divisor != "" {
+	if in.Divisor != nil {
 		const prefix string = ",\"divisor\":"
 		if first {
 			first = false
@@ -79,7 +87,7 @@ func easyjsonE98630a5EncodeGithubComKubewardenK8sObjectsApiCoreV1(out *jwriter.W
 		} else {
 			out.RawString(prefix)
 		}
-		out.String(string(in.Divisor))
+		out.String(string(*in.Divisor))
 	}
 	{
 		const prefix string = ",\"resource\":"

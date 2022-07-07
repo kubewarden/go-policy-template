@@ -15,5 +15,5 @@ import (
 type ContainerStateRunning struct {
 
 	// Time at which the container was last (re-)started
-	StartedAt apimachinery_pkg_apis_meta_v1.Time `json:"startedAt,omitempty"`
+	StartedAt *apimachinery_pkg_apis_meta_v1.Time `json:"startedAt,omitempty"`
 }

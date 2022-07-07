@@ -4,6 +4,7 @@ package v1
 
 import (
 	json "encoding/json"
+	_v1 "github.com/kubewarden/k8s-objects/apimachinery/pkg/apis/meta/v1"
 	easyjson "github.com/mailru/easyjson"
 	jlexer "github.com/mailru/easyjson/jlexer"
 	jwriter "github.com/mailru/easyjson/jwriter"
@@ -37,7 +38,15 @@ func easyjson8674d8afDecodeGithubComKubewardenK8sObjectsApiCoreV1(in *jlexer.Lex
 		}
 		switch key {
 		case "labelSelector":
-			(out.LabelSelector).UnmarshalEasyJSON(in)
+			if in.IsNull() {
+				in.Skip()
+				out.LabelSelector = nil
+			} else {
+				if out.LabelSelector == nil {
+					out.LabelSelector = new(_v1.LabelSelector)
+				}
+				(*out.LabelSelector).UnmarshalEasyJSON(in)
+			}
 		case "maxSkew":
 			if in.IsNull() {
 				in.Skip()
@@ -84,11 +93,11 @@ func easyjson8674d8afEncodeGithubComKubewardenK8sObjectsApiCoreV1(out *jwriter.W
 	out.RawByte('{')
 	first := true
 	_ = first
-	if true {
+	if in.LabelSelector != nil {
 		const prefix string = ",\"labelSelector\":"
 		first = false
 		out.RawString(prefix[1:])
-		(in.LabelSelector).MarshalEasyJSON(out)
+		(*in.LabelSelector).MarshalEasyJSON(out)
 	}
 	{
 		const prefix string = ",\"maxSkew\":"

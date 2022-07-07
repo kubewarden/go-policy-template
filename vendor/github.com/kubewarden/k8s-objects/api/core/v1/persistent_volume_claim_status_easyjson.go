@@ -66,15 +66,23 @@ func easyjsonBf55bb0eDecodeGithubComKubewardenK8sObjectsApiCoreV1(in *jlexer.Lex
 			} else {
 				in.Delim('{')
 				if !in.IsDelim('}') {
-					out.AllocatedResources = make(map[string]resource.Quantity)
+					out.AllocatedResources = make(map[string]*resource.Quantity)
 				} else {
 					out.AllocatedResources = nil
 				}
 				for !in.IsDelim('}') {
 					key := string(in.String())
 					in.WantColon()
-					var v2 resource.Quantity
-					v2 = resource.Quantity(in.String())
+					var v2 *resource.Quantity
+					if in.IsNull() {
+						in.Skip()
+						v2 = nil
+					} else {
+						if v2 == nil {
+							v2 = new(resource.Quantity)
+						}
+						*v2 = resource.Quantity(in.String())
+					}
 					(out.AllocatedResources)[key] = v2
 					in.WantComma()
 				}
@@ -86,15 +94,23 @@ func easyjsonBf55bb0eDecodeGithubComKubewardenK8sObjectsApiCoreV1(in *jlexer.Lex
 			} else {
 				in.Delim('{')
 				if !in.IsDelim('}') {
-					out.Capacity = make(map[string]resource.Quantity)
+					out.Capacity = make(map[string]*resource.Quantity)
 				} else {
 					out.Capacity = nil
 				}
 				for !in.IsDelim('}') {
 					key := string(in.String())
 					in.WantColon()
-					var v3 resource.Quantity
-					v3 = resource.Quantity(in.String())
+					var v3 *resource.Quantity
+					if in.IsNull() {
+						in.Skip()
+						v3 = nil
+					} else {
+						if v3 == nil {
+							v3 = new(resource.Quantity)
+						}
+						*v3 = resource.Quantity(in.String())
+					}
 					(out.Capacity)[key] = v3
 					in.WantComma()
 				}
@@ -149,12 +165,11 @@ func easyjsonBf55bb0eEncodeGithubComKubewardenK8sObjectsApiCoreV1(out *jwriter.W
 	out.RawByte('{')
 	first := true
 	_ = first
-	{
+	if len(in.AccessModes) != 0 {
 		const prefix string = ",\"accessModes\":"
+		first = false
 		out.RawString(prefix[1:])
-		if in.AccessModes == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
-			out.RawString("null")
-		} else {
+		{
 			out.RawByte('[')
 			for v5, v6 := range in.AccessModes {
 				if v5 > 0 {
@@ -167,7 +182,12 @@ func easyjsonBf55bb0eEncodeGithubComKubewardenK8sObjectsApiCoreV1(out *jwriter.W
 	}
 	if len(in.AllocatedResources) != 0 {
 		const prefix string = ",\"allocatedResources\":"
-		out.RawString(prefix)
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
 		{
 			out.RawByte('{')
 			v7First := true
@@ -179,14 +199,23 @@ func easyjsonBf55bb0eEncodeGithubComKubewardenK8sObjectsApiCoreV1(out *jwriter.W
 				}
 				out.String(string(v7Name))
 				out.RawByte(':')
-				out.String(string(v7Value))
+				if v7Value == nil {
+					out.RawString("null")
+				} else {
+					out.String(string(*v7Value))
+				}
 			}
 			out.RawByte('}')
 		}
 	}
 	if len(in.Capacity) != 0 {
 		const prefix string = ",\"capacity\":"
-		out.RawString(prefix)
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
 		{
 			out.RawByte('{')
 			v8First := true
@@ -198,17 +227,24 @@ func easyjsonBf55bb0eEncodeGithubComKubewardenK8sObjectsApiCoreV1(out *jwriter.W
 				}
 				out.String(string(v8Name))
 				out.RawByte(':')
-				out.String(string(v8Value))
+				if v8Value == nil {
+					out.RawString("null")
+				} else {
+					out.String(string(*v8Value))
+				}
 			}
 			out.RawByte('}')
 		}
 	}
-	{
+	if len(in.Conditions) != 0 {
 		const prefix string = ",\"conditions\":"
-		out.RawString(prefix)
-		if in.Conditions == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
-			out.RawString("null")
+		if first {
+			first = false
+			out.RawString(prefix[1:])
 		} else {
+			out.RawString(prefix)
+		}
+		{
 			out.RawByte('[')
 			for v9, v10 := range in.Conditions {
 				if v9 > 0 {
@@ -225,12 +261,22 @@ func easyjsonBf55bb0eEncodeGithubComKubewardenK8sObjectsApiCoreV1(out *jwriter.W
 	}
 	if in.Phase != "" {
 		const prefix string = ",\"phase\":"
-		out.RawString(prefix)
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
 		out.String(string(in.Phase))
 	}
 	if in.ResizeStatus != "" {
 		const prefix string = ",\"resizeStatus\":"
-		out.RawString(prefix)
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
 		out.String(string(in.ResizeStatus))
 	}
 	out.RawByte('}')

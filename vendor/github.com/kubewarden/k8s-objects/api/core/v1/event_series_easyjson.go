@@ -4,6 +4,7 @@ package v1
 
 import (
 	json "encoding/json"
+	_v1 "github.com/kubewarden/k8s-objects/apimachinery/pkg/apis/meta/v1"
 	easyjson "github.com/mailru/easyjson"
 	jlexer "github.com/mailru/easyjson/jlexer"
 	jwriter "github.com/mailru/easyjson/jwriter"
@@ -39,8 +40,16 @@ func easyjson15425908DecodeGithubComKubewardenK8sObjectsApiCoreV1(in *jlexer.Lex
 		case "count":
 			out.Count = int32(in.Int32())
 		case "lastObservedTime":
-			if data := in.Raw(); in.Ok() {
-				in.AddError((out.LastObservedTime).UnmarshalJSON(data))
+			if in.IsNull() {
+				in.Skip()
+				out.LastObservedTime = nil
+			} else {
+				if out.LastObservedTime == nil {
+					out.LastObservedTime = new(_v1.MicroTime)
+				}
+				if data := in.Raw(); in.Ok() {
+					in.AddError((*out.LastObservedTime).UnmarshalJSON(data))
+				}
 			}
 		default:
 			in.SkipRecursive()
@@ -62,7 +71,7 @@ func easyjson15425908EncodeGithubComKubewardenK8sObjectsApiCoreV1(out *jwriter.W
 		out.RawString(prefix[1:])
 		out.Int32(int32(in.Count))
 	}
-	if true {
+	if in.LastObservedTime != nil {
 		const prefix string = ",\"lastObservedTime\":"
 		if first {
 			first = false
@@ -70,7 +79,7 @@ func easyjson15425908EncodeGithubComKubewardenK8sObjectsApiCoreV1(out *jwriter.W
 		} else {
 			out.RawString(prefix)
 		}
-		out.Raw((in.LastObservedTime).MarshalJSON())
+		out.Raw((*in.LastObservedTime).MarshalJSON())
 	}
 	out.RawByte('}')
 }

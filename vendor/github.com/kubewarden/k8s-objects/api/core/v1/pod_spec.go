@@ -39,10 +39,10 @@ type PodSpec struct {
 	EnableServiceLinks bool `json:"enableServiceLinks,omitempty"`
 
 	// List of ephemeral containers run in this pod. Ephemeral containers may be run in an existing pod to perform user-initiated actions such as debugging. This list cannot be specified when creating a pod, and it cannot be modified by updating the pod spec. In order to add an ephemeral container to an existing pod, use the pod's ephemeralcontainers subresource. This field is beta-level and available on clusters that haven't disabled the EphemeralContainers feature gate.
-	EphemeralContainers []*EphemeralContainer `json:"ephemeralContainers"`
+	EphemeralContainers []*EphemeralContainer `json:"ephemeralContainers,omitempty"`
 
 	// HostAliases is an optional list of hosts and IPs that will be injected into the pod's hosts file if specified. This is only valid for non-hostNetwork pods.
-	HostAliases []*HostAlias `json:"hostAliases"`
+	HostAliases []*HostAlias `json:"hostAliases,omitempty"`
 
 	// Use the host's ipc namespace. Optional: Default to false.
 	HostIPC bool `json:"hostIPC,omitempty"`
@@ -57,10 +57,10 @@ type PodSpec struct {
 	Hostname string `json:"hostname,omitempty"`
 
 	// ImagePullSecrets is an optional list of references to secrets in the same namespace to use for pulling any of the images used by this PodSpec. If specified, these secrets will be passed to individual puller implementations for them to use. More info: https://kubernetes.io/docs/concepts/containers/images#specifying-imagepullsecrets-on-a-pod
-	ImagePullSecrets []*LocalObjectReference `json:"imagePullSecrets"`
+	ImagePullSecrets []*LocalObjectReference `json:"imagePullSecrets,omitempty"`
 
 	// List of initialization containers belonging to the pod. Init containers are executed in order prior to containers being started. If any init container fails, the pod is considered to have failed and is handled according to its restartPolicy. The name for an init container or normal container must be unique among all containers. Init containers may not have Lifecycle actions, Readiness probes, Liveness probes, or Startup probes. The resourceRequirements of an init container are taken into account during scheduling by finding the highest request/limit for each resource type, and then using the max of of that value or the sum of the normal containers. Limits are applied to init containers in a similar fashion. Init containers cannot currently be added or removed. Cannot be updated. More info: https://kubernetes.io/docs/concepts/workloads/pods/init-containers/
-	InitContainers []*Container `json:"initContainers"`
+	InitContainers []*Container `json:"initContainers,omitempty"`
 
 	// NodeName is a request to schedule this pod onto a specific node. If it is non-empty, the scheduler simply schedules this pod onto that node, assuming that it fits resource requirements.
 	NodeName string `json:"nodeName,omitempty"`
@@ -76,7 +76,7 @@ type PodSpec struct {
 	Os *PodOS `json:"os,omitempty"`
 
 	// Overhead represents the resource overhead associated with running a pod for a given RuntimeClass. This field will be autopopulated at admission time by the RuntimeClass admission controller. If the RuntimeClass admission controller is enabled, overhead must not be set in Pod create requests. The RuntimeClass admission controller will reject Pod create requests which have the overhead already set. If RuntimeClass is configured and selected in the PodSpec, Overhead will be set to the value defined in the corresponding RuntimeClass, otherwise it will remain unset and treated as zero. More info: https://git.k8s.io/enhancements/keps/sig-node/688-pod-overhead/README.md
-	Overhead map[string]apimachinery_pkg_api_resource.Quantity `json:"overhead,omitempty"`
+	Overhead map[string]*apimachinery_pkg_api_resource.Quantity `json:"overhead,omitempty"`
 
 	// PreemptionPolicy is the Policy for preempting pods with lower priority. One of Never, PreemptLowerPriority. Defaults to PreemptLowerPriority if unset.
 	PreemptionPolicy string `json:"preemptionPolicy,omitempty"`
@@ -88,7 +88,7 @@ type PodSpec struct {
 	PriorityClassName string `json:"priorityClassName,omitempty"`
 
 	// If specified, all readiness gates will be evaluated for pod readiness. A pod is ready when all its containers are ready AND all conditions specified in the readiness gates have status equal to "True" More info: https://git.k8s.io/enhancements/keps/sig-network/580-pod-readiness-gates
-	ReadinessGates []*PodReadinessGate `json:"readinessGates"`
+	ReadinessGates []*PodReadinessGate `json:"readinessGates,omitempty"`
 
 	// Restart policy for all containers within the pod. One of Always, OnFailure, Never. Default to Always. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle/#restart-policy
 	//
@@ -123,11 +123,11 @@ type PodSpec struct {
 	TerminationGracePeriodSeconds int64 `json:"terminationGracePeriodSeconds,omitempty"`
 
 	// If specified, the pod's tolerations.
-	Tolerations []*Toleration `json:"tolerations"`
+	Tolerations []*Toleration `json:"tolerations,omitempty"`
 
 	// TopologySpreadConstraints describes how a group of pods ought to spread across topology domains. Scheduler will schedule pods in a way which abides by the constraints. All topologySpreadConstraints are ANDed.
-	TopologySpreadConstraints []*TopologySpreadConstraint `json:"topologySpreadConstraints"`
+	TopologySpreadConstraints []*TopologySpreadConstraint `json:"topologySpreadConstraints,omitempty"`
 
 	// List of volumes that can be mounted by containers belonging to the pod. More info: https://kubernetes.io/docs/concepts/storage/volumes
-	Volumes []*Volume `json:"volumes"`
+	Volumes []*Volume `json:"volumes,omitempty"`
 }

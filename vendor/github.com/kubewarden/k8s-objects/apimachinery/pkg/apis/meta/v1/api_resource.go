@@ -11,7 +11,7 @@ package v1
 type APIResource struct {
 
 	// categories is a list of the grouped resources this resource belongs to (e.g. 'all')
-	Categories []string `json:"categories"`
+	Categories []string `json:"categories,omitempty"`
 
 	// group is the preferred group of the resource.  Empty implies the group of the containing resource list. For subresources, this may have a different value, for example: Scale".
 	Group string `json:"group,omitempty"`
@@ -29,7 +29,7 @@ type APIResource struct {
 	Namespaced *bool `json:"namespaced"`
 
 	// shortNames is a list of suggested short names of the resource.
-	ShortNames []string `json:"shortNames"`
+	ShortNames []string `json:"shortNames,omitempty"`
 
 	// singularName is the singular name of the resource.  This allows clients to handle plural and singular opaquely. The singularName is more correct for reporting status on a single item and both singular and plural are allowed from the kubectl CLI interface.
 	// Required: true

@@ -189,12 +189,10 @@ func easyjson6b61f212EncodeGithubComKubewardenK8sObjectsApiCoreV1(out *jwriter.W
 			out.Int32(int32(*in.Lun))
 		}
 	}
-	{
+	if len(in.Portals) != 0 {
 		const prefix string = ",\"portals\":"
 		out.RawString(prefix)
-		if in.Portals == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
-			out.RawString("null")
-		} else {
+		{
 			out.RawByte('[')
 			for v2, v3 := range in.Portals {
 				if v2 > 0 {

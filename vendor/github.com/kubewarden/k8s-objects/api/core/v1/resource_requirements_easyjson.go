@@ -43,15 +43,23 @@ func easyjson28f1750dDecodeGithubComKubewardenK8sObjectsApiCoreV1(in *jlexer.Lex
 			} else {
 				in.Delim('{')
 				if !in.IsDelim('}') {
-					out.Limits = make(map[string]resource.Quantity)
+					out.Limits = make(map[string]*resource.Quantity)
 				} else {
 					out.Limits = nil
 				}
 				for !in.IsDelim('}') {
 					key := string(in.String())
 					in.WantColon()
-					var v1 resource.Quantity
-					v1 = resource.Quantity(in.String())
+					var v1 *resource.Quantity
+					if in.IsNull() {
+						in.Skip()
+						v1 = nil
+					} else {
+						if v1 == nil {
+							v1 = new(resource.Quantity)
+						}
+						*v1 = resource.Quantity(in.String())
+					}
 					(out.Limits)[key] = v1
 					in.WantComma()
 				}
@@ -63,15 +71,23 @@ func easyjson28f1750dDecodeGithubComKubewardenK8sObjectsApiCoreV1(in *jlexer.Lex
 			} else {
 				in.Delim('{')
 				if !in.IsDelim('}') {
-					out.Requests = make(map[string]resource.Quantity)
+					out.Requests = make(map[string]*resource.Quantity)
 				} else {
 					out.Requests = nil
 				}
 				for !in.IsDelim('}') {
 					key := string(in.String())
 					in.WantColon()
-					var v2 resource.Quantity
-					v2 = resource.Quantity(in.String())
+					var v2 *resource.Quantity
+					if in.IsNull() {
+						in.Skip()
+						v2 = nil
+					} else {
+						if v2 == nil {
+							v2 = new(resource.Quantity)
+						}
+						*v2 = resource.Quantity(in.String())
+					}
 					(out.Requests)[key] = v2
 					in.WantComma()
 				}
@@ -106,7 +122,11 @@ func easyjson28f1750dEncodeGithubComKubewardenK8sObjectsApiCoreV1(out *jwriter.W
 				}
 				out.String(string(v3Name))
 				out.RawByte(':')
-				out.String(string(v3Value))
+				if v3Value == nil {
+					out.RawString("null")
+				} else {
+					out.String(string(*v3Value))
+				}
 			}
 			out.RawByte('}')
 		}
@@ -130,7 +150,11 @@ func easyjson28f1750dEncodeGithubComKubewardenK8sObjectsApiCoreV1(out *jwriter.W
 				}
 				out.String(string(v4Name))
 				out.RawByte(':')
-				out.String(string(v4Value))
+				if v4Value == nil {
+					out.RawString("null")
+				} else {
+					out.String(string(*v4Value))
+				}
 			}
 			out.RawByte('}')
 		}

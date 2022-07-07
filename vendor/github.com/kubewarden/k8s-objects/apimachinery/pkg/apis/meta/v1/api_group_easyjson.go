@@ -171,12 +171,10 @@ func easyjsonD7481922EncodeGithubComKubewardenK8sObjectsApimachineryPkgApisMetaV
 		out.RawString(prefix)
 		easyjsonD7481922EncodeGithubComKubewardenK8sObjectsApimachineryPkgApisMetaV11(out, *in.PreferredVersion)
 	}
-	{
+	if len(in.ServerAddressByClientCIDRs) != 0 {
 		const prefix string = ",\"serverAddressByClientCIDRs\":"
 		out.RawString(prefix)
-		if in.ServerAddressByClientCIDRs == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
-			out.RawString("null")
-		} else {
+		{
 			out.RawByte('[')
 			for v3, v4 := range in.ServerAddressByClientCIDRs {
 				if v3 > 0 {

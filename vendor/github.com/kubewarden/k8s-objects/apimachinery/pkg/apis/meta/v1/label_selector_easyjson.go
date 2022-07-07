@@ -101,12 +101,11 @@ func easyjson8586501eEncodeGithubComKubewardenK8sObjectsApimachineryPkgApisMetaV
 	out.RawByte('{')
 	first := true
 	_ = first
-	{
+	if len(in.MatchExpressions) != 0 {
 		const prefix string = ",\"matchExpressions\":"
+		first = false
 		out.RawString(prefix[1:])
-		if in.MatchExpressions == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
-			out.RawString("null")
-		} else {
+		{
 			out.RawByte('[')
 			for v3, v4 := range in.MatchExpressions {
 				if v3 > 0 {
@@ -123,7 +122,12 @@ func easyjson8586501eEncodeGithubComKubewardenK8sObjectsApimachineryPkgApisMetaV
 	}
 	if len(in.MatchLabels) != 0 {
 		const prefix string = ",\"matchLabels\":"
-		out.RawString(prefix)
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
 		{
 			out.RawByte('{')
 			v5First := true
@@ -260,12 +264,10 @@ func easyjson8586501eEncodeGithubComKubewardenK8sObjectsApimachineryPkgApisMetaV
 			out.String(string(*in.Operator))
 		}
 	}
-	{
+	if len(in.Values) != 0 {
 		const prefix string = ",\"values\":"
 		out.RawString(prefix)
-		if in.Values == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
-			out.RawString("null")
-		} else {
+		{
 			out.RawByte('[')
 			for v7, v8 := range in.Values {
 				if v7 > 0 {

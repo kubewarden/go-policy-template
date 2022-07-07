@@ -128,7 +128,7 @@ func easyjsonEeadeb9EncodeGithubComKubewardenK8sObjectsApiCoreV1(out *jwriter.Wr
 		}
 		out.Bool(bool(in.ReadOnly))
 	}
-	{
+	if len(in.TargetWWNs) != 0 {
 		const prefix string = ",\"targetWWNs\":"
 		if first {
 			first = false
@@ -136,9 +136,7 @@ func easyjsonEeadeb9EncodeGithubComKubewardenK8sObjectsApiCoreV1(out *jwriter.Wr
 		} else {
 			out.RawString(prefix)
 		}
-		if in.TargetWWNs == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
-			out.RawString("null")
-		} else {
+		{
 			out.RawByte('[')
 			for v3, v4 := range in.TargetWWNs {
 				if v3 > 0 {
@@ -149,12 +147,15 @@ func easyjsonEeadeb9EncodeGithubComKubewardenK8sObjectsApiCoreV1(out *jwriter.Wr
 			out.RawByte(']')
 		}
 	}
-	{
+	if len(in.Wwids) != 0 {
 		const prefix string = ",\"wwids\":"
-		out.RawString(prefix)
-		if in.Wwids == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
-			out.RawString("null")
+		if first {
+			first = false
+			out.RawString(prefix[1:])
 		} else {
+			out.RawString(prefix)
+		}
+		{
 			out.RawByte('[')
 			for v5, v6 := range in.Wwids {
 				if v5 > 0 {

@@ -96,12 +96,11 @@ func easyjson3748d166EncodeGithubComKubewardenK8sObjectsApiCoreV1(out *jwriter.W
 	out.RawByte('{')
 	first := true
 	_ = first
-	{
+	if len(in.Add) != 0 {
 		const prefix string = ",\"add\":"
+		first = false
 		out.RawString(prefix[1:])
-		if in.Add == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
-			out.RawString("null")
-		} else {
+		{
 			out.RawByte('[')
 			for v3, v4 := range in.Add {
 				if v3 > 0 {
@@ -112,12 +111,15 @@ func easyjson3748d166EncodeGithubComKubewardenK8sObjectsApiCoreV1(out *jwriter.W
 			out.RawByte(']')
 		}
 	}
-	{
+	if len(in.Drop) != 0 {
 		const prefix string = ",\"drop\":"
-		out.RawString(prefix)
-		if in.Drop == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
-			out.RawString("null")
+		if first {
+			first = false
+			out.RawString(prefix[1:])
 		} else {
+			out.RawString(prefix)
+		}
+		{
 			out.RawByte('[')
 			for v5, v6 := range in.Drop {
 				if v5 > 0 {

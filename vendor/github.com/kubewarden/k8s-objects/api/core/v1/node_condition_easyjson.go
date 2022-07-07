@@ -4,6 +4,7 @@ package v1
 
 import (
 	json "encoding/json"
+	_v1 "github.com/kubewarden/k8s-objects/apimachinery/pkg/apis/meta/v1"
 	easyjson "github.com/mailru/easyjson"
 	jlexer "github.com/mailru/easyjson/jlexer"
 	jwriter "github.com/mailru/easyjson/jwriter"
@@ -37,12 +38,28 @@ func easyjson288e1c76DecodeGithubComKubewardenK8sObjectsApiCoreV1(in *jlexer.Lex
 		}
 		switch key {
 		case "lastHeartbeatTime":
-			if data := in.Raw(); in.Ok() {
-				in.AddError((out.LastHeartbeatTime).UnmarshalJSON(data))
+			if in.IsNull() {
+				in.Skip()
+				out.LastHeartbeatTime = nil
+			} else {
+				if out.LastHeartbeatTime == nil {
+					out.LastHeartbeatTime = new(_v1.Time)
+				}
+				if data := in.Raw(); in.Ok() {
+					in.AddError((*out.LastHeartbeatTime).UnmarshalJSON(data))
+				}
 			}
 		case "lastTransitionTime":
-			if data := in.Raw(); in.Ok() {
-				in.AddError((out.LastTransitionTime).UnmarshalJSON(data))
+			if in.IsNull() {
+				in.Skip()
+				out.LastTransitionTime = nil
+			} else {
+				if out.LastTransitionTime == nil {
+					out.LastTransitionTime = new(_v1.Time)
+				}
+				if data := in.Raw(); in.Ok() {
+					in.AddError((*out.LastTransitionTime).UnmarshalJSON(data))
+				}
 			}
 		case "message":
 			out.Message = string(in.String())
@@ -82,13 +99,13 @@ func easyjson288e1c76EncodeGithubComKubewardenK8sObjectsApiCoreV1(out *jwriter.W
 	out.RawByte('{')
 	first := true
 	_ = first
-	if true {
+	if in.LastHeartbeatTime != nil {
 		const prefix string = ",\"lastHeartbeatTime\":"
 		first = false
 		out.RawString(prefix[1:])
-		out.Raw((in.LastHeartbeatTime).MarshalJSON())
+		out.Raw((*in.LastHeartbeatTime).MarshalJSON())
 	}
-	if true {
+	if in.LastTransitionTime != nil {
 		const prefix string = ",\"lastTransitionTime\":"
 		if first {
 			first = false
@@ -96,7 +113,7 @@ func easyjson288e1c76EncodeGithubComKubewardenK8sObjectsApiCoreV1(out *jwriter.W
 		} else {
 			out.RawString(prefix)
 		}
-		out.Raw((in.LastTransitionTime).MarshalJSON())
+		out.Raw((*in.LastTransitionTime).MarshalJSON())
 	}
 	if in.Message != "" {
 		const prefix string = ",\"message\":"

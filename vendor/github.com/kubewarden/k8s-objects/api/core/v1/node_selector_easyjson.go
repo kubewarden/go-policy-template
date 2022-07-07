@@ -222,12 +222,11 @@ func easyjson6deaac56EncodeGithubComKubewardenK8sObjectsApiCoreV11(out *jwriter.
 	out.RawByte('{')
 	first := true
 	_ = first
-	{
+	if len(in.MatchExpressions) != 0 {
 		const prefix string = ",\"matchExpressions\":"
+		first = false
 		out.RawString(prefix[1:])
-		if in.MatchExpressions == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
-			out.RawString("null")
-		} else {
+		{
 			out.RawByte('[')
 			for v6, v7 := range in.MatchExpressions {
 				if v6 > 0 {
@@ -242,12 +241,15 @@ func easyjson6deaac56EncodeGithubComKubewardenK8sObjectsApiCoreV11(out *jwriter.
 			out.RawByte(']')
 		}
 	}
-	{
+	if len(in.MatchFields) != 0 {
 		const prefix string = ",\"matchFields\":"
-		out.RawString(prefix)
-		if in.MatchFields == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
-			out.RawString("null")
+		if first {
+			first = false
+			out.RawString(prefix[1:])
 		} else {
+			out.RawString(prefix)
+		}
+		{
 			out.RawByte('[')
 			for v8, v9 := range in.MatchFields {
 				if v8 > 0 {
@@ -358,12 +360,10 @@ func easyjson6deaac56EncodeGithubComKubewardenK8sObjectsApiCoreV12(out *jwriter.
 			out.String(string(*in.Operator))
 		}
 	}
-	{
+	if len(in.Values) != 0 {
 		const prefix string = ",\"values\":"
 		out.RawString(prefix)
-		if in.Values == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
-			out.RawString("null")
-		} else {
+		{
 			out.RawByte('[')
 			for v11, v12 := range in.Values {
 				if v11 > 0 {

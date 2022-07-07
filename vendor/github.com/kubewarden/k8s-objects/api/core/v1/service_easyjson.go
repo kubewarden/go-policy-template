@@ -43,7 +43,15 @@ func easyjsonCd93bc43DecodeGithubComKubewardenK8sObjectsApiCoreV1(in *jlexer.Lex
 		case "kind":
 			out.Kind = string(in.String())
 		case "metadata":
-			(out.Metadata).UnmarshalEasyJSON(in)
+			if in.IsNull() {
+				in.Skip()
+				out.Metadata = nil
+			} else {
+				if out.Metadata == nil {
+					out.Metadata = new(_v1.ObjectMeta)
+				}
+				(*out.Metadata).UnmarshalEasyJSON(in)
+			}
 		case "spec":
 			if in.IsNull() {
 				in.Skip()
@@ -94,7 +102,7 @@ func easyjsonCd93bc43EncodeGithubComKubewardenK8sObjectsApiCoreV1(out *jwriter.W
 		}
 		out.String(string(in.Kind))
 	}
-	if true {
+	if in.Metadata != nil {
 		const prefix string = ",\"metadata\":"
 		if first {
 			first = false
@@ -102,7 +110,7 @@ func easyjsonCd93bc43EncodeGithubComKubewardenK8sObjectsApiCoreV1(out *jwriter.W
 		} else {
 			out.RawString(prefix)
 		}
-		(in.Metadata).MarshalEasyJSON(out)
+		(*in.Metadata).MarshalEasyJSON(out)
 	}
 	if in.Spec != nil {
 		const prefix string = ",\"spec\":"
@@ -177,16 +185,24 @@ func easyjsonCd93bc43DecodeGithubComKubewardenK8sObjectsApiCoreV12(in *jlexer.Le
 				in.Delim('[')
 				if out.Conditions == nil {
 					if !in.IsDelim(']') {
-						out.Conditions = make([]_v1.Condition, 0, 1)
+						out.Conditions = make([]*_v1.Condition, 0, 8)
 					} else {
-						out.Conditions = []_v1.Condition{}
+						out.Conditions = []*_v1.Condition{}
 					}
 				} else {
 					out.Conditions = (out.Conditions)[:0]
 				}
 				for !in.IsDelim(']') {
-					var v1 _v1.Condition
-					(v1).UnmarshalEasyJSON(in)
+					var v1 *_v1.Condition
+					if in.IsNull() {
+						in.Skip()
+						v1 = nil
+					} else {
+						if v1 == nil {
+							v1 = new(_v1.Condition)
+						}
+						(*v1).UnmarshalEasyJSON(in)
+					}
 					out.Conditions = append(out.Conditions, v1)
 					in.WantComma()
 				}
@@ -216,25 +232,33 @@ func easyjsonCd93bc43EncodeGithubComKubewardenK8sObjectsApiCoreV12(out *jwriter.
 	out.RawByte('{')
 	first := true
 	_ = first
-	{
+	if len(in.Conditions) != 0 {
 		const prefix string = ",\"conditions\":"
+		first = false
 		out.RawString(prefix[1:])
-		if in.Conditions == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
-			out.RawString("null")
-		} else {
+		{
 			out.RawByte('[')
 			for v2, v3 := range in.Conditions {
 				if v2 > 0 {
 					out.RawByte(',')
 				}
-				(v3).MarshalEasyJSON(out)
+				if v3 == nil {
+					out.RawString("null")
+				} else {
+					(*v3).MarshalEasyJSON(out)
+				}
 			}
 			out.RawByte(']')
 		}
 	}
 	if in.LoadBalancer != nil {
 		const prefix string = ",\"loadBalancer\":"
-		out.RawString(prefix)
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
 		(*in.LoadBalancer).MarshalEasyJSON(out)
 	}
 	out.RawByte('}')
@@ -465,7 +489,7 @@ func easyjsonCd93bc43EncodeGithubComKubewardenK8sObjectsApiCoreV11(out *jwriter.
 		}
 		out.String(string(in.ClusterIP))
 	}
-	{
+	if len(in.ClusterIPs) != 0 {
 		const prefix string = ",\"clusterIPs\":"
 		if first {
 			first = false
@@ -473,9 +497,7 @@ func easyjsonCd93bc43EncodeGithubComKubewardenK8sObjectsApiCoreV11(out *jwriter.
 		} else {
 			out.RawString(prefix)
 		}
-		if in.ClusterIPs == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
-			out.RawString("null")
-		} else {
+		{
 			out.RawByte('[')
 			for v10, v11 := range in.ClusterIPs {
 				if v10 > 0 {
@@ -486,12 +508,15 @@ func easyjsonCd93bc43EncodeGithubComKubewardenK8sObjectsApiCoreV11(out *jwriter.
 			out.RawByte(']')
 		}
 	}
-	{
+	if len(in.ExternalIPs) != 0 {
 		const prefix string = ",\"externalIPs\":"
-		out.RawString(prefix)
-		if in.ExternalIPs == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
-			out.RawString("null")
+		if first {
+			first = false
+			out.RawString(prefix[1:])
 		} else {
+			out.RawString(prefix)
+		}
+		{
 			out.RawByte('[')
 			for v12, v13 := range in.ExternalIPs {
 				if v12 > 0 {
@@ -504,30 +529,53 @@ func easyjsonCd93bc43EncodeGithubComKubewardenK8sObjectsApiCoreV11(out *jwriter.
 	}
 	if in.ExternalName != "" {
 		const prefix string = ",\"externalName\":"
-		out.RawString(prefix)
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
 		out.String(string(in.ExternalName))
 	}
 	if in.ExternalTrafficPolicy != "" {
 		const prefix string = ",\"externalTrafficPolicy\":"
-		out.RawString(prefix)
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
 		out.String(string(in.ExternalTrafficPolicy))
 	}
 	if in.HealthCheckNodePort != 0 {
 		const prefix string = ",\"healthCheckNodePort\":"
-		out.RawString(prefix)
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
 		out.Int32(int32(in.HealthCheckNodePort))
 	}
 	if in.InternalTrafficPolicy != "" {
 		const prefix string = ",\"internalTrafficPolicy\":"
-		out.RawString(prefix)
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
 		out.String(string(in.InternalTrafficPolicy))
 	}
-	{
+	if len(in.IPFamilies) != 0 {
 		const prefix string = ",\"ipFamilies\":"
-		out.RawString(prefix)
-		if in.IPFamilies == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
-			out.RawString("null")
+		if first {
+			first = false
+			out.RawString(prefix[1:])
 		} else {
+			out.RawString(prefix)
+		}
+		{
 			out.RawByte('[')
 			for v14, v15 := range in.IPFamilies {
 				if v14 > 0 {
@@ -540,25 +588,43 @@ func easyjsonCd93bc43EncodeGithubComKubewardenK8sObjectsApiCoreV11(out *jwriter.
 	}
 	if in.IPFamilyPolicy != "" {
 		const prefix string = ",\"ipFamilyPolicy\":"
-		out.RawString(prefix)
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
 		out.String(string(in.IPFamilyPolicy))
 	}
 	if in.LoadBalancerClass != "" {
 		const prefix string = ",\"loadBalancerClass\":"
-		out.RawString(prefix)
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
 		out.String(string(in.LoadBalancerClass))
 	}
 	if in.LoadBalancerIP != "" {
 		const prefix string = ",\"loadBalancerIP\":"
-		out.RawString(prefix)
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
 		out.String(string(in.LoadBalancerIP))
 	}
-	{
+	if len(in.LoadBalancerSourceRanges) != 0 {
 		const prefix string = ",\"loadBalancerSourceRanges\":"
-		out.RawString(prefix)
-		if in.LoadBalancerSourceRanges == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
-			out.RawString("null")
+		if first {
+			first = false
+			out.RawString(prefix[1:])
 		} else {
+			out.RawString(prefix)
+		}
+		{
 			out.RawByte('[')
 			for v16, v17 := range in.LoadBalancerSourceRanges {
 				if v16 > 0 {
@@ -569,12 +635,15 @@ func easyjsonCd93bc43EncodeGithubComKubewardenK8sObjectsApiCoreV11(out *jwriter.
 			out.RawByte(']')
 		}
 	}
-	{
+	if len(in.Ports) != 0 {
 		const prefix string = ",\"ports\":"
-		out.RawString(prefix)
-		if in.Ports == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
-			out.RawString("null")
+		if first {
+			first = false
+			out.RawString(prefix[1:])
 		} else {
+			out.RawString(prefix)
+		}
+		{
 			out.RawByte('[')
 			for v18, v19 := range in.Ports {
 				if v18 > 0 {
@@ -591,12 +660,22 @@ func easyjsonCd93bc43EncodeGithubComKubewardenK8sObjectsApiCoreV11(out *jwriter.
 	}
 	if in.PublishNotReadyAddresses {
 		const prefix string = ",\"publishNotReadyAddresses\":"
-		out.RawString(prefix)
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
 		out.Bool(bool(in.PublishNotReadyAddresses))
 	}
 	if len(in.Selector) != 0 {
 		const prefix string = ",\"selector\":"
-		out.RawString(prefix)
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
 		{
 			out.RawByte('{')
 			v20First := true
@@ -615,17 +694,32 @@ func easyjsonCd93bc43EncodeGithubComKubewardenK8sObjectsApiCoreV11(out *jwriter.
 	}
 	if in.SessionAffinity != "" {
 		const prefix string = ",\"sessionAffinity\":"
-		out.RawString(prefix)
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
 		out.String(string(in.SessionAffinity))
 	}
 	if in.SessionAffinityConfig != nil {
 		const prefix string = ",\"sessionAffinityConfig\":"
-		out.RawString(prefix)
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
 		easyjsonCd93bc43EncodeGithubComKubewardenK8sObjectsApiCoreV14(out, *in.SessionAffinityConfig)
 	}
 	if in.Type != "" {
 		const prefix string = ",\"type\":"
-		out.RawString(prefix)
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
 		out.String(string(in.Type))
 	}
 	out.RawByte('}')
@@ -719,7 +813,15 @@ func easyjsonCd93bc43DecodeGithubComKubewardenK8sObjectsApiCoreV13(in *jlexer.Le
 		case "protocol":
 			out.Protocol = string(in.String())
 		case "targetPort":
-			out.TargetPort = intstr.IntOrString(in.String())
+			if in.IsNull() {
+				in.Skip()
+				out.TargetPort = nil
+			} else {
+				if out.TargetPort == nil {
+					out.TargetPort = new(intstr.IntOrString)
+				}
+				*out.TargetPort = intstr.IntOrString(in.String())
+			}
 		default:
 			in.SkipRecursive()
 		}
@@ -779,10 +881,10 @@ func easyjsonCd93bc43EncodeGithubComKubewardenK8sObjectsApiCoreV13(out *jwriter.
 		out.RawString(prefix)
 		out.String(string(in.Protocol))
 	}
-	if in.TargetPort != "" {
+	if in.TargetPort != nil {
 		const prefix string = ",\"targetPort\":"
 		out.RawString(prefix)
-		out.String(string(in.TargetPort))
+		out.String(string(*in.TargetPort))
 	}
 	out.RawByte('}')
 }

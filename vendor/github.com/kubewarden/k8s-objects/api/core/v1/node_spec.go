@@ -20,13 +20,13 @@ type NodeSpec struct {
 	PodCIDR string `json:"podCIDR,omitempty"`
 
 	// podCIDRs represents the IP ranges assigned to the node for usage by Pods on that node. If this field is specified, the 0th entry must match the podCIDR field. It may contain at most 1 value for each of IPv4 and IPv6.
-	PodCIDRs []string `json:"podCIDRs"`
+	PodCIDRs []string `json:"podCIDRs,omitempty"`
 
 	// ID of the node assigned by the cloud provider in the format: <ProviderName>://<ProviderSpecificNodeID>
 	ProviderID string `json:"providerID,omitempty"`
 
 	// If specified, the node's taints.
-	Taints []*Taint `json:"taints"`
+	Taints []*Taint `json:"taints,omitempty"`
 
 	// Unschedulable controls node schedulability of new pods. By default, node is schedulable. More info: https://kubernetes.io/docs/concepts/nodes/node/#manual-node-administration
 	Unschedulable bool `json:"unschedulable,omitempty"`

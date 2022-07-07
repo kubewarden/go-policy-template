@@ -11,7 +11,7 @@ package v1
 type NamespaceStatus struct {
 
 	// Represents the latest available observations of a namespace's current state.
-	Conditions []*NamespaceCondition `json:"conditions"`
+	Conditions []*NamespaceCondition `json:"conditions,omitempty"`
 
 	// Phase is the current lifecycle phase of the namespace. More info: https://kubernetes.io/docs/tasks/administer-cluster/namespaces/
 	//

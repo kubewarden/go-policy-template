@@ -24,10 +24,10 @@ type Event struct {
 	Count int32 `json:"count,omitempty"`
 
 	// Time when this Event was first observed.
-	EventTime apimachinery_pkg_apis_meta_v1.MicroTime `json:"eventTime,omitempty"`
+	EventTime *apimachinery_pkg_apis_meta_v1.MicroTime `json:"eventTime,omitempty"`
 
 	// The time at which the event was first recorded. (Time of server receipt is in TypeMeta.)
-	FirstTimestamp apimachinery_pkg_apis_meta_v1.Time `json:"firstTimestamp,omitempty"`
+	FirstTimestamp *apimachinery_pkg_apis_meta_v1.Time `json:"firstTimestamp,omitempty"`
 
 	// The object that this event is about.
 	// Required: true
@@ -37,7 +37,7 @@ type Event struct {
 	Kind string `json:"kind,omitempty"`
 
 	// The time at which the most recent occurrence of this event was recorded.
-	LastTimestamp apimachinery_pkg_apis_meta_v1.Time `json:"lastTimestamp,omitempty"`
+	LastTimestamp *apimachinery_pkg_apis_meta_v1.Time `json:"lastTimestamp,omitempty"`
 
 	// A human-readable description of the status of this operation.
 	Message string `json:"message,omitempty"`

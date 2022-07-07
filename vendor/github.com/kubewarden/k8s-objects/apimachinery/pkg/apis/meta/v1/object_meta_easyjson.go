@@ -261,7 +261,7 @@ func easyjson7cd974a5EncodeGithubComKubewardenK8sObjectsApimachineryPkgApisMetaV
 		}
 		out.Raw((in.DeletionTimestamp).MarshalJSON())
 	}
-	{
+	if len(in.Finalizers) != 0 {
 		const prefix string = ",\"finalizers\":"
 		if first {
 			first = false
@@ -269,9 +269,7 @@ func easyjson7cd974a5EncodeGithubComKubewardenK8sObjectsApimachineryPkgApisMetaV
 		} else {
 			out.RawString(prefix)
 		}
-		if in.Finalizers == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
-			out.RawString("null")
-		} else {
+		{
 			out.RawByte('[')
 			for v7, v8 := range in.Finalizers {
 				if v7 > 0 {
@@ -284,17 +282,32 @@ func easyjson7cd974a5EncodeGithubComKubewardenK8sObjectsApimachineryPkgApisMetaV
 	}
 	if in.GenerateName != "" {
 		const prefix string = ",\"generateName\":"
-		out.RawString(prefix)
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
 		out.String(string(in.GenerateName))
 	}
 	if in.Generation != 0 {
 		const prefix string = ",\"generation\":"
-		out.RawString(prefix)
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
 		out.Int64(int64(in.Generation))
 	}
 	if len(in.Labels) != 0 {
 		const prefix string = ",\"labels\":"
-		out.RawString(prefix)
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
 		{
 			out.RawByte('{')
 			v9First := true
@@ -311,12 +324,15 @@ func easyjson7cd974a5EncodeGithubComKubewardenK8sObjectsApimachineryPkgApisMetaV
 			out.RawByte('}')
 		}
 	}
-	{
+	if len(in.ManagedFields) != 0 {
 		const prefix string = ",\"managedFields\":"
-		out.RawString(prefix)
-		if in.ManagedFields == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
-			out.RawString("null")
+		if first {
+			first = false
+			out.RawString(prefix[1:])
 		} else {
+			out.RawString(prefix)
+		}
+		{
 			out.RawByte('[')
 			for v10, v11 := range in.ManagedFields {
 				if v10 > 0 {
@@ -333,20 +349,33 @@ func easyjson7cd974a5EncodeGithubComKubewardenK8sObjectsApimachineryPkgApisMetaV
 	}
 	if in.Name != "" {
 		const prefix string = ",\"name\":"
-		out.RawString(prefix)
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
 		out.String(string(in.Name))
 	}
 	if in.Namespace != "" {
 		const prefix string = ",\"namespace\":"
-		out.RawString(prefix)
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
 		out.String(string(in.Namespace))
 	}
-	{
+	if len(in.OwnerReferences) != 0 {
 		const prefix string = ",\"ownerReferences\":"
-		out.RawString(prefix)
-		if in.OwnerReferences == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
-			out.RawString("null")
+		if first {
+			first = false
+			out.RawString(prefix[1:])
 		} else {
+			out.RawString(prefix)
+		}
+		{
 			out.RawByte('[')
 			for v12, v13 := range in.OwnerReferences {
 				if v12 > 0 {
@@ -363,17 +392,32 @@ func easyjson7cd974a5EncodeGithubComKubewardenK8sObjectsApimachineryPkgApisMetaV
 	}
 	if in.ResourceVersion != "" {
 		const prefix string = ",\"resourceVersion\":"
-		out.RawString(prefix)
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
 		out.String(string(in.ResourceVersion))
 	}
 	if in.SelfLink != "" {
 		const prefix string = ",\"selfLink\":"
-		out.RawString(prefix)
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
 		out.String(string(in.SelfLink))
 	}
 	if in.UID != "" {
 		const prefix string = ",\"uid\":"
-		out.RawString(prefix)
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
 		out.String(string(in.UID))
 	}
 	out.RawByte('}')

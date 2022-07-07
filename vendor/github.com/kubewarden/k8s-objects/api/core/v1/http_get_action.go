@@ -18,7 +18,7 @@ type HTTPGetAction struct {
 	Host string `json:"host,omitempty"`
 
 	// Custom headers to set in the request. HTTP allows repeated headers.
-	HTTPHeaders []*HTTPHeader `json:"httpHeaders"`
+	HTTPHeaders []*HTTPHeader `json:"httpHeaders,omitempty"`
 
 	// Path to access on the HTTP server.
 	Path string `json:"path,omitempty"`

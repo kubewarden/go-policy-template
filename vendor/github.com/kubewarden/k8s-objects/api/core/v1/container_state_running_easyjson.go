@@ -4,6 +4,7 @@ package v1
 
 import (
 	json "encoding/json"
+	_v1 "github.com/kubewarden/k8s-objects/apimachinery/pkg/apis/meta/v1"
 	easyjson "github.com/mailru/easyjson"
 	jlexer "github.com/mailru/easyjson/jlexer"
 	jwriter "github.com/mailru/easyjson/jwriter"
@@ -37,8 +38,16 @@ func easyjsonB17754e5DecodeGithubComKubewardenK8sObjectsApiCoreV1(in *jlexer.Lex
 		}
 		switch key {
 		case "startedAt":
-			if data := in.Raw(); in.Ok() {
-				in.AddError((out.StartedAt).UnmarshalJSON(data))
+			if in.IsNull() {
+				in.Skip()
+				out.StartedAt = nil
+			} else {
+				if out.StartedAt == nil {
+					out.StartedAt = new(_v1.Time)
+				}
+				if data := in.Raw(); in.Ok() {
+					in.AddError((*out.StartedAt).UnmarshalJSON(data))
+				}
 			}
 		default:
 			in.SkipRecursive()
@@ -54,11 +63,11 @@ func easyjsonB17754e5EncodeGithubComKubewardenK8sObjectsApiCoreV1(out *jwriter.W
 	out.RawByte('{')
 	first := true
 	_ = first
-	if true {
+	if in.StartedAt != nil {
 		const prefix string = ",\"startedAt\":"
 		first = false
 		out.RawString(prefix[1:])
-		out.Raw((in.StartedAt).MarshalJSON())
+		out.Raw((*in.StartedAt).MarshalJSON())
 	}
 	out.RawByte('}')
 }

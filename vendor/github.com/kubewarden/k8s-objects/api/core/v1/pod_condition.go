@@ -15,10 +15,10 @@ import (
 type PodCondition struct {
 
 	// Last time we probed the condition.
-	LastProbeTime apimachinery_pkg_apis_meta_v1.Time `json:"lastProbeTime,omitempty"`
+	LastProbeTime *apimachinery_pkg_apis_meta_v1.Time `json:"lastProbeTime,omitempty"`
 
 	// Last time the condition transitioned from one status to another.
-	LastTransitionTime apimachinery_pkg_apis_meta_v1.Time `json:"lastTransitionTime,omitempty"`
+	LastTransitionTime *apimachinery_pkg_apis_meta_v1.Time `json:"lastTransitionTime,omitempty"`
 
 	// Human-readable message indicating details about last transition.
 	Message string `json:"message,omitempty"`

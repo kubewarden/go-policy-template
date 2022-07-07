@@ -4,6 +4,7 @@ package v1
 
 import (
 	json "encoding/json"
+	_v1 "github.com/kubewarden/k8s-objects/apimachinery/pkg/apis/meta/v1"
 	easyjson "github.com/mailru/easyjson"
 	jlexer "github.com/mailru/easyjson/jlexer"
 	jwriter "github.com/mailru/easyjson/jwriter"
@@ -37,9 +38,25 @@ func easyjson18999177DecodeGithubComKubewardenK8sObjectsApiCoreV1(in *jlexer.Lex
 		}
 		switch key {
 		case "labelSelector":
-			(out.LabelSelector).UnmarshalEasyJSON(in)
+			if in.IsNull() {
+				in.Skip()
+				out.LabelSelector = nil
+			} else {
+				if out.LabelSelector == nil {
+					out.LabelSelector = new(_v1.LabelSelector)
+				}
+				(*out.LabelSelector).UnmarshalEasyJSON(in)
+			}
 		case "namespaceSelector":
-			(out.NamespaceSelector).UnmarshalEasyJSON(in)
+			if in.IsNull() {
+				in.Skip()
+				out.NamespaceSelector = nil
+			} else {
+				if out.NamespaceSelector == nil {
+					out.NamespaceSelector = new(_v1.LabelSelector)
+				}
+				(*out.NamespaceSelector).UnmarshalEasyJSON(in)
+			}
 		case "namespaces":
 			if in.IsNull() {
 				in.Skip()
@@ -87,13 +104,13 @@ func easyjson18999177EncodeGithubComKubewardenK8sObjectsApiCoreV1(out *jwriter.W
 	out.RawByte('{')
 	first := true
 	_ = first
-	if true {
+	if in.LabelSelector != nil {
 		const prefix string = ",\"labelSelector\":"
 		first = false
 		out.RawString(prefix[1:])
-		(in.LabelSelector).MarshalEasyJSON(out)
+		(*in.LabelSelector).MarshalEasyJSON(out)
 	}
-	if true {
+	if in.NamespaceSelector != nil {
 		const prefix string = ",\"namespaceSelector\":"
 		if first {
 			first = false
@@ -101,9 +118,9 @@ func easyjson18999177EncodeGithubComKubewardenK8sObjectsApiCoreV1(out *jwriter.W
 		} else {
 			out.RawString(prefix)
 		}
-		(in.NamespaceSelector).MarshalEasyJSON(out)
+		(*in.NamespaceSelector).MarshalEasyJSON(out)
 	}
-	{
+	if len(in.Namespaces) != 0 {
 		const prefix string = ",\"namespaces\":"
 		if first {
 			first = false
@@ -111,9 +128,7 @@ func easyjson18999177EncodeGithubComKubewardenK8sObjectsApiCoreV1(out *jwriter.W
 		} else {
 			out.RawString(prefix)
 		}
-		if in.Namespaces == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
-			out.RawString("null")
-		} else {
+		{
 			out.RawByte('[')
 			for v2, v3 := range in.Namespaces {
 				if v2 > 0 {
@@ -126,7 +141,12 @@ func easyjson18999177EncodeGithubComKubewardenK8sObjectsApiCoreV1(out *jwriter.W
 	}
 	{
 		const prefix string = ",\"topologyKey\":"
-		out.RawString(prefix)
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
 		if in.TopologyKey == nil {
 			out.RawString("null")
 		} else {

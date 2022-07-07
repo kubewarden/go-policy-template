@@ -22,7 +22,7 @@ type ContainerStateTerminated struct {
 	ExitCode *int32 `json:"exitCode"`
 
 	// Time at which the container last terminated
-	FinishedAt apimachinery_pkg_apis_meta_v1.Time `json:"finishedAt,omitempty"`
+	FinishedAt *apimachinery_pkg_apis_meta_v1.Time `json:"finishedAt,omitempty"`
 
 	// Message regarding the last termination of the container
 	Message string `json:"message,omitempty"`
@@ -34,5 +34,5 @@ type ContainerStateTerminated struct {
 	Signal int32 `json:"signal,omitempty"`
 
 	// Time at which previous execution of the container started
-	StartedAt apimachinery_pkg_apis_meta_v1.Time `json:"startedAt,omitempty"`
+	StartedAt *apimachinery_pkg_apis_meta_v1.Time `json:"startedAt,omitempty"`
 }

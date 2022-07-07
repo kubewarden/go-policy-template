@@ -15,8 +15,8 @@ import (
 type ResourceRequirements struct {
 
 	// Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
-	Limits map[string]apimachinery_pkg_api_resource.Quantity `json:"limits,omitempty"`
+	Limits map[string]*apimachinery_pkg_api_resource.Quantity `json:"limits,omitempty"`
 
 	// Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
-	Requests map[string]apimachinery_pkg_api_resource.Quantity `json:"requests,omitempty"`
+	Requests map[string]*apimachinery_pkg_api_resource.Quantity `json:"requests,omitempty"`
 }

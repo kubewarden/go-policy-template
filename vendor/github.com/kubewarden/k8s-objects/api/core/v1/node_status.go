@@ -15,16 +15,16 @@ import (
 type NodeStatus struct {
 
 	// List of addresses reachable to the node. Queried from cloud provider, if available. More info: https://kubernetes.io/docs/concepts/nodes/node/#addresses Note: This field is declared as mergeable, but the merge key is not sufficiently unique, which can cause data corruption when it is merged. Callers should instead use a full-replacement patch. See http://pr.k8s.io/79391 for an example.
-	Addresses []*NodeAddress `json:"addresses"`
+	Addresses []*NodeAddress `json:"addresses,omitempty"`
 
 	// Allocatable represents the resources of a node that are available for scheduling. Defaults to Capacity.
-	Allocatable map[string]apimachinery_pkg_api_resource.Quantity `json:"allocatable,omitempty"`
+	Allocatable map[string]*apimachinery_pkg_api_resource.Quantity `json:"allocatable,omitempty"`
 
 	// Capacity represents the total resources of a node. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#capacity
-	Capacity map[string]apimachinery_pkg_api_resource.Quantity `json:"capacity,omitempty"`
+	Capacity map[string]*apimachinery_pkg_api_resource.Quantity `json:"capacity,omitempty"`
 
 	// Conditions is an array of current observed node conditions. More info: https://kubernetes.io/docs/concepts/nodes/node/#condition
-	Conditions []*NodeCondition `json:"conditions"`
+	Conditions []*NodeCondition `json:"conditions,omitempty"`
 
 	// Status of the config assigned to the node via the dynamic Kubelet config feature.
 	Config *NodeConfigStatus `json:"config,omitempty"`
@@ -33,7 +33,7 @@ type NodeStatus struct {
 	DaemonEndpoints *NodeDaemonEndpoints `json:"daemonEndpoints,omitempty"`
 
 	// List of container images on this node
-	Images []*ContainerImage `json:"images"`
+	Images []*ContainerImage `json:"images,omitempty"`
 
 	// Set of ids/uuids to uniquely identify the node. More info: https://kubernetes.io/docs/concepts/nodes/node/#info
 	NodeInfo *NodeSystemInfo `json:"nodeInfo,omitempty"`
@@ -44,8 +44,8 @@ type NodeStatus struct {
 	Phase string `json:"phase,omitempty"`
 
 	// List of volumes that are attached to the node.
-	VolumesAttached []*AttachedVolume `json:"volumesAttached"`
+	VolumesAttached []*AttachedVolume `json:"volumesAttached,omitempty"`
 
 	// List of attachable volumes in use (mounted) by the node.
-	VolumesInUse []string `json:"volumesInUse"`
+	VolumesInUse []string `json:"volumesInUse,omitempty"`
 }

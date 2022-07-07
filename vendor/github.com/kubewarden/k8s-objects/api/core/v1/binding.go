@@ -21,7 +21,7 @@ type Binding struct {
 	Kind string `json:"kind,omitempty"`
 
 	// Standard object's metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata
-	Metadata apimachinery_pkg_apis_meta_v1.ObjectMeta `json:"metadata,omitempty"`
+	Metadata *apimachinery_pkg_apis_meta_v1.ObjectMeta `json:"metadata,omitempty"`
 
 	// The target object that you want to bind to the standard object.
 	// Required: true

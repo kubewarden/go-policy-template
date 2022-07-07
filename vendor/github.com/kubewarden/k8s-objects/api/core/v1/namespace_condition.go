@@ -15,7 +15,7 @@ import (
 type NamespaceCondition struct {
 
 	// last transition time
-	LastTransitionTime apimachinery_pkg_apis_meta_v1.Time `json:"lastTransitionTime,omitempty"`
+	LastTransitionTime *apimachinery_pkg_apis_meta_v1.Time `json:"lastTransitionTime,omitempty"`
 
 	// message
 	Message string `json:"message,omitempty"`

@@ -5,6 +5,7 @@ package v1
 import (
 	json "encoding/json"
 	resource "github.com/kubewarden/k8s-objects/apimachinery/pkg/api/resource"
+	_v1 "github.com/kubewarden/k8s-objects/apimachinery/pkg/apis/meta/v1"
 	easyjson "github.com/mailru/easyjson"
 	jlexer "github.com/mailru/easyjson/jlexer"
 	jwriter "github.com/mailru/easyjson/jwriter"
@@ -42,7 +43,15 @@ func easyjson75f96e95DecodeGithubComKubewardenK8sObjectsApiCoreV1(in *jlexer.Lex
 		case "kind":
 			out.Kind = string(in.String())
 		case "metadata":
-			(out.Metadata).UnmarshalEasyJSON(in)
+			if in.IsNull() {
+				in.Skip()
+				out.Metadata = nil
+			} else {
+				if out.Metadata == nil {
+					out.Metadata = new(_v1.ObjectMeta)
+				}
+				(*out.Metadata).UnmarshalEasyJSON(in)
+			}
 		case "spec":
 			if in.IsNull() {
 				in.Skip()
@@ -83,7 +92,7 @@ func easyjson75f96e95EncodeGithubComKubewardenK8sObjectsApiCoreV1(out *jwriter.W
 		}
 		out.String(string(in.Kind))
 	}
-	if true {
+	if in.Metadata != nil {
 		const prefix string = ",\"metadata\":"
 		if first {
 			first = false
@@ -91,7 +100,7 @@ func easyjson75f96e95EncodeGithubComKubewardenK8sObjectsApiCoreV1(out *jwriter.W
 		} else {
 			out.RawString(prefix)
 		}
-		(in.Metadata).MarshalEasyJSON(out)
+		(*in.Metadata).MarshalEasyJSON(out)
 	}
 	if in.Spec != nil {
 		const prefix string = ",\"spec\":"
@@ -240,15 +249,23 @@ func easyjson75f96e95DecodeGithubComKubewardenK8sObjectsApiCoreV12(in *jlexer.Le
 			} else {
 				in.Delim('{')
 				if !in.IsDelim('}') {
-					out.Default = make(map[string]resource.Quantity)
+					out.Default = make(map[string]*resource.Quantity)
 				} else {
 					out.Default = nil
 				}
 				for !in.IsDelim('}') {
 					key := string(in.String())
 					in.WantColon()
-					var v4 resource.Quantity
-					v4 = resource.Quantity(in.String())
+					var v4 *resource.Quantity
+					if in.IsNull() {
+						in.Skip()
+						v4 = nil
+					} else {
+						if v4 == nil {
+							v4 = new(resource.Quantity)
+						}
+						*v4 = resource.Quantity(in.String())
+					}
 					(out.Default)[key] = v4
 					in.WantComma()
 				}
@@ -260,15 +277,23 @@ func easyjson75f96e95DecodeGithubComKubewardenK8sObjectsApiCoreV12(in *jlexer.Le
 			} else {
 				in.Delim('{')
 				if !in.IsDelim('}') {
-					out.DefaultRequest = make(map[string]resource.Quantity)
+					out.DefaultRequest = make(map[string]*resource.Quantity)
 				} else {
 					out.DefaultRequest = nil
 				}
 				for !in.IsDelim('}') {
 					key := string(in.String())
 					in.WantColon()
-					var v5 resource.Quantity
-					v5 = resource.Quantity(in.String())
+					var v5 *resource.Quantity
+					if in.IsNull() {
+						in.Skip()
+						v5 = nil
+					} else {
+						if v5 == nil {
+							v5 = new(resource.Quantity)
+						}
+						*v5 = resource.Quantity(in.String())
+					}
 					(out.DefaultRequest)[key] = v5
 					in.WantComma()
 				}
@@ -280,15 +305,23 @@ func easyjson75f96e95DecodeGithubComKubewardenK8sObjectsApiCoreV12(in *jlexer.Le
 			} else {
 				in.Delim('{')
 				if !in.IsDelim('}') {
-					out.Max = make(map[string]resource.Quantity)
+					out.Max = make(map[string]*resource.Quantity)
 				} else {
 					out.Max = nil
 				}
 				for !in.IsDelim('}') {
 					key := string(in.String())
 					in.WantColon()
-					var v6 resource.Quantity
-					v6 = resource.Quantity(in.String())
+					var v6 *resource.Quantity
+					if in.IsNull() {
+						in.Skip()
+						v6 = nil
+					} else {
+						if v6 == nil {
+							v6 = new(resource.Quantity)
+						}
+						*v6 = resource.Quantity(in.String())
+					}
 					(out.Max)[key] = v6
 					in.WantComma()
 				}
@@ -300,15 +333,23 @@ func easyjson75f96e95DecodeGithubComKubewardenK8sObjectsApiCoreV12(in *jlexer.Le
 			} else {
 				in.Delim('{')
 				if !in.IsDelim('}') {
-					out.MaxLimitRequestRatio = make(map[string]resource.Quantity)
+					out.MaxLimitRequestRatio = make(map[string]*resource.Quantity)
 				} else {
 					out.MaxLimitRequestRatio = nil
 				}
 				for !in.IsDelim('}') {
 					key := string(in.String())
 					in.WantColon()
-					var v7 resource.Quantity
-					v7 = resource.Quantity(in.String())
+					var v7 *resource.Quantity
+					if in.IsNull() {
+						in.Skip()
+						v7 = nil
+					} else {
+						if v7 == nil {
+							v7 = new(resource.Quantity)
+						}
+						*v7 = resource.Quantity(in.String())
+					}
 					(out.MaxLimitRequestRatio)[key] = v7
 					in.WantComma()
 				}
@@ -320,15 +361,23 @@ func easyjson75f96e95DecodeGithubComKubewardenK8sObjectsApiCoreV12(in *jlexer.Le
 			} else {
 				in.Delim('{')
 				if !in.IsDelim('}') {
-					out.Min = make(map[string]resource.Quantity)
+					out.Min = make(map[string]*resource.Quantity)
 				} else {
 					out.Min = nil
 				}
 				for !in.IsDelim('}') {
 					key := string(in.String())
 					in.WantColon()
-					var v8 resource.Quantity
-					v8 = resource.Quantity(in.String())
+					var v8 *resource.Quantity
+					if in.IsNull() {
+						in.Skip()
+						v8 = nil
+					} else {
+						if v8 == nil {
+							v8 = new(resource.Quantity)
+						}
+						*v8 = resource.Quantity(in.String())
+					}
 					(out.Min)[key] = v8
 					in.WantComma()
 				}
@@ -373,7 +422,11 @@ func easyjson75f96e95EncodeGithubComKubewardenK8sObjectsApiCoreV12(out *jwriter.
 				}
 				out.String(string(v9Name))
 				out.RawByte(':')
-				out.String(string(v9Value))
+				if v9Value == nil {
+					out.RawString("null")
+				} else {
+					out.String(string(*v9Value))
+				}
 			}
 			out.RawByte('}')
 		}
@@ -397,7 +450,11 @@ func easyjson75f96e95EncodeGithubComKubewardenK8sObjectsApiCoreV12(out *jwriter.
 				}
 				out.String(string(v10Name))
 				out.RawByte(':')
-				out.String(string(v10Value))
+				if v10Value == nil {
+					out.RawString("null")
+				} else {
+					out.String(string(*v10Value))
+				}
 			}
 			out.RawByte('}')
 		}
@@ -421,7 +478,11 @@ func easyjson75f96e95EncodeGithubComKubewardenK8sObjectsApiCoreV12(out *jwriter.
 				}
 				out.String(string(v11Name))
 				out.RawByte(':')
-				out.String(string(v11Value))
+				if v11Value == nil {
+					out.RawString("null")
+				} else {
+					out.String(string(*v11Value))
+				}
 			}
 			out.RawByte('}')
 		}
@@ -445,7 +506,11 @@ func easyjson75f96e95EncodeGithubComKubewardenK8sObjectsApiCoreV12(out *jwriter.
 				}
 				out.String(string(v12Name))
 				out.RawByte(':')
-				out.String(string(v12Value))
+				if v12Value == nil {
+					out.RawString("null")
+				} else {
+					out.String(string(*v12Value))
+				}
 			}
 			out.RawByte('}')
 		}
@@ -469,7 +534,11 @@ func easyjson75f96e95EncodeGithubComKubewardenK8sObjectsApiCoreV12(out *jwriter.
 				}
 				out.String(string(v13Name))
 				out.RawByte(':')
-				out.String(string(v13Value))
+				if v13Value == nil {
+					out.RawString("null")
+				} else {
+					out.String(string(*v13Value))
+				}
 			}
 			out.RawByte('}')
 		}

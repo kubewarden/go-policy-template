@@ -40,7 +40,15 @@ func easyjson4dfb56a6DecodeGithubComKubewardenK8sObjectsApiCoreV1(in *jlexer.Lex
 		case "medium":
 			out.Medium = string(in.String())
 		case "sizeLimit":
-			out.SizeLimit = resource.Quantity(in.String())
+			if in.IsNull() {
+				in.Skip()
+				out.SizeLimit = nil
+			} else {
+				if out.SizeLimit == nil {
+					out.SizeLimit = new(resource.Quantity)
+				}
+				*out.SizeLimit = resource.Quantity(in.String())
+			}
 		default:
 			in.SkipRecursive()
 		}
@@ -61,7 +69,7 @@ func easyjson4dfb56a6EncodeGithubComKubewardenK8sObjectsApiCoreV1(out *jwriter.W
 		out.RawString(prefix[1:])
 		out.String(string(in.Medium))
 	}
-	if in.SizeLimit != "" {
+	if in.SizeLimit != nil {
 		const prefix string = ",\"sizeLimit\":"
 		if first {
 			first = false
@@ -69,7 +77,7 @@ func easyjson4dfb56a6EncodeGithubComKubewardenK8sObjectsApiCoreV1(out *jwriter.W
 		} else {
 			out.RawString(prefix)
 		}
-		out.String(string(in.SizeLimit))
+		out.String(string(*in.SizeLimit))
 	}
 	out.RawByte('}')
 }

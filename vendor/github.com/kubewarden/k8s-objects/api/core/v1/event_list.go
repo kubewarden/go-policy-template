@@ -25,5 +25,5 @@ type EventList struct {
 	Kind string `json:"kind,omitempty"`
 
 	// Standard list metadata. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
-	Metadata apimachinery_pkg_apis_meta_v1.ListMeta `json:"metadata,omitempty"`
+	Metadata *apimachinery_pkg_apis_meta_v1.ListMeta `json:"metadata,omitempty"`
 }

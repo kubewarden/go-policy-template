@@ -18,5 +18,5 @@ type EventSeries struct {
 	Count int32 `json:"count,omitempty"`
 
 	// Time of the last occurrence observed
-	LastObservedTime apimachinery_pkg_apis_meta_v1.MicroTime `json:"lastObservedTime,omitempty"`
+	LastObservedTime *apimachinery_pkg_apis_meta_v1.MicroTime `json:"lastObservedTime,omitempty"`
 }

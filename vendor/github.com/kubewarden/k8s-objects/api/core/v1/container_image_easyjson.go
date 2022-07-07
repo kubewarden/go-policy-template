@@ -75,12 +75,11 @@ func easyjsonCe4acf15EncodeGithubComKubewardenK8sObjectsApiCoreV1(out *jwriter.W
 	out.RawByte('{')
 	first := true
 	_ = first
-	{
+	if len(in.Names) != 0 {
 		const prefix string = ",\"names\":"
+		first = false
 		out.RawString(prefix[1:])
-		if in.Names == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
-			out.RawString("null")
-		} else {
+		{
 			out.RawByte('[')
 			for v2, v3 := range in.Names {
 				if v2 > 0 {
@@ -93,7 +92,12 @@ func easyjsonCe4acf15EncodeGithubComKubewardenK8sObjectsApiCoreV1(out *jwriter.W
 	}
 	if in.SizeBytes != 0 {
 		const prefix string = ",\"sizeBytes\":"
-		out.RawString(prefix)
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
 		out.Int64(int64(in.SizeBytes))
 	}
 	out.RawByte('}')

@@ -15,8 +15,8 @@ import (
 type ResourceQuotaStatus struct {
 
 	// Hard is the set of enforced hard limits for each named resource. More info: https://kubernetes.io/docs/concepts/policy/resource-quotas/
-	Hard map[string]apimachinery_pkg_api_resource.Quantity `json:"hard,omitempty"`
+	Hard map[string]*apimachinery_pkg_api_resource.Quantity `json:"hard,omitempty"`
 
 	// Used is the current observed total usage of the resource in the namespace.
-	Used map[string]apimachinery_pkg_api_resource.Quantity `json:"used,omitempty"`
+	Used map[string]*apimachinery_pkg_api_resource.Quantity `json:"used,omitempty"`
 }

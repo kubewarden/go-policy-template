@@ -82,12 +82,11 @@ func easyjsonC2f65f1fEncodeGithubComKubewardenK8sObjectsApiCoreV1(out *jwriter.W
 	out.RawByte('{')
 	first := true
 	_ = first
-	{
+	if len(in.Items) != 0 {
 		const prefix string = ",\"items\":"
+		first = false
 		out.RawString(prefix[1:])
-		if in.Items == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
-			out.RawString("null")
-		} else {
+		{
 			out.RawByte('[')
 			for v2, v3 := range in.Items {
 				if v2 > 0 {
@@ -252,7 +251,15 @@ func easyjsonC2f65f1fDecodeGithubComKubewardenK8sObjectsApiCoreV13(in *jlexer.Le
 		case "containerName":
 			out.ContainerName = string(in.String())
 		case "divisor":
-			out.Divisor = resource.Quantity(in.String())
+			if in.IsNull() {
+				in.Skip()
+				out.Divisor = nil
+			} else {
+				if out.Divisor == nil {
+					out.Divisor = new(resource.Quantity)
+				}
+				*out.Divisor = resource.Quantity(in.String())
+			}
 		case "resource":
 			if in.IsNull() {
 				in.Skip()
@@ -283,7 +290,7 @@ func easyjsonC2f65f1fEncodeGithubComKubewardenK8sObjectsApiCoreV13(out *jwriter.
 		out.RawString(prefix[1:])
 		out.String(string(in.ContainerName))
 	}
-	if in.Divisor != "" {
+	if in.Divisor != nil {
 		const prefix string = ",\"divisor\":"
 		if first {
 			first = false
@@ -291,7 +298,7 @@ func easyjsonC2f65f1fEncodeGithubComKubewardenK8sObjectsApiCoreV13(out *jwriter.
 		} else {
 			out.RawString(prefix)
 		}
-		out.String(string(in.Divisor))
+		out.String(string(*in.Divisor))
 	}
 	{
 		const prefix string = ",\"resource\":"

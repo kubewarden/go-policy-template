@@ -50,8 +50,15 @@ var (
 // MarshalJSON returns the DateTime as JSON
 func (t DateTime) MarshalJSON() ([]byte, error) {
 	w := jwriter.Writer{}
-	tstr := NormalizeTimeForMarshal(time.Time(t)).Format(MarshalFormat)
-	w.String(tstr)
+
+	timeForMarshal := NormalizeTimeForMarshal(time.Time(t))
+
+	if timeForMarshal.IsZero() {
+		w.RawString(jsonNull)
+	} else {
+		tstr, err := timeForMarshal.MarshalJSON()
+		w.Raw(tstr, err)
+	}
 
 	return w.Buffer.BuildBytes(), w.Error
 }

@@ -11,5 +11,5 @@ package v1
 type ScopeSelector struct {
 
 	// A list of scope selector requirements by scope of the resources.
-	MatchExpressions []*ScopedResourceSelectorRequirement `json:"matchExpressions"`
+	MatchExpressions []*ScopedResourceSelectorRequirement `json:"matchExpressions,omitempty"`
 }

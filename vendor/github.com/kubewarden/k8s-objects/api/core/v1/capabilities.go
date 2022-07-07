@@ -11,8 +11,8 @@ package v1
 type Capabilities struct {
 
 	// Added capabilities
-	Add []string `json:"add"`
+	Add []string `json:"add,omitempty"`
 
 	// Removed capabilities
-	Drop []string `json:"drop"`
+	Drop []string `json:"drop,omitempty"`
 }

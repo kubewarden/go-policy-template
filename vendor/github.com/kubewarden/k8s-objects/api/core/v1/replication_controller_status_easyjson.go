@@ -105,7 +105,7 @@ func easyjson787cf0f8EncodeGithubComKubewardenK8sObjectsApiCoreV1(out *jwriter.W
 		out.RawString(prefix[1:])
 		out.Int32(int32(in.AvailableReplicas))
 	}
-	{
+	if len(in.Conditions) != 0 {
 		const prefix string = ",\"conditions\":"
 		if first {
 			first = false
@@ -113,9 +113,7 @@ func easyjson787cf0f8EncodeGithubComKubewardenK8sObjectsApiCoreV1(out *jwriter.W
 		} else {
 			out.RawString(prefix)
 		}
-		if in.Conditions == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
-			out.RawString("null")
-		} else {
+		{
 			out.RawByte('[')
 			for v2, v3 := range in.Conditions {
 				if v2 > 0 {
@@ -132,22 +130,42 @@ func easyjson787cf0f8EncodeGithubComKubewardenK8sObjectsApiCoreV1(out *jwriter.W
 	}
 	if in.FullyLabeledReplicas != 0 {
 		const prefix string = ",\"fullyLabeledReplicas\":"
-		out.RawString(prefix)
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
 		out.Int32(int32(in.FullyLabeledReplicas))
 	}
 	if in.ObservedGeneration != 0 {
 		const prefix string = ",\"observedGeneration\":"
-		out.RawString(prefix)
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
 		out.Int64(int64(in.ObservedGeneration))
 	}
 	if in.ReadyReplicas != 0 {
 		const prefix string = ",\"readyReplicas\":"
-		out.RawString(prefix)
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
 		out.Int32(int32(in.ReadyReplicas))
 	}
 	{
 		const prefix string = ",\"replicas\":"
-		out.RawString(prefix)
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
 		if in.Replicas == nil {
 			out.RawString("null")
 		} else {

@@ -43,15 +43,23 @@ func easyjsonFc0a5813DecodeGithubComKubewardenK8sObjectsApiCoreV1(in *jlexer.Lex
 			} else {
 				in.Delim('{')
 				if !in.IsDelim('}') {
-					out.Hard = make(map[string]resource.Quantity)
+					out.Hard = make(map[string]*resource.Quantity)
 				} else {
 					out.Hard = nil
 				}
 				for !in.IsDelim('}') {
 					key := string(in.String())
 					in.WantColon()
-					var v1 resource.Quantity
-					v1 = resource.Quantity(in.String())
+					var v1 *resource.Quantity
+					if in.IsNull() {
+						in.Skip()
+						v1 = nil
+					} else {
+						if v1 == nil {
+							v1 = new(resource.Quantity)
+						}
+						*v1 = resource.Quantity(in.String())
+					}
 					(out.Hard)[key] = v1
 					in.WantComma()
 				}
@@ -119,7 +127,11 @@ func easyjsonFc0a5813EncodeGithubComKubewardenK8sObjectsApiCoreV1(out *jwriter.W
 				}
 				out.String(string(v3Name))
 				out.RawByte(':')
-				out.String(string(v3Value))
+				if v3Value == nil {
+					out.RawString("null")
+				} else {
+					out.String(string(*v3Value))
+				}
 			}
 			out.RawByte('}')
 		}
@@ -134,7 +146,7 @@ func easyjsonFc0a5813EncodeGithubComKubewardenK8sObjectsApiCoreV1(out *jwriter.W
 		}
 		easyjsonFc0a5813EncodeGithubComKubewardenK8sObjectsApiCoreV11(out, *in.ScopeSelector)
 	}
-	{
+	if len(in.Scopes) != 0 {
 		const prefix string = ",\"scopes\":"
 		if first {
 			first = false
@@ -142,9 +154,7 @@ func easyjsonFc0a5813EncodeGithubComKubewardenK8sObjectsApiCoreV1(out *jwriter.W
 		} else {
 			out.RawString(prefix)
 		}
-		if in.Scopes == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
-			out.RawString("null")
-		} else {
+		{
 			out.RawByte('[')
 			for v4, v5 := range in.Scopes {
 				if v4 > 0 {
@@ -245,12 +255,11 @@ func easyjsonFc0a5813EncodeGithubComKubewardenK8sObjectsApiCoreV11(out *jwriter.
 	out.RawByte('{')
 	first := true
 	_ = first
-	{
+	if len(in.MatchExpressions) != 0 {
 		const prefix string = ",\"matchExpressions\":"
+		first = false
 		out.RawString(prefix[1:])
-		if in.MatchExpressions == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
-			out.RawString("null")
-		} else {
+		{
 			out.RawByte('[')
 			for v7, v8 := range in.MatchExpressions {
 				if v7 > 0 {
@@ -361,12 +370,10 @@ func easyjsonFc0a5813EncodeGithubComKubewardenK8sObjectsApiCoreV12(out *jwriter.
 			out.String(string(*in.ScopeName))
 		}
 	}
-	{
+	if len(in.Values) != 0 {
 		const prefix string = ",\"values\":"
 		out.RawString(prefix)
-		if in.Values == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
-			out.RawString("null")
-		} else {
+		{
 			out.RawByte('[')
 			for v10, v11 := range in.Values {
 				if v10 > 0 {

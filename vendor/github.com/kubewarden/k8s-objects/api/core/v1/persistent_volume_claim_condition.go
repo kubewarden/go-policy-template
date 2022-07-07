@@ -15,10 +15,10 @@ import (
 type PersistentVolumeClaimCondition struct {
 
 	// lastProbeTime is the time we probed the condition.
-	LastProbeTime apimachinery_pkg_apis_meta_v1.Time `json:"lastProbeTime,omitempty"`
+	LastProbeTime *apimachinery_pkg_apis_meta_v1.Time `json:"lastProbeTime,omitempty"`
 
 	// lastTransitionTime is the time the condition transitioned from one status to another.
-	LastTransitionTime apimachinery_pkg_apis_meta_v1.Time `json:"lastTransitionTime,omitempty"`
+	LastTransitionTime *apimachinery_pkg_apis_meta_v1.Time `json:"lastTransitionTime,omitempty"`
 
 	// message is the human-readable message indicating details about last transition.
 	Message string `json:"message,omitempty"`

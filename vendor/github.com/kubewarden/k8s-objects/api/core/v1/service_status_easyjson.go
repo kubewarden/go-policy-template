@@ -45,16 +45,24 @@ func easyjson4b13d882DecodeGithubComKubewardenK8sObjectsApiCoreV1(in *jlexer.Lex
 				in.Delim('[')
 				if out.Conditions == nil {
 					if !in.IsDelim(']') {
-						out.Conditions = make([]_v1.Condition, 0, 1)
+						out.Conditions = make([]*_v1.Condition, 0, 8)
 					} else {
-						out.Conditions = []_v1.Condition{}
+						out.Conditions = []*_v1.Condition{}
 					}
 				} else {
 					out.Conditions = (out.Conditions)[:0]
 				}
 				for !in.IsDelim(']') {
-					var v1 _v1.Condition
-					(v1).UnmarshalEasyJSON(in)
+					var v1 *_v1.Condition
+					if in.IsNull() {
+						in.Skip()
+						v1 = nil
+					} else {
+						if v1 == nil {
+							v1 = new(_v1.Condition)
+						}
+						(*v1).UnmarshalEasyJSON(in)
+					}
 					out.Conditions = append(out.Conditions, v1)
 					in.WantComma()
 				}
@@ -84,25 +92,33 @@ func easyjson4b13d882EncodeGithubComKubewardenK8sObjectsApiCoreV1(out *jwriter.W
 	out.RawByte('{')
 	first := true
 	_ = first
-	{
+	if len(in.Conditions) != 0 {
 		const prefix string = ",\"conditions\":"
+		first = false
 		out.RawString(prefix[1:])
-		if in.Conditions == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
-			out.RawString("null")
-		} else {
+		{
 			out.RawByte('[')
 			for v2, v3 := range in.Conditions {
 				if v2 > 0 {
 					out.RawByte(',')
 				}
-				(v3).MarshalEasyJSON(out)
+				if v3 == nil {
+					out.RawString("null")
+				} else {
+					(*v3).MarshalEasyJSON(out)
+				}
 			}
 			out.RawByte(']')
 		}
 	}
 	if in.LoadBalancer != nil {
 		const prefix string = ",\"loadBalancer\":"
-		out.RawString(prefix)
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
 		(*in.LoadBalancer).MarshalEasyJSON(out)
 	}
 	out.RawByte('}')

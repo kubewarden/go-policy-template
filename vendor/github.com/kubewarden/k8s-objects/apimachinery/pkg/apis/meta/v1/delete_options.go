@@ -14,7 +14,7 @@ type DeleteOptions struct {
 	APIVersion string `json:"apiVersion,omitempty"`
 
 	// When present, indicates that modifications should not be persisted. An invalid or unrecognized dryRun directive will result in an error response and no further processing of the request. Valid values are: - All: all dry run stages will be processed
-	DryRun []string `json:"dryRun"`
+	DryRun []string `json:"dryRun,omitempty"`
 
 	// The duration in seconds before the object should be deleted. Value must be non-negative integer. The value zero indicates delete immediately. If this value is nil, the default grace period for the specified type will be used. Defaults to a per object value if not specified. zero means delete immediately.
 	GracePeriodSeconds int64 `json:"gracePeriodSeconds,omitempty"`

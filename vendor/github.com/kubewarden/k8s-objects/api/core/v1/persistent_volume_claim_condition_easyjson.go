@@ -4,6 +4,7 @@ package v1
 
 import (
 	json "encoding/json"
+	_v1 "github.com/kubewarden/k8s-objects/apimachinery/pkg/apis/meta/v1"
 	easyjson "github.com/mailru/easyjson"
 	jlexer "github.com/mailru/easyjson/jlexer"
 	jwriter "github.com/mailru/easyjson/jwriter"
@@ -37,12 +38,28 @@ func easyjson65968fddDecodeGithubComKubewardenK8sObjectsApiCoreV1(in *jlexer.Lex
 		}
 		switch key {
 		case "lastProbeTime":
-			if data := in.Raw(); in.Ok() {
-				in.AddError((out.LastProbeTime).UnmarshalJSON(data))
+			if in.IsNull() {
+				in.Skip()
+				out.LastProbeTime = nil
+			} else {
+				if out.LastProbeTime == nil {
+					out.LastProbeTime = new(_v1.Time)
+				}
+				if data := in.Raw(); in.Ok() {
+					in.AddError((*out.LastProbeTime).UnmarshalJSON(data))
+				}
 			}
 		case "lastTransitionTime":
-			if data := in.Raw(); in.Ok() {
-				in.AddError((out.LastTransitionTime).UnmarshalJSON(data))
+			if in.IsNull() {
+				in.Skip()
+				out.LastTransitionTime = nil
+			} else {
+				if out.LastTransitionTime == nil {
+					out.LastTransitionTime = new(_v1.Time)
+				}
+				if data := in.Raw(); in.Ok() {
+					in.AddError((*out.LastTransitionTime).UnmarshalJSON(data))
+				}
 			}
 		case "message":
 			out.Message = string(in.String())
@@ -82,13 +99,13 @@ func easyjson65968fddEncodeGithubComKubewardenK8sObjectsApiCoreV1(out *jwriter.W
 	out.RawByte('{')
 	first := true
 	_ = first
-	if true {
+	if in.LastProbeTime != nil {
 		const prefix string = ",\"lastProbeTime\":"
 		first = false
 		out.RawString(prefix[1:])
-		out.Raw((in.LastProbeTime).MarshalJSON())
+		out.Raw((*in.LastProbeTime).MarshalJSON())
 	}
-	if true {
+	if in.LastTransitionTime != nil {
 		const prefix string = ",\"lastTransitionTime\":"
 		if first {
 			first = false
@@ -96,7 +113,7 @@ func easyjson65968fddEncodeGithubComKubewardenK8sObjectsApiCoreV1(out *jwriter.W
 		} else {
 			out.RawString(prefix)
 		}
-		out.Raw((in.LastTransitionTime).MarshalJSON())
+		out.Raw((*in.LastTransitionTime).MarshalJSON())
 	}
 	if in.Message != "" {
 		const prefix string = ",\"message\":"

@@ -11,5 +11,5 @@ package v1
 type LoadBalancerStatus struct {
 
 	// Ingress is a list containing ingress points for the load-balancer. Traffic intended for the service should be sent to these ingress points.
-	Ingress []*LoadBalancerIngress `json:"ingress"`
+	Ingress []*LoadBalancerIngress `json:"ingress,omitempty"`
 }

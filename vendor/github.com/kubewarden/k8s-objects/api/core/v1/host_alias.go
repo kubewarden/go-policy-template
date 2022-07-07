@@ -11,7 +11,7 @@ package v1
 type HostAlias struct {
 
 	// Hostnames for the above IP address.
-	Hostnames []string `json:"hostnames"`
+	Hostnames []string `json:"hostnames,omitempty"`
 
 	// IP address of the host file entry.
 	IP string `json:"ip,omitempty"`

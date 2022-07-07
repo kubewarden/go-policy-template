@@ -15,7 +15,7 @@ import (
 type PersistentVolumeClaimTemplate struct {
 
 	// May contain labels and annotations that will be copied into the PVC when creating it. No other fields are allowed and will be rejected during validation.
-	Metadata apimachinery_pkg_apis_meta_v1.ObjectMeta `json:"metadata,omitempty"`
+	Metadata *apimachinery_pkg_apis_meta_v1.ObjectMeta `json:"metadata,omitempty"`
 
 	// The specification for the PersistentVolumeClaim. The entire content is copied unchanged into the PVC that gets created from this template. The same fields as in a PersistentVolumeClaim are also valid here.
 	// Required: true

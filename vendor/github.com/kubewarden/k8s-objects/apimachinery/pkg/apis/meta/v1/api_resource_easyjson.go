@@ -165,12 +165,11 @@ func easyjsonEdf567a7EncodeGithubComKubewardenK8sObjectsApimachineryPkgApisMetaV
 	out.RawByte('{')
 	first := true
 	_ = first
-	{
+	if len(in.Categories) != 0 {
 		const prefix string = ",\"categories\":"
+		first = false
 		out.RawString(prefix[1:])
-		if in.Categories == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
-			out.RawString("null")
-		} else {
+		{
 			out.RawByte('[')
 			for v4, v5 := range in.Categories {
 				if v4 > 0 {
@@ -183,12 +182,22 @@ func easyjsonEdf567a7EncodeGithubComKubewardenK8sObjectsApimachineryPkgApisMetaV
 	}
 	if in.Group != "" {
 		const prefix string = ",\"group\":"
-		out.RawString(prefix)
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
 		out.String(string(in.Group))
 	}
 	{
 		const prefix string = ",\"kind\":"
-		out.RawString(prefix)
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
 		if in.Kind == nil {
 			out.RawString("null")
 		} else {
@@ -213,12 +222,10 @@ func easyjsonEdf567a7EncodeGithubComKubewardenK8sObjectsApimachineryPkgApisMetaV
 			out.Bool(bool(*in.Namespaced))
 		}
 	}
-	{
+	if len(in.ShortNames) != 0 {
 		const prefix string = ",\"shortNames\":"
 		out.RawString(prefix)
-		if in.ShortNames == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
-			out.RawString("null")
-		} else {
+		{
 			out.RawByte('[')
 			for v6, v7 := range in.ShortNames {
 				if v6 > 0 {

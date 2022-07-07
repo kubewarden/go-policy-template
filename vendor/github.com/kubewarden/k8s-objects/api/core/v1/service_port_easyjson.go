@@ -56,7 +56,15 @@ func easyjsonAe6c9c81DecodeGithubComKubewardenK8sObjectsApiCoreV1(in *jlexer.Lex
 		case "protocol":
 			out.Protocol = string(in.String())
 		case "targetPort":
-			out.TargetPort = intstr.IntOrString(in.String())
+			if in.IsNull() {
+				in.Skip()
+				out.TargetPort = nil
+			} else {
+				if out.TargetPort == nil {
+					out.TargetPort = new(intstr.IntOrString)
+				}
+				*out.TargetPort = intstr.IntOrString(in.String())
+			}
 		default:
 			in.SkipRecursive()
 		}
@@ -116,10 +124,10 @@ func easyjsonAe6c9c81EncodeGithubComKubewardenK8sObjectsApiCoreV1(out *jwriter.W
 		out.RawString(prefix)
 		out.String(string(in.Protocol))
 	}
-	if in.TargetPort != "" {
+	if in.TargetPort != nil {
 		const prefix string = ",\"targetPort\":"
 		out.RawString(prefix)
-		out.String(string(in.TargetPort))
+		out.String(string(*in.TargetPort))
 	}
 	out.RawByte('}')
 }

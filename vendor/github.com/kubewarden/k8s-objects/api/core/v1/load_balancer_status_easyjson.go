@@ -81,12 +81,11 @@ func easyjson55ad6c3aEncodeGithubComKubewardenK8sObjectsApiCoreV1(out *jwriter.W
 	out.RawByte('{')
 	first := true
 	_ = first
-	{
+	if len(in.Ingress) != 0 {
 		const prefix string = ",\"ingress\":"
+		first = false
 		out.RawString(prefix[1:])
-		if in.Ingress == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
-			out.RawString("null")
-		} else {
+		{
 			out.RawByte('[')
 			for v2, v3 := range in.Ingress {
 				if v2 > 0 {

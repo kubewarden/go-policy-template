@@ -17,5 +17,5 @@ type LoadBalancerIngress struct {
 	IP string `json:"ip,omitempty"`
 
 	// Ports is a list of records of service ports If used, every port defined in the service should have an entry in it
-	Ports []*PortStatus `json:"ports"`
+	Ports []*PortStatus `json:"ports,omitempty"`
 }

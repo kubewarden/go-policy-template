@@ -4,6 +4,7 @@ package v1
 
 import (
 	json "encoding/json"
+	_v1 "github.com/kubewarden/k8s-objects/apimachinery/pkg/apis/meta/v1"
 	easyjson "github.com/mailru/easyjson"
 	jlexer "github.com/mailru/easyjson/jlexer"
 	jwriter "github.com/mailru/easyjson/jwriter"
@@ -74,7 +75,15 @@ func easyjson3d7129e3DecodeGithubComKubewardenK8sObjectsApiCoreV1(in *jlexer.Lex
 		case "kind":
 			out.Kind = string(in.String())
 		case "metadata":
-			(out.Metadata).UnmarshalEasyJSON(in)
+			if in.IsNull() {
+				in.Skip()
+				out.Metadata = nil
+			} else {
+				if out.Metadata == nil {
+					out.Metadata = new(_v1.ObjectMeta)
+				}
+				(*out.Metadata).UnmarshalEasyJSON(in)
+			}
 		case "secrets":
 			if in.IsNull() {
 				in.Skip()
@@ -136,7 +145,7 @@ func easyjson3d7129e3EncodeGithubComKubewardenK8sObjectsApiCoreV1(out *jwriter.W
 		}
 		out.Bool(bool(in.AutomountServiceAccountToken))
 	}
-	{
+	if len(in.ImagePullSecrets) != 0 {
 		const prefix string = ",\"imagePullSecrets\":"
 		if first {
 			first = false
@@ -144,9 +153,7 @@ func easyjson3d7129e3EncodeGithubComKubewardenK8sObjectsApiCoreV1(out *jwriter.W
 		} else {
 			out.RawString(prefix)
 		}
-		if in.ImagePullSecrets == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
-			out.RawString("null")
-		} else {
+		{
 			out.RawByte('[')
 			for v3, v4 := range in.ImagePullSecrets {
 				if v3 > 0 {
@@ -163,20 +170,33 @@ func easyjson3d7129e3EncodeGithubComKubewardenK8sObjectsApiCoreV1(out *jwriter.W
 	}
 	if in.Kind != "" {
 		const prefix string = ",\"kind\":"
-		out.RawString(prefix)
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
 		out.String(string(in.Kind))
 	}
-	if true {
+	if in.Metadata != nil {
 		const prefix string = ",\"metadata\":"
-		out.RawString(prefix)
-		(in.Metadata).MarshalEasyJSON(out)
-	}
-	{
-		const prefix string = ",\"secrets\":"
-		out.RawString(prefix)
-		if in.Secrets == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
-			out.RawString("null")
+		if first {
+			first = false
+			out.RawString(prefix[1:])
 		} else {
+			out.RawString(prefix)
+		}
+		(*in.Metadata).MarshalEasyJSON(out)
+	}
+	if len(in.Secrets) != 0 {
+		const prefix string = ",\"secrets\":"
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
+		{
 			out.RawByte('[')
 			for v5, v6 := range in.Secrets {
 				if v5 > 0 {

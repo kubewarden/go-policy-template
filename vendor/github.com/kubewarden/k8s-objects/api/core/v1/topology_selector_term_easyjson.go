@@ -81,12 +81,11 @@ func easyjsonB66dba6eEncodeGithubComKubewardenK8sObjectsApiCoreV1(out *jwriter.W
 	out.RawByte('{')
 	first := true
 	_ = first
-	{
+	if len(in.MatchLabelExpressions) != 0 {
 		const prefix string = ",\"matchLabelExpressions\":"
+		first = false
 		out.RawString(prefix[1:])
-		if in.MatchLabelExpressions == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
-			out.RawString("null")
-		} else {
+		{
 			out.RawByte('[')
 			for v2, v3 := range in.MatchLabelExpressions {
 				if v2 > 0 {

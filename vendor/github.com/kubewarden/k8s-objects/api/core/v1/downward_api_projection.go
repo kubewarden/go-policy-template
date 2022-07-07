@@ -11,5 +11,5 @@ package v1
 type DownwardAPIProjection struct {
 
 	// Items is a list of DownwardAPIVolume file
-	Items []*DownwardAPIVolumeFile `json:"items"`
+	Items []*DownwardAPIVolumeFile `json:"items,omitempty"`
 }

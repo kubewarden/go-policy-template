@@ -4,6 +4,7 @@ package v1
 
 import (
 	json "encoding/json"
+	_v1 "github.com/kubewarden/k8s-objects/apimachinery/pkg/apis/meta/v1"
 	easyjson "github.com/mailru/easyjson"
 	jlexer "github.com/mailru/easyjson/jlexer"
 	jwriter "github.com/mailru/easyjson/jwriter"
@@ -57,8 +58,16 @@ func easyjson9f3c6a92DecodeGithubComKubewardenK8sObjectsApiCoreV1(in *jlexer.Lex
 				*out.Key = string(in.String())
 			}
 		case "timeAdded":
-			if data := in.Raw(); in.Ok() {
-				in.AddError((out.TimeAdded).UnmarshalJSON(data))
+			if in.IsNull() {
+				in.Skip()
+				out.TimeAdded = nil
+			} else {
+				if out.TimeAdded == nil {
+					out.TimeAdded = new(_v1.Time)
+				}
+				if data := in.Raw(); in.Ok() {
+					in.AddError((*out.TimeAdded).UnmarshalJSON(data))
+				}
 			}
 		case "value":
 			out.Value = string(in.String())
@@ -94,10 +103,10 @@ func easyjson9f3c6a92EncodeGithubComKubewardenK8sObjectsApiCoreV1(out *jwriter.W
 			out.String(string(*in.Key))
 		}
 	}
-	if true {
+	if in.TimeAdded != nil {
 		const prefix string = ",\"timeAdded\":"
 		out.RawString(prefix)
-		out.Raw((in.TimeAdded).MarshalJSON())
+		out.Raw((*in.TimeAdded).MarshalJSON())
 	}
 	if in.Value != "" {
 		const prefix string = ",\"value\":"

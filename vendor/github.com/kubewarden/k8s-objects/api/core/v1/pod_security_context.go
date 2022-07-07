@@ -36,10 +36,10 @@ type PodSecurityContext struct {
 	SeccompProfile *SeccompProfile `json:"seccompProfile,omitempty"`
 
 	// A list of groups applied to the first process run in each container, in addition to the container's primary GID.  If unspecified, no groups will be added to any container. Note that this field cannot be set when spec.os.name is windows.
-	SupplementalGroups []int64 `json:"supplementalGroups"`
+	SupplementalGroups []int64 `json:"supplementalGroups,omitempty"`
 
 	// Sysctls hold a list of namespaced sysctls used for the pod. Pods with unsupported sysctls (by the container runtime) might fail to launch. Note that this field cannot be set when spec.os.name is windows.
-	Sysctls []*Sysctl `json:"sysctls"`
+	Sysctls []*Sysctl `json:"sysctls,omitempty"`
 
 	// The Windows specific settings applied to all containers. If unspecified, the options within a container's SecurityContext will be used. If set in both SecurityContext and PodSecurityContext, the value specified in SecurityContext takes precedence. Note that this field cannot be set when spec.os.name is linux.
 	WindowsOptions *WindowsSecurityContextOptions `json:"windowsOptions,omitempty"`

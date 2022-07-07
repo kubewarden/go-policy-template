@@ -11,8 +11,8 @@ package v1
 type NodeSelectorTerm struct {
 
 	// A list of node selector requirements by node's labels.
-	MatchExpressions []*NodeSelectorRequirement `json:"matchExpressions"`
+	MatchExpressions []*NodeSelectorRequirement `json:"matchExpressions,omitempty"`
 
 	// A list of node selector requirements by node's fields.
-	MatchFields []*NodeSelectorRequirement `json:"matchFields"`
+	MatchFields []*NodeSelectorRequirement `json:"matchFields,omitempty"`
 }

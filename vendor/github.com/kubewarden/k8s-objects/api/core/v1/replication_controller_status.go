@@ -14,7 +14,7 @@ type ReplicationControllerStatus struct {
 	AvailableReplicas int32 `json:"availableReplicas,omitempty"`
 
 	// Represents the latest available observations of a replication controller's current state.
-	Conditions []*ReplicationControllerCondition `json:"conditions"`
+	Conditions []*ReplicationControllerCondition `json:"conditions,omitempty"`
 
 	// The number of pods that have labels matching the labels of the pod template of the replication controller.
 	FullyLabeledReplicas int32 `json:"fullyLabeledReplicas,omitempty"`

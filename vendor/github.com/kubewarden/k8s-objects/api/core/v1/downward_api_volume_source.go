@@ -14,5 +14,5 @@ type DownwardAPIVolumeSource struct {
 	DefaultMode int32 `json:"defaultMode,omitempty"`
 
 	// Items is a list of downward API volume file
-	Items []*DownwardAPIVolumeFile `json:"items"`
+	Items []*DownwardAPIVolumeFile `json:"items,omitempty"`
 }

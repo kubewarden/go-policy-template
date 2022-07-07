@@ -44,12 +44,28 @@ func easyjsonF642ad3eDecodeGithubComKubewardenK8sObjectsApiCoreV1(in *jlexer.Lex
 		case "count":
 			out.Count = int32(in.Int32())
 		case "eventTime":
-			if data := in.Raw(); in.Ok() {
-				in.AddError((out.EventTime).UnmarshalJSON(data))
+			if in.IsNull() {
+				in.Skip()
+				out.EventTime = nil
+			} else {
+				if out.EventTime == nil {
+					out.EventTime = new(_v1.MicroTime)
+				}
+				if data := in.Raw(); in.Ok() {
+					in.AddError((*out.EventTime).UnmarshalJSON(data))
+				}
 			}
 		case "firstTimestamp":
-			if data := in.Raw(); in.Ok() {
-				in.AddError((out.FirstTimestamp).UnmarshalJSON(data))
+			if in.IsNull() {
+				in.Skip()
+				out.FirstTimestamp = nil
+			} else {
+				if out.FirstTimestamp == nil {
+					out.FirstTimestamp = new(_v1.Time)
+				}
+				if data := in.Raw(); in.Ok() {
+					in.AddError((*out.FirstTimestamp).UnmarshalJSON(data))
+				}
 			}
 		case "involvedObject":
 			if in.IsNull() {
@@ -64,8 +80,16 @@ func easyjsonF642ad3eDecodeGithubComKubewardenK8sObjectsApiCoreV1(in *jlexer.Lex
 		case "kind":
 			out.Kind = string(in.String())
 		case "lastTimestamp":
-			if data := in.Raw(); in.Ok() {
-				in.AddError((out.LastTimestamp).UnmarshalJSON(data))
+			if in.IsNull() {
+				in.Skip()
+				out.LastTimestamp = nil
+			} else {
+				if out.LastTimestamp == nil {
+					out.LastTimestamp = new(_v1.Time)
+				}
+				if data := in.Raw(); in.Ok() {
+					in.AddError((*out.LastTimestamp).UnmarshalJSON(data))
+				}
 			}
 		case "message":
 			out.Message = string(in.String())
@@ -157,7 +181,7 @@ func easyjsonF642ad3eEncodeGithubComKubewardenK8sObjectsApiCoreV1(out *jwriter.W
 		}
 		out.Int32(int32(in.Count))
 	}
-	if true {
+	if in.EventTime != nil {
 		const prefix string = ",\"eventTime\":"
 		if first {
 			first = false
@@ -165,9 +189,9 @@ func easyjsonF642ad3eEncodeGithubComKubewardenK8sObjectsApiCoreV1(out *jwriter.W
 		} else {
 			out.RawString(prefix)
 		}
-		out.Raw((in.EventTime).MarshalJSON())
+		out.Raw((*in.EventTime).MarshalJSON())
 	}
-	if true {
+	if in.FirstTimestamp != nil {
 		const prefix string = ",\"firstTimestamp\":"
 		if first {
 			first = false
@@ -175,7 +199,7 @@ func easyjsonF642ad3eEncodeGithubComKubewardenK8sObjectsApiCoreV1(out *jwriter.W
 		} else {
 			out.RawString(prefix)
 		}
-		out.Raw((in.FirstTimestamp).MarshalJSON())
+		out.Raw((*in.FirstTimestamp).MarshalJSON())
 	}
 	{
 		const prefix string = ",\"involvedObject\":"
@@ -196,10 +220,10 @@ func easyjsonF642ad3eEncodeGithubComKubewardenK8sObjectsApiCoreV1(out *jwriter.W
 		out.RawString(prefix)
 		out.String(string(in.Kind))
 	}
-	if true {
+	if in.LastTimestamp != nil {
 		const prefix string = ",\"lastTimestamp\":"
 		out.RawString(prefix)
-		out.Raw((in.LastTimestamp).MarshalJSON())
+		out.Raw((*in.LastTimestamp).MarshalJSON())
 	}
 	if in.Message != "" {
 		const prefix string = ",\"message\":"
@@ -353,8 +377,16 @@ func easyjsonF642ad3eDecodeGithubComKubewardenK8sObjectsApiCoreV12(in *jlexer.Le
 		case "count":
 			out.Count = int32(in.Int32())
 		case "lastObservedTime":
-			if data := in.Raw(); in.Ok() {
-				in.AddError((out.LastObservedTime).UnmarshalJSON(data))
+			if in.IsNull() {
+				in.Skip()
+				out.LastObservedTime = nil
+			} else {
+				if out.LastObservedTime == nil {
+					out.LastObservedTime = new(_v1.MicroTime)
+				}
+				if data := in.Raw(); in.Ok() {
+					in.AddError((*out.LastObservedTime).UnmarshalJSON(data))
+				}
 			}
 		default:
 			in.SkipRecursive()
@@ -376,7 +408,7 @@ func easyjsonF642ad3eEncodeGithubComKubewardenK8sObjectsApiCoreV12(out *jwriter.
 		out.RawString(prefix[1:])
 		out.Int32(int32(in.Count))
 	}
-	if true {
+	if in.LastObservedTime != nil {
 		const prefix string = ",\"lastObservedTime\":"
 		if first {
 			first = false
@@ -384,7 +416,7 @@ func easyjsonF642ad3eEncodeGithubComKubewardenK8sObjectsApiCoreV12(out *jwriter.
 		} else {
 			out.RawString(prefix)
 		}
-		out.Raw((in.LastObservedTime).MarshalJSON())
+		out.Raw((*in.LastObservedTime).MarshalJSON())
 	}
 	out.RawByte('}')
 }

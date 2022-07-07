@@ -74,15 +74,23 @@ func easyjson94b78b83DecodeGithubComKubewardenK8sObjectsApiCoreV1(in *jlexer.Lex
 			} else {
 				in.Delim('{')
 				if !in.IsDelim('}') {
-					out.Allocatable = make(map[string]resource.Quantity)
+					out.Allocatable = make(map[string]*resource.Quantity)
 				} else {
 					out.Allocatable = nil
 				}
 				for !in.IsDelim('}') {
 					key := string(in.String())
 					in.WantColon()
-					var v2 resource.Quantity
-					v2 = resource.Quantity(in.String())
+					var v2 *resource.Quantity
+					if in.IsNull() {
+						in.Skip()
+						v2 = nil
+					} else {
+						if v2 == nil {
+							v2 = new(resource.Quantity)
+						}
+						*v2 = resource.Quantity(in.String())
+					}
 					(out.Allocatable)[key] = v2
 					in.WantComma()
 				}
@@ -94,15 +102,23 @@ func easyjson94b78b83DecodeGithubComKubewardenK8sObjectsApiCoreV1(in *jlexer.Lex
 			} else {
 				in.Delim('{')
 				if !in.IsDelim('}') {
-					out.Capacity = make(map[string]resource.Quantity)
+					out.Capacity = make(map[string]*resource.Quantity)
 				} else {
 					out.Capacity = nil
 				}
 				for !in.IsDelim('}') {
 					key := string(in.String())
 					in.WantColon()
-					var v3 resource.Quantity
-					v3 = resource.Quantity(in.String())
+					var v3 *resource.Quantity
+					if in.IsNull() {
+						in.Skip()
+						v3 = nil
+					} else {
+						if v3 == nil {
+							v3 = new(resource.Quantity)
+						}
+						*v3 = resource.Quantity(in.String())
+					}
 					(out.Capacity)[key] = v3
 					in.WantComma()
 				}
@@ -270,12 +286,11 @@ func easyjson94b78b83EncodeGithubComKubewardenK8sObjectsApiCoreV1(out *jwriter.W
 	out.RawByte('{')
 	first := true
 	_ = first
-	{
+	if len(in.Addresses) != 0 {
 		const prefix string = ",\"addresses\":"
+		first = false
 		out.RawString(prefix[1:])
-		if in.Addresses == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
-			out.RawString("null")
-		} else {
+		{
 			out.RawByte('[')
 			for v8, v9 := range in.Addresses {
 				if v8 > 0 {
@@ -292,7 +307,12 @@ func easyjson94b78b83EncodeGithubComKubewardenK8sObjectsApiCoreV1(out *jwriter.W
 	}
 	if len(in.Allocatable) != 0 {
 		const prefix string = ",\"allocatable\":"
-		out.RawString(prefix)
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
 		{
 			out.RawByte('{')
 			v10First := true
@@ -304,14 +324,23 @@ func easyjson94b78b83EncodeGithubComKubewardenK8sObjectsApiCoreV1(out *jwriter.W
 				}
 				out.String(string(v10Name))
 				out.RawByte(':')
-				out.String(string(v10Value))
+				if v10Value == nil {
+					out.RawString("null")
+				} else {
+					out.String(string(*v10Value))
+				}
 			}
 			out.RawByte('}')
 		}
 	}
 	if len(in.Capacity) != 0 {
 		const prefix string = ",\"capacity\":"
-		out.RawString(prefix)
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
 		{
 			out.RawByte('{')
 			v11First := true
@@ -323,17 +352,24 @@ func easyjson94b78b83EncodeGithubComKubewardenK8sObjectsApiCoreV1(out *jwriter.W
 				}
 				out.String(string(v11Name))
 				out.RawByte(':')
-				out.String(string(v11Value))
+				if v11Value == nil {
+					out.RawString("null")
+				} else {
+					out.String(string(*v11Value))
+				}
 			}
 			out.RawByte('}')
 		}
 	}
-	{
+	if len(in.Conditions) != 0 {
 		const prefix string = ",\"conditions\":"
-		out.RawString(prefix)
-		if in.Conditions == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
-			out.RawString("null")
+		if first {
+			first = false
+			out.RawString(prefix[1:])
 		} else {
+			out.RawString(prefix)
+		}
+		{
 			out.RawByte('[')
 			for v12, v13 := range in.Conditions {
 				if v12 > 0 {
@@ -350,20 +386,33 @@ func easyjson94b78b83EncodeGithubComKubewardenK8sObjectsApiCoreV1(out *jwriter.W
 	}
 	if in.Config != nil {
 		const prefix string = ",\"config\":"
-		out.RawString(prefix)
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
 		(*in.Config).MarshalEasyJSON(out)
 	}
 	if in.DaemonEndpoints != nil {
 		const prefix string = ",\"daemonEndpoints\":"
-		out.RawString(prefix)
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
 		(*in.DaemonEndpoints).MarshalEasyJSON(out)
 	}
-	{
+	if len(in.Images) != 0 {
 		const prefix string = ",\"images\":"
-		out.RawString(prefix)
-		if in.Images == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
-			out.RawString("null")
+		if first {
+			first = false
+			out.RawString(prefix[1:])
 		} else {
+			out.RawString(prefix)
+		}
+		{
 			out.RawByte('[')
 			for v14, v15 := range in.Images {
 				if v14 > 0 {
@@ -380,20 +429,33 @@ func easyjson94b78b83EncodeGithubComKubewardenK8sObjectsApiCoreV1(out *jwriter.W
 	}
 	if in.NodeInfo != nil {
 		const prefix string = ",\"nodeInfo\":"
-		out.RawString(prefix)
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
 		easyjson94b78b83EncodeGithubComKubewardenK8sObjectsApiCoreV11(out, *in.NodeInfo)
 	}
 	if in.Phase != "" {
 		const prefix string = ",\"phase\":"
-		out.RawString(prefix)
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
 		out.String(string(in.Phase))
 	}
-	{
+	if len(in.VolumesAttached) != 0 {
 		const prefix string = ",\"volumesAttached\":"
-		out.RawString(prefix)
-		if in.VolumesAttached == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
-			out.RawString("null")
+		if first {
+			first = false
+			out.RawString(prefix[1:])
 		} else {
+			out.RawString(prefix)
+		}
+		{
 			out.RawByte('[')
 			for v16, v17 := range in.VolumesAttached {
 				if v16 > 0 {
@@ -408,12 +470,15 @@ func easyjson94b78b83EncodeGithubComKubewardenK8sObjectsApiCoreV1(out *jwriter.W
 			out.RawByte(']')
 		}
 	}
-	{
+	if len(in.VolumesInUse) != 0 {
 		const prefix string = ",\"volumesInUse\":"
-		out.RawString(prefix)
-		if in.VolumesInUse == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
-			out.RawString("null")
+		if first {
+			first = false
+			out.RawString(prefix[1:])
 		} else {
+			out.RawString(prefix)
+		}
+		{
 			out.RawByte('[')
 			for v18, v19 := range in.VolumesInUse {
 				if v18 > 0 {

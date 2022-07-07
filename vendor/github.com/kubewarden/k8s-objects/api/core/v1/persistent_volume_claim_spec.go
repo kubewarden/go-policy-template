@@ -15,7 +15,7 @@ import (
 type PersistentVolumeClaimSpec struct {
 
 	// accessModes contains the desired access modes the volume should have. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#access-modes-1
-	AccessModes []string `json:"accessModes"`
+	AccessModes []string `json:"accessModes,omitempty"`
 
 	// dataSource field can be used to specify either: * An existing VolumeSnapshot object (snapshot.storage.k8s.io/VolumeSnapshot) * An existing PVC (PersistentVolumeClaim) If the provisioner or an external controller can support the specified data source, it will create a new volume based on the contents of the specified data source. If the AnyVolumeDataSource feature gate is enabled, this field will always have the same contents as the DataSourceRef field.
 	DataSource *TypedLocalObjectReference `json:"dataSource,omitempty"`
@@ -32,7 +32,7 @@ type PersistentVolumeClaimSpec struct {
 	Resources *ResourceRequirements `json:"resources,omitempty"`
 
 	// selector is a label query over volumes to consider for binding.
-	Selector apimachinery_pkg_apis_meta_v1.LabelSelector `json:"selector,omitempty"`
+	Selector *apimachinery_pkg_apis_meta_v1.LabelSelector `json:"selector,omitempty"`
 
 	// storageClassName is the name of the StorageClass required by the claim. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#class-1
 	StorageClassName string `json:"storageClassName,omitempty"`

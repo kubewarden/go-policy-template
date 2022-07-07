@@ -15,16 +15,16 @@ package v1
 type EphemeralContainer struct {
 
 	// Arguments to the entrypoint. The image's CMD is used if this is not provided. Variable references $(VAR_NAME) are expanded using the container's environment. If a variable cannot be resolved, the reference in the input string will be unchanged. Double $$ are reduced to a single $, which allows for escaping the $(VAR_NAME) syntax: i.e. "$$(VAR_NAME)" will produce the string literal "$(VAR_NAME)". Escaped references will never be expanded, regardless of whether the variable exists or not. Cannot be updated. More info: https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#running-a-command-in-a-shell
-	Args []string `json:"args"`
+	Args []string `json:"args,omitempty"`
 
 	// Entrypoint array. Not executed within a shell. The image's ENTRYPOINT is used if this is not provided. Variable references $(VAR_NAME) are expanded using the container's environment. If a variable cannot be resolved, the reference in the input string will be unchanged. Double $$ are reduced to a single $, which allows for escaping the $(VAR_NAME) syntax: i.e. "$$(VAR_NAME)" will produce the string literal "$(VAR_NAME)". Escaped references will never be expanded, regardless of whether the variable exists or not. Cannot be updated. More info: https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#running-a-command-in-a-shell
-	Command []string `json:"command"`
+	Command []string `json:"command,omitempty"`
 
 	// List of environment variables to set in the container. Cannot be updated.
-	Env []*EnvVar `json:"env"`
+	Env []*EnvVar `json:"env,omitempty"`
 
 	// List of sources to populate environment variables in the container. The keys defined within a source must be a C_IDENTIFIER. All invalid keys will be reported as an event when the container is starting. When a key exists in multiple sources, the value associated with the last source will take precedence. Values defined by an Env with a duplicate key will take precedence. Cannot be updated.
-	EnvFrom []*EnvFromSource `json:"envFrom"`
+	EnvFrom []*EnvFromSource `json:"envFrom,omitempty"`
 
 	// Container image name. More info: https://kubernetes.io/docs/concepts/containers/images
 	Image string `json:"image,omitempty"`
@@ -45,7 +45,7 @@ type EphemeralContainer struct {
 	Name *string `json:"name"`
 
 	// Ports are not allowed for ephemeral containers.
-	Ports []*ContainerPort `json:"ports"`
+	Ports []*ContainerPort `json:"ports,omitempty"`
 
 	// Probes are not allowed for ephemeral containers.
 	ReadinessProbe *Probe `json:"readinessProbe,omitempty"`
@@ -82,10 +82,10 @@ type EphemeralContainer struct {
 	Tty bool `json:"tty,omitempty"`
 
 	// volumeDevices is the list of block devices to be used by the container.
-	VolumeDevices []*VolumeDevice `json:"volumeDevices"`
+	VolumeDevices []*VolumeDevice `json:"volumeDevices,omitempty"`
 
 	// Pod volumes to mount into the container's filesystem. Subpath mounts are not allowed for ephemeral containers. Cannot be updated.
-	VolumeMounts []*VolumeMount `json:"volumeMounts"`
+	VolumeMounts []*VolumeMount `json:"volumeMounts,omitempty"`
 
 	// Container's working directory. If not specified, the container runtime's default will be used, which might be configured in the container image. Cannot be updated.
 	WorkingDir string `json:"workingDir,omitempty"`

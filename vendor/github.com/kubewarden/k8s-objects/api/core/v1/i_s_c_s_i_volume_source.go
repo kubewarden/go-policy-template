@@ -34,7 +34,7 @@ type ISCSIVolumeSource struct {
 	Lun *int32 `json:"lun"`
 
 	// portals is the iSCSI Target Portal List. The portal is either an IP or ip_addr:port if the port is other than default (typically TCP ports 860 and 3260).
-	Portals []string `json:"portals"`
+	Portals []string `json:"portals,omitempty"`
 
 	// readOnly here will force the ReadOnly setting in VolumeMounts. Defaults to false.
 	ReadOnly bool `json:"readOnly,omitempty"`

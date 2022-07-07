@@ -15,10 +15,10 @@ import (
 type NodeCondition struct {
 
 	// Last time we got an update on a given condition.
-	LastHeartbeatTime apimachinery_pkg_apis_meta_v1.Time `json:"lastHeartbeatTime,omitempty"`
+	LastHeartbeatTime *apimachinery_pkg_apis_meta_v1.Time `json:"lastHeartbeatTime,omitempty"`
 
 	// Last time the condition transit from one status to another.
-	LastTransitionTime apimachinery_pkg_apis_meta_v1.Time `json:"lastTransitionTime,omitempty"`
+	LastTransitionTime *apimachinery_pkg_apis_meta_v1.Time `json:"lastTransitionTime,omitempty"`
 
 	// Human readable message indicating details about last transition.
 	Message string `json:"message,omitempty"`

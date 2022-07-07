@@ -73,12 +73,11 @@ func easyjsonEe8a932eEncodeGithubComKubewardenK8sObjectsApiCoreV1(out *jwriter.W
 	out.RawByte('{')
 	first := true
 	_ = first
-	{
+	if len(in.Command) != 0 {
 		const prefix string = ",\"command\":"
+		first = false
 		out.RawString(prefix[1:])
-		if in.Command == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
-			out.RawString("null")
-		} else {
+		{
 			out.RawByte('[')
 			for v2, v3 := range in.Command {
 				if v2 > 0 {

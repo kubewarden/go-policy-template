@@ -23,5 +23,5 @@ type ScopedResourceSelectorRequirement struct {
 	ScopeName *string `json:"scopeName"`
 
 	// An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. This array is replaced during a strategic merge patch.
-	Values []string `json:"values"`
+	Values []string `json:"values,omitempty"`
 }

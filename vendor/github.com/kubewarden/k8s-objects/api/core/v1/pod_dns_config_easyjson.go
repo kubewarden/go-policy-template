@@ -127,12 +127,11 @@ func easyjson76d27232EncodeGithubComKubewardenK8sObjectsApiCoreV1(out *jwriter.W
 	out.RawByte('{')
 	first := true
 	_ = first
-	{
+	if len(in.Nameservers) != 0 {
 		const prefix string = ",\"nameservers\":"
+		first = false
 		out.RawString(prefix[1:])
-		if in.Nameservers == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
-			out.RawString("null")
-		} else {
+		{
 			out.RawByte('[')
 			for v4, v5 := range in.Nameservers {
 				if v4 > 0 {
@@ -143,12 +142,15 @@ func easyjson76d27232EncodeGithubComKubewardenK8sObjectsApiCoreV1(out *jwriter.W
 			out.RawByte(']')
 		}
 	}
-	{
+	if len(in.Options) != 0 {
 		const prefix string = ",\"options\":"
-		out.RawString(prefix)
-		if in.Options == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
-			out.RawString("null")
+		if first {
+			first = false
+			out.RawString(prefix[1:])
 		} else {
+			out.RawString(prefix)
+		}
+		{
 			out.RawByte('[')
 			for v6, v7 := range in.Options {
 				if v6 > 0 {
@@ -163,12 +165,15 @@ func easyjson76d27232EncodeGithubComKubewardenK8sObjectsApiCoreV1(out *jwriter.W
 			out.RawByte(']')
 		}
 	}
-	{
+	if len(in.Searches) != 0 {
 		const prefix string = ",\"searches\":"
-		out.RawString(prefix)
-		if in.Searches == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
-			out.RawString("null")
+		if first {
+			first = false
+			out.RawString(prefix[1:])
 		} else {
+			out.RawString(prefix)
+		}
+		{
 			out.RawByte('[')
 			for v8, v9 := range in.Searches {
 				if v8 > 0 {

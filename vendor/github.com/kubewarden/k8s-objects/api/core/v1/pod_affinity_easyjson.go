@@ -4,6 +4,7 @@ package v1
 
 import (
 	json "encoding/json"
+	_v1 "github.com/kubewarden/k8s-objects/apimachinery/pkg/apis/meta/v1"
 	easyjson "github.com/mailru/easyjson"
 	jlexer "github.com/mailru/easyjson/jlexer"
 	jwriter "github.com/mailru/easyjson/jwriter"
@@ -112,12 +113,11 @@ func easyjson5fdbc764EncodeGithubComKubewardenK8sObjectsApiCoreV1(out *jwriter.W
 	out.RawByte('{')
 	first := true
 	_ = first
-	{
+	if len(in.PreferredDuringSchedulingIgnoredDuringExecution) != 0 {
 		const prefix string = ",\"preferredDuringSchedulingIgnoredDuringExecution\":"
+		first = false
 		out.RawString(prefix[1:])
-		if in.PreferredDuringSchedulingIgnoredDuringExecution == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
-			out.RawString("null")
-		} else {
+		{
 			out.RawByte('[')
 			for v3, v4 := range in.PreferredDuringSchedulingIgnoredDuringExecution {
 				if v3 > 0 {
@@ -132,12 +132,15 @@ func easyjson5fdbc764EncodeGithubComKubewardenK8sObjectsApiCoreV1(out *jwriter.W
 			out.RawByte(']')
 		}
 	}
-	{
+	if len(in.RequiredDuringSchedulingIgnoredDuringExecution) != 0 {
 		const prefix string = ",\"requiredDuringSchedulingIgnoredDuringExecution\":"
-		out.RawString(prefix)
-		if in.RequiredDuringSchedulingIgnoredDuringExecution == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
-			out.RawString("null")
+		if first {
+			first = false
+			out.RawString(prefix[1:])
 		} else {
+			out.RawString(prefix)
+		}
+		{
 			out.RawByte('[')
 			for v5, v6 := range in.RequiredDuringSchedulingIgnoredDuringExecution {
 				if v5 > 0 {
@@ -198,9 +201,25 @@ func easyjson5fdbc764DecodeGithubComKubewardenK8sObjectsApiCoreV12(in *jlexer.Le
 		}
 		switch key {
 		case "labelSelector":
-			(out.LabelSelector).UnmarshalEasyJSON(in)
+			if in.IsNull() {
+				in.Skip()
+				out.LabelSelector = nil
+			} else {
+				if out.LabelSelector == nil {
+					out.LabelSelector = new(_v1.LabelSelector)
+				}
+				(*out.LabelSelector).UnmarshalEasyJSON(in)
+			}
 		case "namespaceSelector":
-			(out.NamespaceSelector).UnmarshalEasyJSON(in)
+			if in.IsNull() {
+				in.Skip()
+				out.NamespaceSelector = nil
+			} else {
+				if out.NamespaceSelector == nil {
+					out.NamespaceSelector = new(_v1.LabelSelector)
+				}
+				(*out.NamespaceSelector).UnmarshalEasyJSON(in)
+			}
 		case "namespaces":
 			if in.IsNull() {
 				in.Skip()
@@ -248,13 +267,13 @@ func easyjson5fdbc764EncodeGithubComKubewardenK8sObjectsApiCoreV12(out *jwriter.
 	out.RawByte('{')
 	first := true
 	_ = first
-	if true {
+	if in.LabelSelector != nil {
 		const prefix string = ",\"labelSelector\":"
 		first = false
 		out.RawString(prefix[1:])
-		(in.LabelSelector).MarshalEasyJSON(out)
+		(*in.LabelSelector).MarshalEasyJSON(out)
 	}
-	if true {
+	if in.NamespaceSelector != nil {
 		const prefix string = ",\"namespaceSelector\":"
 		if first {
 			first = false
@@ -262,9 +281,9 @@ func easyjson5fdbc764EncodeGithubComKubewardenK8sObjectsApiCoreV12(out *jwriter.
 		} else {
 			out.RawString(prefix)
 		}
-		(in.NamespaceSelector).MarshalEasyJSON(out)
+		(*in.NamespaceSelector).MarshalEasyJSON(out)
 	}
-	{
+	if len(in.Namespaces) != 0 {
 		const prefix string = ",\"namespaces\":"
 		if first {
 			first = false
@@ -272,9 +291,7 @@ func easyjson5fdbc764EncodeGithubComKubewardenK8sObjectsApiCoreV12(out *jwriter.
 		} else {
 			out.RawString(prefix)
 		}
-		if in.Namespaces == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
-			out.RawString("null")
-		} else {
+		{
 			out.RawByte('[')
 			for v8, v9 := range in.Namespaces {
 				if v8 > 0 {
@@ -287,7 +304,12 @@ func easyjson5fdbc764EncodeGithubComKubewardenK8sObjectsApiCoreV12(out *jwriter.
 	}
 	{
 		const prefix string = ",\"topologyKey\":"
-		out.RawString(prefix)
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
 		if in.TopologyKey == nil {
 			out.RawString("null")
 		} else {

@@ -14,5 +14,5 @@ type ProjectedVolumeSource struct {
 	DefaultMode int32 `json:"defaultMode,omitempty"`
 
 	// sources is the list of volume projections
-	Sources []*VolumeProjection `json:"sources"`
+	Sources []*VolumeProjection `json:"sources,omitempty"`
 }

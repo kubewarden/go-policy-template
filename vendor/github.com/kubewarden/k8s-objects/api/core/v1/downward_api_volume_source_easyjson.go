@@ -89,7 +89,7 @@ func easyjson7dca663cEncodeGithubComKubewardenK8sObjectsApiCoreV1(out *jwriter.W
 		out.RawString(prefix[1:])
 		out.Int32(int32(in.DefaultMode))
 	}
-	{
+	if len(in.Items) != 0 {
 		const prefix string = ",\"items\":"
 		if first {
 			first = false
@@ -97,9 +97,7 @@ func easyjson7dca663cEncodeGithubComKubewardenK8sObjectsApiCoreV1(out *jwriter.W
 		} else {
 			out.RawString(prefix)
 		}
-		if in.Items == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
-			out.RawString("null")
-		} else {
+		{
 			out.RawByte('[')
 			for v2, v3 := range in.Items {
 				if v2 > 0 {

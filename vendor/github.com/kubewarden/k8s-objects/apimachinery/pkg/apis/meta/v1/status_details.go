@@ -11,7 +11,7 @@ package v1
 type StatusDetails struct {
 
 	// The Causes array includes more details associated with the StatusReason failure. Not all StatusReasons may provide detailed causes.
-	Causes []*StatusCause `json:"causes"`
+	Causes []*StatusCause `json:"causes,omitempty"`
 
 	// The group attribute of the resource associated with the status StatusReason.
 	Group string `json:"group,omitempty"`

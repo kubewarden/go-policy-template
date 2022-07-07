@@ -20,8 +20,8 @@ type FCVolumeSource struct {
 	ReadOnly bool `json:"readOnly,omitempty"`
 
 	// targetWWNs is Optional: FC target worldwide names (WWNs)
-	TargetWWNs []string `json:"targetWWNs"`
+	TargetWWNs []string `json:"targetWWNs,omitempty"`
 
 	// wwids Optional: FC volume world wide identifiers (wwids) Either wwids or combination of targetWWNs and lun must be set, but not both simultaneously.
-	Wwids []string `json:"wwids"`
+	Wwids []string `json:"wwids,omitempty"`
 }

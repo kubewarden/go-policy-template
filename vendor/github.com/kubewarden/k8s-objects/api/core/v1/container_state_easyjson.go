@@ -4,6 +4,7 @@ package v1
 
 import (
 	json "encoding/json"
+	_v1 "github.com/kubewarden/k8s-objects/apimachinery/pkg/apis/meta/v1"
 	easyjson "github.com/mailru/easyjson"
 	jlexer "github.com/mailru/easyjson/jlexer"
 	jwriter "github.com/mailru/easyjson/jwriter"
@@ -219,8 +220,16 @@ func easyjsonB5c9d911DecodeGithubComKubewardenK8sObjectsApiCoreV12(in *jlexer.Le
 				*out.ExitCode = int32(in.Int32())
 			}
 		case "finishedAt":
-			if data := in.Raw(); in.Ok() {
-				in.AddError((out.FinishedAt).UnmarshalJSON(data))
+			if in.IsNull() {
+				in.Skip()
+				out.FinishedAt = nil
+			} else {
+				if out.FinishedAt == nil {
+					out.FinishedAt = new(_v1.Time)
+				}
+				if data := in.Raw(); in.Ok() {
+					in.AddError((*out.FinishedAt).UnmarshalJSON(data))
+				}
 			}
 		case "message":
 			out.Message = string(in.String())
@@ -229,8 +238,16 @@ func easyjsonB5c9d911DecodeGithubComKubewardenK8sObjectsApiCoreV12(in *jlexer.Le
 		case "signal":
 			out.Signal = int32(in.Int32())
 		case "startedAt":
-			if data := in.Raw(); in.Ok() {
-				in.AddError((out.StartedAt).UnmarshalJSON(data))
+			if in.IsNull() {
+				in.Skip()
+				out.StartedAt = nil
+			} else {
+				if out.StartedAt == nil {
+					out.StartedAt = new(_v1.Time)
+				}
+				if data := in.Raw(); in.Ok() {
+					in.AddError((*out.StartedAt).UnmarshalJSON(data))
+				}
 			}
 		default:
 			in.SkipRecursive()
@@ -266,10 +283,10 @@ func easyjsonB5c9d911EncodeGithubComKubewardenK8sObjectsApiCoreV12(out *jwriter.
 			out.Int32(int32(*in.ExitCode))
 		}
 	}
-	if true {
+	if in.FinishedAt != nil {
 		const prefix string = ",\"finishedAt\":"
 		out.RawString(prefix)
-		out.Raw((in.FinishedAt).MarshalJSON())
+		out.Raw((*in.FinishedAt).MarshalJSON())
 	}
 	if in.Message != "" {
 		const prefix string = ",\"message\":"
@@ -286,10 +303,10 @@ func easyjsonB5c9d911EncodeGithubComKubewardenK8sObjectsApiCoreV12(out *jwriter.
 		out.RawString(prefix)
 		out.Int32(int32(in.Signal))
 	}
-	if true {
+	if in.StartedAt != nil {
 		const prefix string = ",\"startedAt\":"
 		out.RawString(prefix)
-		out.Raw((in.StartedAt).MarshalJSON())
+		out.Raw((*in.StartedAt).MarshalJSON())
 	}
 	out.RawByte('}')
 }
@@ -313,8 +330,16 @@ func easyjsonB5c9d911DecodeGithubComKubewardenK8sObjectsApiCoreV11(in *jlexer.Le
 		}
 		switch key {
 		case "startedAt":
-			if data := in.Raw(); in.Ok() {
-				in.AddError((out.StartedAt).UnmarshalJSON(data))
+			if in.IsNull() {
+				in.Skip()
+				out.StartedAt = nil
+			} else {
+				if out.StartedAt == nil {
+					out.StartedAt = new(_v1.Time)
+				}
+				if data := in.Raw(); in.Ok() {
+					in.AddError((*out.StartedAt).UnmarshalJSON(data))
+				}
 			}
 		default:
 			in.SkipRecursive()
@@ -330,11 +355,11 @@ func easyjsonB5c9d911EncodeGithubComKubewardenK8sObjectsApiCoreV11(out *jwriter.
 	out.RawByte('{')
 	first := true
 	_ = first
-	if true {
+	if in.StartedAt != nil {
 		const prefix string = ",\"startedAt\":"
 		first = false
 		out.RawString(prefix[1:])
-		out.Raw((in.StartedAt).MarshalJSON())
+		out.Raw((*in.StartedAt).MarshalJSON())
 	}
 	out.RawByte('}')
 }

@@ -11,7 +11,7 @@ package v1
 type ContainerImage struct {
 
 	// Names by which this image is known. e.g. ["k8s.gcr.io/hyperkube:v1.0.7", "dockerhub.io/google_containers/hyperkube:v1.0.7"]
-	Names []string `json:"names"`
+	Names []string `json:"names,omitempty"`
 
 	// The size of the image in bytes.
 	SizeBytes int64 `json:"sizeBytes,omitempty"`

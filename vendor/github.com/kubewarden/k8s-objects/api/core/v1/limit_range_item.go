@@ -15,19 +15,19 @@ import (
 type LimitRangeItem struct {
 
 	// Default resource requirement limit value by resource name if resource limit is omitted.
-	Default map[string]apimachinery_pkg_api_resource.Quantity `json:"default,omitempty"`
+	Default map[string]*apimachinery_pkg_api_resource.Quantity `json:"default,omitempty"`
 
 	// DefaultRequest is the default resource requirement request value by resource name if resource request is omitted.
-	DefaultRequest map[string]apimachinery_pkg_api_resource.Quantity `json:"defaultRequest,omitempty"`
+	DefaultRequest map[string]*apimachinery_pkg_api_resource.Quantity `json:"defaultRequest,omitempty"`
 
 	// Max usage constraints on this kind by resource name.
-	Max map[string]apimachinery_pkg_api_resource.Quantity `json:"max,omitempty"`
+	Max map[string]*apimachinery_pkg_api_resource.Quantity `json:"max,omitempty"`
 
 	// MaxLimitRequestRatio if specified, the named resource must have a request and limit that are both non-zero where limit divided by request is less than or equal to the enumerated value; this represents the max burst for the named resource.
-	MaxLimitRequestRatio map[string]apimachinery_pkg_api_resource.Quantity `json:"maxLimitRequestRatio,omitempty"`
+	MaxLimitRequestRatio map[string]*apimachinery_pkg_api_resource.Quantity `json:"maxLimitRequestRatio,omitempty"`
 
 	// Min usage constraints on this kind by resource name.
-	Min map[string]apimachinery_pkg_api_resource.Quantity `json:"min,omitempty"`
+	Min map[string]*apimachinery_pkg_api_resource.Quantity `json:"min,omitempty"`
 
 	// Type of resource that this limit applies to.
 	// Required: true

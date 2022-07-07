@@ -21,5 +21,5 @@ type NodeSelectorRequirement struct {
 	Operator *string `json:"operator"`
 
 	// An array of string values. If the operator is In or NotIn, the values array must be non-empty. If the operator is Exists or DoesNotExist, the values array must be empty. If the operator is Gt or Lt, the values array must have a single element, which will be interpreted as an integer. This array is replaced during a strategic merge patch.
-	Values []string `json:"values"`
+	Values []string `json:"values,omitempty"`
 }

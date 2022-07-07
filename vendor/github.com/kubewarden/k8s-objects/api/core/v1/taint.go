@@ -25,7 +25,7 @@ type Taint struct {
 	Key *string `json:"key"`
 
 	// TimeAdded represents the time at which the taint was added. It is only written for NoExecute taints.
-	TimeAdded apimachinery_pkg_apis_meta_v1.Time `json:"timeAdded,omitempty"`
+	TimeAdded *apimachinery_pkg_apis_meta_v1.Time `json:"timeAdded,omitempty"`
 
 	// The taint value corresponding to the taint key.
 	Value string `json:"value,omitempty"`

@@ -15,7 +15,7 @@ import (
 type ServiceStatus struct {
 
 	// Current service state
-	Conditions []apimachinery_pkg_apis_meta_v1.Condition `json:"conditions"`
+	Conditions []*apimachinery_pkg_apis_meta_v1.Condition `json:"conditions,omitempty"`
 
 	// LoadBalancer contains the current status of the load-balancer, if one is present.
 	LoadBalancer *LoadBalancerStatus `json:"loadBalancer,omitempty"`

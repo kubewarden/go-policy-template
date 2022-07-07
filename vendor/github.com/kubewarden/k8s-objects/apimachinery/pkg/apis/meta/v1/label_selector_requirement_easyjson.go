@@ -111,12 +111,10 @@ func easyjson227226eaEncodeGithubComKubewardenK8sObjectsApimachineryPkgApisMetaV
 			out.String(string(*in.Operator))
 		}
 	}
-	{
+	if len(in.Values) != 0 {
 		const prefix string = ",\"values\":"
 		out.RawString(prefix)
-		if in.Values == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
-			out.RawString("null")
-		} else {
+		{
 			out.RawByte('[')
 			for v2, v3 := range in.Values {
 				if v2 > 0 {

@@ -11,16 +11,16 @@ package v1
 type Container struct {
 
 	// Arguments to the entrypoint. The container image's CMD is used if this is not provided. Variable references $(VAR_NAME) are expanded using the container's environment. If a variable cannot be resolved, the reference in the input string will be unchanged. Double $$ are reduced to a single $, which allows for escaping the $(VAR_NAME) syntax: i.e. "$$(VAR_NAME)" will produce the string literal "$(VAR_NAME)". Escaped references will never be expanded, regardless of whether the variable exists or not. Cannot be updated. More info: https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#running-a-command-in-a-shell
-	Args []string `json:"args"`
+	Args []string `json:"args,omitempty"`
 
 	// Entrypoint array. Not executed within a shell. The container image's ENTRYPOINT is used if this is not provided. Variable references $(VAR_NAME) are expanded using the container's environment. If a variable cannot be resolved, the reference in the input string will be unchanged. Double $$ are reduced to a single $, which allows for escaping the $(VAR_NAME) syntax: i.e. "$$(VAR_NAME)" will produce the string literal "$(VAR_NAME)". Escaped references will never be expanded, regardless of whether the variable exists or not. Cannot be updated. More info: https://kubernetes.io/docs/tasks/inject-data-application/define-command-argument-container/#running-a-command-in-a-shell
-	Command []string `json:"command"`
+	Command []string `json:"command,omitempty"`
 
 	// List of environment variables to set in the container. Cannot be updated.
-	Env []*EnvVar `json:"env"`
+	Env []*EnvVar `json:"env,omitempty"`
 
 	// List of sources to populate environment variables in the container. The keys defined within a source must be a C_IDENTIFIER. All invalid keys will be reported as an event when the container is starting. When a key exists in multiple sources, the value associated with the last source will take precedence. Values defined by an Env with a duplicate key will take precedence. Cannot be updated.
-	EnvFrom []*EnvFromSource `json:"envFrom"`
+	EnvFrom []*EnvFromSource `json:"envFrom,omitempty"`
 
 	// Container image name. More info: https://kubernetes.io/docs/concepts/containers/images This field is optional to allow higher level config management to default or override container images in workload controllers like Deployments and StatefulSets.
 	Image string `json:"image,omitempty"`
@@ -41,7 +41,7 @@ type Container struct {
 	Name *string `json:"name"`
 
 	// List of ports to expose from the container. Exposing a port here gives the system additional information about the network connections a container uses, but is primarily informational. Not specifying a port here DOES NOT prevent that port from being exposed. Any port which is listening on the default "0.0.0.0" address inside a container will be accessible from the network. Cannot be updated.
-	Ports []*ContainerPort `json:"ports"`
+	Ports []*ContainerPort `json:"ports,omitempty"`
 
 	// Periodic probe of container service readiness. Container will be removed from service endpoints if the probe fails. Cannot be updated. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
 	ReadinessProbe *Probe `json:"readinessProbe,omitempty"`
@@ -73,10 +73,10 @@ type Container struct {
 	Tty bool `json:"tty,omitempty"`
 
 	// volumeDevices is the list of block devices to be used by the container.
-	VolumeDevices []*VolumeDevice `json:"volumeDevices"`
+	VolumeDevices []*VolumeDevice `json:"volumeDevices,omitempty"`
 
 	// Pod volumes to mount into the container's filesystem. Cannot be updated.
-	VolumeMounts []*VolumeMount `json:"volumeMounts"`
+	VolumeMounts []*VolumeMount `json:"volumeMounts,omitempty"`
 
 	// Container's working directory. If not specified, the container runtime's default will be used, which might be configured in the container image. Cannot be updated.
 	WorkingDir string `json:"workingDir,omitempty"`

@@ -18,11 +18,11 @@ package v1
 type EndpointSubset struct {
 
 	// IP addresses which offer the related ports that are marked as ready. These endpoints should be considered safe for load balancers and clients to utilize.
-	Addresses []*EndpointAddress `json:"addresses"`
+	Addresses []*EndpointAddress `json:"addresses,omitempty"`
 
 	// IP addresses which offer the related ports but are not currently marked as ready because they have not yet finished starting, have recently failed a readiness check, or have recently failed a liveness check.
-	NotReadyAddresses []*EndpointAddress `json:"notReadyAddresses"`
+	NotReadyAddresses []*EndpointAddress `json:"notReadyAddresses,omitempty"`
 
 	// Port numbers available on the related IP addresses.
-	Ports []*EndpointPort `json:"ports"`
+	Ports []*EndpointPort `json:"ports,omitempty"`
 }

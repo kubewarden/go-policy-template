@@ -258,12 +258,11 @@ func easyjson727fe99aEncodeGithubComKubewardenK8sObjectsApimachineryPkgApisMetaV
 	out.RawByte('{')
 	first := true
 	_ = first
-	{
+	if len(in.Causes) != 0 {
 		const prefix string = ",\"causes\":"
+		first = false
 		out.RawString(prefix[1:])
-		if in.Causes == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
-			out.RawString("null")
-		} else {
+		{
 			out.RawByte('[')
 			for v2, v3 := range in.Causes {
 				if v2 > 0 {
@@ -280,27 +279,52 @@ func easyjson727fe99aEncodeGithubComKubewardenK8sObjectsApimachineryPkgApisMetaV
 	}
 	if in.Group != "" {
 		const prefix string = ",\"group\":"
-		out.RawString(prefix)
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
 		out.String(string(in.Group))
 	}
 	if in.Kind != "" {
 		const prefix string = ",\"kind\":"
-		out.RawString(prefix)
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
 		out.String(string(in.Kind))
 	}
 	if in.Name != "" {
 		const prefix string = ",\"name\":"
-		out.RawString(prefix)
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
 		out.String(string(in.Name))
 	}
 	if in.RetryAfterSeconds != 0 {
 		const prefix string = ",\"retryAfterSeconds\":"
-		out.RawString(prefix)
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
 		out.Int32(int32(in.RetryAfterSeconds))
 	}
 	if in.UID != "" {
 		const prefix string = ",\"uid\":"
-		out.RawString(prefix)
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
 		out.String(string(in.UID))
 	}
 	out.RawByte('}')

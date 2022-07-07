@@ -99,7 +99,7 @@ func easyjson1226db32EncodeGithubComKubewardenK8sObjectsApimachineryPkgApisMetaV
 		out.RawString(prefix[1:])
 		out.String(string(in.APIVersion))
 	}
-	{
+	if len(in.DryRun) != 0 {
 		const prefix string = ",\"dryRun\":"
 		if first {
 			first = false
@@ -107,9 +107,7 @@ func easyjson1226db32EncodeGithubComKubewardenK8sObjectsApimachineryPkgApisMetaV
 		} else {
 			out.RawString(prefix)
 		}
-		if in.DryRun == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
-			out.RawString("null")
-		} else {
+		{
 			out.RawByte('[')
 			for v2, v3 := range in.DryRun {
 				if v2 > 0 {
@@ -122,27 +120,52 @@ func easyjson1226db32EncodeGithubComKubewardenK8sObjectsApimachineryPkgApisMetaV
 	}
 	if in.GracePeriodSeconds != 0 {
 		const prefix string = ",\"gracePeriodSeconds\":"
-		out.RawString(prefix)
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
 		out.Int64(int64(in.GracePeriodSeconds))
 	}
 	if in.Kind != "" {
 		const prefix string = ",\"kind\":"
-		out.RawString(prefix)
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
 		out.String(string(in.Kind))
 	}
 	if in.OrphanDependents {
 		const prefix string = ",\"orphanDependents\":"
-		out.RawString(prefix)
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
 		out.Bool(bool(in.OrphanDependents))
 	}
 	if in.Preconditions != nil {
 		const prefix string = ",\"preconditions\":"
-		out.RawString(prefix)
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
 		easyjson1226db32EncodeGithubComKubewardenK8sObjectsApimachineryPkgApisMetaV11(out, *in.Preconditions)
 	}
 	if in.PropagationPolicy != "" {
 		const prefix string = ",\"propagationPolicy\":"
-		out.RawString(prefix)
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
 		out.String(string(in.PropagationPolicy))
 	}
 	out.RawByte('}')
