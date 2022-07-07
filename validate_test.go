@@ -13,7 +13,7 @@ import (
 func TestEmptySettingsLeadsToApproval(t *testing.T) {
 	settings := Settings{}
 	pod := corev1.Pod{
-		Metadata: metav1.ObjectMeta{
+		Metadata: &metav1.ObjectMeta{
 			Name:      "test-pod",
 			Namespace: "default",
 		},
@@ -44,7 +44,7 @@ func TestApproval(t *testing.T) {
 		DeniedNames: []string{"foo", "bar"},
 	}
 	pod := corev1.Pod{
-		Metadata: metav1.ObjectMeta{
+		Metadata: &metav1.ObjectMeta{
 			Name:      "test-pod",
 			Namespace: "default",
 		},
@@ -103,7 +103,7 @@ func TestRejectionBecauseNameIsDenied(t *testing.T) {
 	}
 
 	pod := corev1.Pod{
-		Metadata: metav1.ObjectMeta{
+		Metadata: &metav1.ObjectMeta{
 			Name:      "test-pod",
 			Namespace: "default",
 		},
