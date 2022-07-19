@@ -1,0 +1,32 @@
+---
+version: 0.0.1
+name: policy-name
+displayName: Policy Name
+createdAt: '2022-07-19T16:42:59+02:00'
+description: DESCRIPTION OF YOUR POLICY
+license: Apache-2.0
+homeURL: POLICY HOMEPAGE URL
+containersImages:
+- name: policy
+  image: "<registry>/<policy-name>:0.0.1"
+install: |
+  The policy can be obtained using [`kwctl`](https://github.com/kubewarden/kwctl/):
+
+  ```console
+  kwctl pull <registry>/<policy-name>:0.0.1
+  ```
+keywords:
+- this is freeform
+links:
+- name: policy
+  url: https://github.com/yourorg/policy-name/releases/download/0.0.1/policy.wasm
+- name: source
+  url: POLICY HOMEPAGE URL
+provider:
+  name: kubewarden
+recommendations:
+- url: https://artifacthub.io/packages/helm/kubewarden/kubewarden-controller
+annotations:
+  kubewarden/resources: Pod
+  kubewarden/mutation: false
+  kubewarden/contextAware: false
