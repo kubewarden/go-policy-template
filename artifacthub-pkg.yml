@@ -27,6 +27,6 @@ provider:
 recommendations:
 - url: https://artifacthub.io/packages/helm/kubewarden/kubewarden-controller
 annotations:
-  kubewarden/resources: Pod
+  kubewarden/resources: Pod # comma separated list
   kubewarden/mutation: false
   kubewarden/contextAware: false
