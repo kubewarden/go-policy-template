@@ -1,6 +1,6 @@
 module github.com/kubewarden/go-policy-template
 
-go 1.17
+go 1.19
 
 replace github.com/go-openapi/strfmt => github.com/kubewarden/strfmt v0.1.2
 
