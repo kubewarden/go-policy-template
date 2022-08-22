@@ -9,7 +9,7 @@ require (
 	github.com/kubewarden/k8s-objects v1.24.0-kw3
 	github.com/kubewarden/policy-sdk-go v0.2.3
 	github.com/mailru/easyjson v0.7.7
-	github.com/wapc/wapc-guest-tinygo v0.3.1
+	github.com/wapc/wapc-guest-tinygo v0.3.2
 )
 
 require (
