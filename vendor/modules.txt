@@ -28,7 +28,7 @@ github.com/mailru/easyjson
 github.com/mailru/easyjson/buffer
 github.com/mailru/easyjson/jlexer
 github.com/mailru/easyjson/jwriter
-# github.com/wapc/wapc-guest-tinygo v0.3.2
+# github.com/wapc/wapc-guest-tinygo v0.3.3
 ## explicit; go 1.16
 github.com/wapc/wapc-guest-tinygo
 # github.com/go-openapi/strfmt => github.com/kubewarden/strfmt v0.1.2
