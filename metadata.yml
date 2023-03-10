@@ -13,7 +13,3 @@ annotations:
   io.kubewarden.policy.url: https://github.com/yourorg/policy-name
   io.kubewarden.policy.source: https://github.com/yourorg/policy-name
   io.kubewarden.policy.license: Apache-2.0
-  io.kubewarden.policy.usage: |
-    Long explaination.
-
-    **Note well:** this can be Markdown text

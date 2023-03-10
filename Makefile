@@ -9,7 +9,7 @@ policy.wasm: $(SOURCE_FILES) go.mod go.sum types_easyjson.go
 		tinygo build -o policy.wasm -target=wasi -no-debug .
 
 annotated-policy.wasm: policy.wasm metadata.yml
-	kwctl annotate -m metadata.yml -o annotated-policy.wasm policy.wasm
+	kwctl annotate -m metadata.yml -u README.md -o annotated-policy.wasm policy.wasm
 
 .PHONY: generate-easyjson
 types_easyjson.go: types.go
