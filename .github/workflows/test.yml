@@ -4,3 +4,5 @@ jobs:
   test:
     name: run tests and linters
     uses: kubewarden/github-actions/.github/workflows/reusable-test-policy-go.yml@v1
+    with:
+      artifacthub: false # change to true to check artifacthub-pkg.yml
