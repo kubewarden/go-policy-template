@@ -12,6 +12,8 @@ github.com/kubewarden/k8s-objects v1.24.0-kw3 h1:cRi2A5iESlZHqokXY0QXW6LdQaDXyLz
 github.com/kubewarden/k8s-objects v1.24.0-kw3/go.mod h1:IuIHLG1JtxjC1JnY7SyEEA9MukCh/FACcwpzaBjgdLQ=
 github.com/kubewarden/policy-sdk-go v0.2.3 h1:kjcZNbiuy3DbbLIiRKvrBqnl7JJVdJWRa3RgXo3JHaM=
 github.com/kubewarden/policy-sdk-go v0.2.3/go.mod h1:Bdkvsecwifx+JdoyOds8FmGEcbVrSp09JZ3uB6TasH8=
+github.com/kubewarden/policy-sdk-go v0.2.4 h1:yjHCO49WndzCBg/61FzySAvUORRgfE1ycIHzgv1ouyk=
+github.com/kubewarden/policy-sdk-go v0.2.4/go.mod h1:dG40XOmgGpBrCE0dL//nplHDaLSu6/mnHD97B9TK8i4=
 github.com/kubewarden/strfmt v0.1.1 h1:DsgILnn2sTtcAdWoEAyX9qyqC/95wuB5H5Rn/qBZIpc=
 github.com/kubewarden/strfmt v0.1.1/go.mod h1:sqLlis8qlm4A4pnZsRyRjNxyH86fiM+7Ee7bO+uJk94=
 github.com/kubewarden/strfmt v0.1.2 h1:S0YUVkPeyUMikz8QssbMzfd1MC5K8ZqxLI2zfF8euMs=
