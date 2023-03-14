@@ -7,6 +7,12 @@ mutating: false
 contextAware: false
 executionMode: kubewarden-wapc
 annotations:
+  # artifacthub specific:
+  io.artifacthub.displayName: Policy Name
+  io.artifacthub.resources: Pod
+  io.artifacthub.keywords: pod, cool policy, kubewarden
+  io.kubewarden.policy.ociUrl: ghcr.io/yourorg/policies/policy-name # must match release workflow oci-target
+  # kubewarden specific:
   io.kubewarden.policy.title: policy-name
   io.kubewarden.policy.description: Short description
   io.kubewarden.policy.author: policy-author

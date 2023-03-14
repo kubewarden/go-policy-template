@@ -25,4 +25,4 @@ jobs:
 
     uses: kubewarden/github-actions/.github/workflows/reusable-release-policy-go.yml@v2
     with:
-      oci-target: #FIXME: change to something like ghcr.io/${{ github.repository_owner }}/policies/safe-labels
+      oci-target: #FIXME: change to something like ghcr.io/${{ github.repository_owner }}/policies/policy-name
