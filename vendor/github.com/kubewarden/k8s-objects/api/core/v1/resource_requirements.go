@@ -14,6 +14,13 @@ import (
 // swagger:model ResourceRequirements
 type ResourceRequirements struct {
 
+	// Claims lists the names of resources, defined in spec.resourceClaims, that are used by this container.
+	//
+	// This is an alpha field and requires enabling the DynamicResourceAllocation feature gate.
+	//
+	// This field is immutable.
+	Claims []*ResourceClaim `json:"claims,omitempty"`
+
 	// Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
 	Limits map[string]*apimachinery_pkg_api_resource.Quantity `json:"limits,omitempty"`
 

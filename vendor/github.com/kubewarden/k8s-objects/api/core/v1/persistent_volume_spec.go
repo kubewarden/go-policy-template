@@ -18,7 +18,7 @@ type PersistentVolumeSpec struct {
 	AccessModes []string `json:"accessModes,omitempty"`
 
 	// awsElasticBlockStore represents an AWS Disk resource that is attached to a kubelet's host machine and then exposed to the pod. More info: https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore
-	AwsElasticBlockStore *AWSElasticBlockStoreVolumeSource `json:"awsElasticBlockStore,omitempty"`
+	AWSElasticBlockStore *AWSElasticBlockStoreVolumeSource `json:"awsElasticBlockStore,omitempty"`
 
 	// azureDisk represents an Azure Data Disk mount on the host and bind mount to the pod.
 	AzureDisk *AzureDiskVolumeSource `json:"azureDisk,omitempty"`
@@ -39,10 +39,10 @@ type PersistentVolumeSpec struct {
 	ClaimRef *ObjectReference `json:"claimRef,omitempty"`
 
 	// csi represents storage that is handled by an external CSI driver (Beta feature).
-	Csi *CSIPersistentVolumeSource `json:"csi,omitempty"`
+	CSI *CSIPersistentVolumeSource `json:"csi,omitempty"`
 
 	// fc represents a Fibre Channel resource that is attached to a kubelet's host machine and then exposed to the pod.
-	Fc *FCVolumeSource `json:"fc,omitempty"`
+	FC *FCVolumeSource `json:"fc,omitempty"`
 
 	// flexVolume represents a generic volume resource that is provisioned/attached using an exec based plugin.
 	FlexVolume *FlexPersistentVolumeSource `json:"flexVolume,omitempty"`
@@ -51,7 +51,7 @@ type PersistentVolumeSpec struct {
 	Flocker *FlockerVolumeSource `json:"flocker,omitempty"`
 
 	// gcePersistentDisk represents a GCE Disk resource that is attached to a kubelet's host machine and then exposed to the pod. Provisioned by an admin. More info: https://kubernetes.io/docs/concepts/storage/volumes#gcepersistentdisk
-	GcePersistentDisk *GCEPersistentDiskVolumeSource `json:"gcePersistentDisk,omitempty"`
+	GCEPersistentDisk *GCEPersistentDiskVolumeSource `json:"gcePersistentDisk,omitempty"`
 
 	// glusterfs represents a Glusterfs volume that is attached to a host and exposed to the pod. Provisioned by an admin. More info: https://examples.k8s.io/volumes/glusterfs/README.md
 	Glusterfs *GlusterfsPersistentVolumeSource `json:"glusterfs,omitempty"`
@@ -60,7 +60,7 @@ type PersistentVolumeSpec struct {
 	HostPath *HostPathVolumeSource `json:"hostPath,omitempty"`
 
 	// iscsi represents an ISCSI Disk resource that is attached to a kubelet's host machine and then exposed to the pod. Provisioned by an admin.
-	Iscsi *ISCSIPersistentVolumeSource `json:"iscsi,omitempty"`
+	ISCSI *ISCSIPersistentVolumeSource `json:"iscsi,omitempty"`
 
 	// local represents directly-attached storage with node affinity
 	Local *LocalVolumeSource `json:"local,omitempty"`
@@ -69,7 +69,7 @@ type PersistentVolumeSpec struct {
 	MountOptions []string `json:"mountOptions,omitempty"`
 
 	// nfs represents an NFS mount on the host. Provisioned by an admin. More info: https://kubernetes.io/docs/concepts/storage/volumes#nfs
-	Nfs *NFSVolumeSource `json:"nfs,omitempty"`
+	NFS *NFSVolumeSource `json:"nfs,omitempty"`
 
 	// nodeAffinity defines constraints that limit what nodes this volume can be accessed from. This field influences the scheduling of pods that use this volume.
 	NodeAffinity *VolumeNodeAffinity `json:"nodeAffinity,omitempty"`
@@ -89,7 +89,7 @@ type PersistentVolumeSpec struct {
 	Quobyte *QuobyteVolumeSource `json:"quobyte,omitempty"`
 
 	// rbd represents a Rados Block Device mount on the host that shares a pod's lifetime. More info: https://examples.k8s.io/volumes/rbd/README.md
-	Rbd *RBDPersistentVolumeSource `json:"rbd,omitempty"`
+	RBD *RBDPersistentVolumeSource `json:"rbd,omitempty"`
 
 	// scaleIO represents a ScaleIO persistent volume attached and mounted on Kubernetes nodes.
 	ScaleIO *ScaleIOPersistentVolumeSource `json:"scaleIO,omitempty"`

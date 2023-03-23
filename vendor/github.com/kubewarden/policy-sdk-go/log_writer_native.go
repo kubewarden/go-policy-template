@@ -1,3 +1,4 @@
+//go:build !wasi
 // +build !wasi
 
 // note well: we have to use the tinygo wasi target, because the wasm one is

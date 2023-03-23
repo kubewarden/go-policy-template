@@ -11,7 +11,7 @@ package v1
 type Volume struct {
 
 	// awsElasticBlockStore represents an AWS Disk resource that is attached to a kubelet's host machine and then exposed to the pod. More info: https://kubernetes.io/docs/concepts/storage/volumes#awselasticblockstore
-	AwsElasticBlockStore *AWSElasticBlockStoreVolumeSource `json:"awsElasticBlockStore,omitempty"`
+	AWSElasticBlockStore *AWSElasticBlockStoreVolumeSource `json:"awsElasticBlockStore,omitempty"`
 
 	// azureDisk represents an Azure Data Disk mount on the host and bind mount to the pod.
 	AzureDisk *AzureDiskVolumeSource `json:"azureDisk,omitempty"`
@@ -29,7 +29,7 @@ type Volume struct {
 	ConfigMap *ConfigMapVolumeSource `json:"configMap,omitempty"`
 
 	// csi (Container Storage Interface) represents ephemeral storage that is handled by certain external CSI drivers (Beta feature).
-	Csi *CSIVolumeSource `json:"csi,omitempty"`
+	CSI *CSIVolumeSource `json:"csi,omitempty"`
 
 	// downwardAPI represents downward API about the pod that should populate this volume
 	DownwardAPI *DownwardAPIVolumeSource `json:"downwardAPI,omitempty"`
@@ -54,7 +54,7 @@ type Volume struct {
 	Ephemeral *EphemeralVolumeSource `json:"ephemeral,omitempty"`
 
 	// fc represents a Fibre Channel resource that is attached to a kubelet's host machine and then exposed to the pod.
-	Fc *FCVolumeSource `json:"fc,omitempty"`
+	FC *FCVolumeSource `json:"fc,omitempty"`
 
 	// flexVolume represents a generic volume resource that is provisioned/attached using an exec based plugin.
 	FlexVolume *FlexVolumeSource `json:"flexVolume,omitempty"`
@@ -63,7 +63,7 @@ type Volume struct {
 	Flocker *FlockerVolumeSource `json:"flocker,omitempty"`
 
 	// gcePersistentDisk represents a GCE Disk resource that is attached to a kubelet's host machine and then exposed to the pod. More info: https://kubernetes.io/docs/concepts/storage/volumes#gcepersistentdisk
-	GcePersistentDisk *GCEPersistentDiskVolumeSource `json:"gcePersistentDisk,omitempty"`
+	GCEPersistentDisk *GCEPersistentDiskVolumeSource `json:"gcePersistentDisk,omitempty"`
 
 	// gitRepo represents a git repository at a particular revision. DEPRECATED: GitRepo is deprecated. To provision a container with a git repo, mount an EmptyDir into an InitContainer that clones the repo using git, then mount the EmptyDir into the Pod's container.
 	GitRepo *GitRepoVolumeSource `json:"gitRepo,omitempty"`
@@ -75,14 +75,14 @@ type Volume struct {
 	HostPath *HostPathVolumeSource `json:"hostPath,omitempty"`
 
 	// iscsi represents an ISCSI Disk resource that is attached to a kubelet's host machine and then exposed to the pod. More info: https://examples.k8s.io/volumes/iscsi/README.md
-	Iscsi *ISCSIVolumeSource `json:"iscsi,omitempty"`
+	ISCSI *ISCSIVolumeSource `json:"iscsi,omitempty"`
 
 	// name of the volume. Must be a DNS_LABEL and unique within the pod. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
 	// Required: true
 	Name *string `json:"name"`
 
 	// nfs represents an NFS mount on the host that shares a pod's lifetime More info: https://kubernetes.io/docs/concepts/storage/volumes#nfs
-	Nfs *NFSVolumeSource `json:"nfs,omitempty"`
+	NFS *NFSVolumeSource `json:"nfs,omitempty"`
 
 	// persistentVolumeClaimVolumeSource represents a reference to a PersistentVolumeClaim in the same namespace. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#persistentvolumeclaims
 	PersistentVolumeClaim *PersistentVolumeClaimVolumeSource `json:"persistentVolumeClaim,omitempty"`
@@ -100,7 +100,7 @@ type Volume struct {
 	Quobyte *QuobyteVolumeSource `json:"quobyte,omitempty"`
 
 	// rbd represents a Rados Block Device mount on the host that shares a pod's lifetime. More info: https://examples.k8s.io/volumes/rbd/README.md
-	Rbd *RBDVolumeSource `json:"rbd,omitempty"`
+	RBD *RBDVolumeSource `json:"rbd,omitempty"`
 
 	// scaleIO represents a ScaleIO persistent volume attached and mounted on Kubernetes nodes.
 	ScaleIO *ScaleIOVolumeSource `json:"scaleIO,omitempty"`

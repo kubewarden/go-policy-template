@@ -25,7 +25,7 @@ type ReplicationControllerStatus struct {
 	// The number of ready replicas for this replication controller.
 	ReadyReplicas int32 `json:"readyReplicas,omitempty"`
 
-	// Replicas is the most recently oberved number of replicas. More info: https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller#what-is-a-replicationcontroller
+	// Replicas is the most recently observed number of replicas. More info: https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller#what-is-a-replicationcontroller
 	// Required: true
 	Replicas *int32 `json:"replicas"`
 }

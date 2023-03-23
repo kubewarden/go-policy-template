@@ -40,6 +40,16 @@ func easyjsonC8b5e123DecodeGithubComKubewardenK8sObjectsApiAppsV1(in *jlexer.Lex
 		switch key {
 		case "minReadySeconds":
 			out.MinReadySeconds = int32(in.Int32())
+		case "ordinals":
+			if in.IsNull() {
+				in.Skip()
+				out.Ordinals = nil
+			} else {
+				if out.Ordinals == nil {
+					out.Ordinals = new(StatefulSetOrdinals)
+				}
+				(*out.Ordinals).UnmarshalEasyJSON(in)
+			}
 		case "persistentVolumeClaimRetentionPolicy":
 			if in.IsNull() {
 				in.Skip()
@@ -146,6 +156,16 @@ func easyjsonC8b5e123EncodeGithubComKubewardenK8sObjectsApiAppsV1(out *jwriter.W
 		first = false
 		out.RawString(prefix[1:])
 		out.Int32(int32(in.MinReadySeconds))
+	}
+	if in.Ordinals != nil {
+		const prefix string = ",\"ordinals\":"
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
+		(*in.Ordinals).MarshalEasyJSON(out)
 	}
 	if in.PersistentVolumeClaimRetentionPolicy != nil {
 		const prefix string = ",\"persistentVolumeClaimRetentionPolicy\":"

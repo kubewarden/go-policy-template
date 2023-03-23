@@ -10,7 +10,7 @@ package v1
 // swagger:model StatefulSetStatus
 type StatefulSetStatus struct {
 
-	// Total number of available pods (ready for at least minReadySeconds) targeted by this statefulset. This is a beta field and enabled/disabled by StatefulSetMinReadySeconds feature gate.
+	// Total number of available pods (ready for at least minReadySeconds) targeted by this statefulset.
 	AvailableReplicas int32 `json:"availableReplicas,omitempty"`
 
 	// collisionCount is the count of hash collisions for the StatefulSet. The StatefulSet controller uses this field as a collision avoidance mechanism when it needs to create the name for the newest ControllerRevision.

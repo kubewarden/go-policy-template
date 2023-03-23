@@ -9,8 +9,6 @@ package v1
 //
 // To add an ephemeral container, use the ephemeralcontainers subresource of an existing Pod. Ephemeral containers may not be removed or restarted.
 //
-// This is a beta feature available on clusters that haven't disabled the EphemeralContainers feature gate.
-//
 // swagger:model EphemeralContainer
 type EphemeralContainer struct {
 

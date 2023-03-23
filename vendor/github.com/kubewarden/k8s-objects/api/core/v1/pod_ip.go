@@ -6,7 +6,8 @@ package v1
 // Editing this file might prove futile when you re-run the swagger generate command
 
 // PodIP IP address information for entries in the (plural) PodIPs field. Each entry includes:
-//    IP: An IP address allocated to the pod. Routable at least within the cluster.
+//
+// 	IP: An IP address allocated to the pod. Routable at least within the cluster.
 //
 // swagger:model PodIP
 type PodIP struct {

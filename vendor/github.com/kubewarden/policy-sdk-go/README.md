@@ -224,7 +224,7 @@ The policy executor exposes additional capabilities that can be leveraged by the
 guest.
 
 These capabilities are exposed to the Go policies via this SDK, through the `Host`
-type defined inside of `github.com/kubewarden/policy-sdk-go/host_capabilities`.
+type defined inside of `github.com/kubewarden/policy-sdk-go/capabilities`.
 
 ## Get OCI manifest digest
 
@@ -233,7 +233,7 @@ get the immutable reference of a container Image or anything that is stored
 inside of a container registry (e.g. Kubewarden Policies, Helm charts,...).
 
 ```go
-host := host_capabilities.NewHost()
+host := capabilities.NewHost()
 digest, err := host.GetOCIManifestDigest("busybox:latest")
 ```
 
@@ -243,7 +243,7 @@ The policy can lookup the addresses for a given hostname by using the
 DNS resolvers of the host that is evaluating the policy.
 
 ```go
-host := host_capabilities.NewHost()
+host := capabilities.NewHost()
 ips, err := host.LookupHost("kubewarden.io")
 ```
 
