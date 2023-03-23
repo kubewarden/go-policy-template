@@ -13,11 +13,6 @@ type ObjectMeta struct {
 	// Annotations is an unstructured key value map stored with a resource that may be set by external tools to store and retrieve arbitrary metadata. They are not queryable and should be preserved when modifying objects. More info: http://kubernetes.io/docs/user-guide/annotations
 	Annotations map[string]string `json:"annotations,omitempty"`
 
-	// Deprecated: ClusterName is a legacy field that was always cleared by the system and never used; it will be removed completely in 1.25.
-	//
-	// The name in the go struct is changed to help clients detect accidental use.
-	ClusterName string `json:"clusterName,omitempty"`
-
 	// CreationTimestamp is a timestamp representing the server time when this object was created. It is not guaranteed to be set in happens-before order across separate operations. Clients may not set this value. It is represented in RFC3339 form and is in UTC.
 	//
 	// Populated by the system. Read-only. Null for lists. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#metadata

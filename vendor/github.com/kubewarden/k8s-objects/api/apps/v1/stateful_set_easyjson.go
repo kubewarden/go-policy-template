@@ -494,6 +494,16 @@ func easyjsonB4d3c875DecodeGithubComKubewardenK8sObjectsApiAppsV11(in *jlexer.Le
 		switch key {
 		case "minReadySeconds":
 			out.MinReadySeconds = int32(in.Int32())
+		case "ordinals":
+			if in.IsNull() {
+				in.Skip()
+				out.Ordinals = nil
+			} else {
+				if out.Ordinals == nil {
+					out.Ordinals = new(StatefulSetOrdinals)
+				}
+				easyjsonB4d3c875DecodeGithubComKubewardenK8sObjectsApiAppsV14(in, out.Ordinals)
+			}
 		case "persistentVolumeClaimRetentionPolicy":
 			if in.IsNull() {
 				in.Skip()
@@ -502,7 +512,7 @@ func easyjsonB4d3c875DecodeGithubComKubewardenK8sObjectsApiAppsV11(in *jlexer.Le
 				if out.PersistentVolumeClaimRetentionPolicy == nil {
 					out.PersistentVolumeClaimRetentionPolicy = new(StatefulSetPersistentVolumeClaimRetentionPolicy)
 				}
-				easyjsonB4d3c875DecodeGithubComKubewardenK8sObjectsApiAppsV14(in, out.PersistentVolumeClaimRetentionPolicy)
+				easyjsonB4d3c875DecodeGithubComKubewardenK8sObjectsApiAppsV15(in, out.PersistentVolumeClaimRetentionPolicy)
 			}
 		case "podManagementPolicy":
 			out.PodManagementPolicy = string(in.String())
@@ -548,7 +558,7 @@ func easyjsonB4d3c875DecodeGithubComKubewardenK8sObjectsApiAppsV11(in *jlexer.Le
 				if out.UpdateStrategy == nil {
 					out.UpdateStrategy = new(StatefulSetUpdateStrategy)
 				}
-				easyjsonB4d3c875DecodeGithubComKubewardenK8sObjectsApiAppsV15(in, out.UpdateStrategy)
+				easyjsonB4d3c875DecodeGithubComKubewardenK8sObjectsApiAppsV16(in, out.UpdateStrategy)
 			}
 		case "volumeClaimTemplates":
 			if in.IsNull() {
@@ -601,6 +611,16 @@ func easyjsonB4d3c875EncodeGithubComKubewardenK8sObjectsApiAppsV11(out *jwriter.
 		out.RawString(prefix[1:])
 		out.Int32(int32(in.MinReadySeconds))
 	}
+	if in.Ordinals != nil {
+		const prefix string = ",\"ordinals\":"
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
+		easyjsonB4d3c875EncodeGithubComKubewardenK8sObjectsApiAppsV14(out, *in.Ordinals)
+	}
 	if in.PersistentVolumeClaimRetentionPolicy != nil {
 		const prefix string = ",\"persistentVolumeClaimRetentionPolicy\":"
 		if first {
@@ -609,7 +629,7 @@ func easyjsonB4d3c875EncodeGithubComKubewardenK8sObjectsApiAppsV11(out *jwriter.
 		} else {
 			out.RawString(prefix)
 		}
-		easyjsonB4d3c875EncodeGithubComKubewardenK8sObjectsApiAppsV14(out, *in.PersistentVolumeClaimRetentionPolicy)
+		easyjsonB4d3c875EncodeGithubComKubewardenK8sObjectsApiAppsV15(out, *in.PersistentVolumeClaimRetentionPolicy)
 	}
 	if in.PodManagementPolicy != "" {
 		const prefix string = ",\"podManagementPolicy\":"
@@ -676,7 +696,7 @@ func easyjsonB4d3c875EncodeGithubComKubewardenK8sObjectsApiAppsV11(out *jwriter.
 	if in.UpdateStrategy != nil {
 		const prefix string = ",\"updateStrategy\":"
 		out.RawString(prefix)
-		easyjsonB4d3c875EncodeGithubComKubewardenK8sObjectsApiAppsV15(out, *in.UpdateStrategy)
+		easyjsonB4d3c875EncodeGithubComKubewardenK8sObjectsApiAppsV16(out, *in.UpdateStrategy)
 	}
 	if len(in.VolumeClaimTemplates) != 0 {
 		const prefix string = ",\"volumeClaimTemplates\":"
@@ -698,7 +718,7 @@ func easyjsonB4d3c875EncodeGithubComKubewardenK8sObjectsApiAppsV11(out *jwriter.
 	}
 	out.RawByte('}')
 }
-func easyjsonB4d3c875DecodeGithubComKubewardenK8sObjectsApiAppsV15(in *jlexer.Lexer, out *StatefulSetUpdateStrategy) {
+func easyjsonB4d3c875DecodeGithubComKubewardenK8sObjectsApiAppsV16(in *jlexer.Lexer, out *StatefulSetUpdateStrategy) {
 	isTopLevel := in.IsStart()
 	if in.IsNull() {
 		if isTopLevel {
@@ -739,7 +759,7 @@ func easyjsonB4d3c875DecodeGithubComKubewardenK8sObjectsApiAppsV15(in *jlexer.Le
 		in.Consumed()
 	}
 }
-func easyjsonB4d3c875EncodeGithubComKubewardenK8sObjectsApiAppsV15(out *jwriter.Writer, in StatefulSetUpdateStrategy) {
+func easyjsonB4d3c875EncodeGithubComKubewardenK8sObjectsApiAppsV16(out *jwriter.Writer, in StatefulSetUpdateStrategy) {
 	out.RawByte('{')
 	first := true
 	_ = first
@@ -761,7 +781,7 @@ func easyjsonB4d3c875EncodeGithubComKubewardenK8sObjectsApiAppsV15(out *jwriter.
 	}
 	out.RawByte('}')
 }
-func easyjsonB4d3c875DecodeGithubComKubewardenK8sObjectsApiAppsV14(in *jlexer.Lexer, out *StatefulSetPersistentVolumeClaimRetentionPolicy) {
+func easyjsonB4d3c875DecodeGithubComKubewardenK8sObjectsApiAppsV15(in *jlexer.Lexer, out *StatefulSetPersistentVolumeClaimRetentionPolicy) {
 	isTopLevel := in.IsStart()
 	if in.IsNull() {
 		if isTopLevel {
@@ -794,7 +814,7 @@ func easyjsonB4d3c875DecodeGithubComKubewardenK8sObjectsApiAppsV14(in *jlexer.Le
 		in.Consumed()
 	}
 }
-func easyjsonB4d3c875EncodeGithubComKubewardenK8sObjectsApiAppsV14(out *jwriter.Writer, in StatefulSetPersistentVolumeClaimRetentionPolicy) {
+func easyjsonB4d3c875EncodeGithubComKubewardenK8sObjectsApiAppsV15(out *jwriter.Writer, in StatefulSetPersistentVolumeClaimRetentionPolicy) {
 	out.RawByte('{')
 	first := true
 	_ = first
@@ -813,6 +833,49 @@ func easyjsonB4d3c875EncodeGithubComKubewardenK8sObjectsApiAppsV14(out *jwriter.
 			out.RawString(prefix)
 		}
 		out.String(string(in.WhenScaled))
+	}
+	out.RawByte('}')
+}
+func easyjsonB4d3c875DecodeGithubComKubewardenK8sObjectsApiAppsV14(in *jlexer.Lexer, out *StatefulSetOrdinals) {
+	isTopLevel := in.IsStart()
+	if in.IsNull() {
+		if isTopLevel {
+			in.Consumed()
+		}
+		in.Skip()
+		return
+	}
+	in.Delim('{')
+	for !in.IsDelim('}') {
+		key := in.UnsafeFieldName(false)
+		in.WantColon()
+		if in.IsNull() {
+			in.Skip()
+			in.WantComma()
+			continue
+		}
+		switch key {
+		case "start":
+			out.Start = int32(in.Int32())
+		default:
+			in.SkipRecursive()
+		}
+		in.WantComma()
+	}
+	in.Delim('}')
+	if isTopLevel {
+		in.Consumed()
+	}
+}
+func easyjsonB4d3c875EncodeGithubComKubewardenK8sObjectsApiAppsV14(out *jwriter.Writer, in StatefulSetOrdinals) {
+	out.RawByte('{')
+	first := true
+	_ = first
+	if in.Start != 0 {
+		const prefix string = ",\"start\":"
+		first = false
+		out.RawString(prefix[1:])
+		out.Int32(int32(in.Start))
 	}
 	out.RawByte('}')
 }

@@ -56,8 +56,6 @@ func easyjson7cd974a5DecodeGithubComKubewardenK8sObjectsApimachineryPkgApisMetaV
 				}
 				in.Delim('}')
 			}
-		case "clusterName":
-			out.ClusterName = string(in.String())
 		case "creationTimestamp":
 			if data := in.Raw(); in.Ok() {
 				in.AddError((out.CreationTimestamp).UnmarshalJSON(data))
@@ -220,16 +218,6 @@ func easyjson7cd974a5EncodeGithubComKubewardenK8sObjectsApimachineryPkgApisMetaV
 			}
 			out.RawByte('}')
 		}
-	}
-	if in.ClusterName != "" {
-		const prefix string = ",\"clusterName\":"
-		if first {
-			first = false
-			out.RawString(prefix[1:])
-		} else {
-			out.RawString(prefix)
-		}
-		out.String(string(in.ClusterName))
 	}
 	if true {
 		const prefix string = ",\"creationTimestamp\":"

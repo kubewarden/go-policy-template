@@ -47,7 +47,7 @@ func easyjson82d633f6DecodeGithubComKubewardenK8sObjectsApiCoreV1(in *jlexer.Lex
 				*out.Driver = string(in.String())
 			}
 		case "fsType":
-			out.FsType = string(in.String())
+			out.FSType = string(in.String())
 		case "options":
 			if in.IsNull() {
 				in.Skip()
@@ -103,10 +103,10 @@ func easyjson82d633f6EncodeGithubComKubewardenK8sObjectsApiCoreV1(out *jwriter.W
 			out.String(string(*in.Driver))
 		}
 	}
-	if in.FsType != "" {
+	if in.FSType != "" {
 		const prefix string = ",\"fsType\":"
 		out.RawString(prefix)
-		out.String(string(in.FsType))
+		out.String(string(in.FSType))
 	}
 	if len(in.Options) != 0 {
 		const prefix string = ",\"options\":"

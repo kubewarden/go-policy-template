@@ -823,12 +823,12 @@ func easyjson1dbef17bDecodeGithubComKubewardenK8sObjectsApiCoreV17(in *jlexer.Le
 		case "seLinuxOptions":
 			if in.IsNull() {
 				in.Skip()
-				out.SeLinuxOptions = nil
+				out.SELinuxOptions = nil
 			} else {
-				if out.SeLinuxOptions == nil {
-					out.SeLinuxOptions = new(SELinuxOptions)
+				if out.SELinuxOptions == nil {
+					out.SELinuxOptions = new(SELinuxOptions)
 				}
-				easyjson1dbef17bDecodeGithubComKubewardenK8sObjectsApiCoreV110(in, out.SeLinuxOptions)
+				easyjson1dbef17bDecodeGithubComKubewardenK8sObjectsApiCoreV110(in, out.SELinuxOptions)
 			}
 		case "seccompProfile":
 			if in.IsNull() {
@@ -940,7 +940,7 @@ func easyjson1dbef17bEncodeGithubComKubewardenK8sObjectsApiCoreV17(out *jwriter.
 		}
 		out.Int64(int64(in.RunAsUser))
 	}
-	if in.SeLinuxOptions != nil {
+	if in.SELinuxOptions != nil {
 		const prefix string = ",\"seLinuxOptions\":"
 		if first {
 			first = false
@@ -948,7 +948,7 @@ func easyjson1dbef17bEncodeGithubComKubewardenK8sObjectsApiCoreV17(out *jwriter.
 		} else {
 			out.RawString(prefix)
 		}
-		easyjson1dbef17bEncodeGithubComKubewardenK8sObjectsApiCoreV110(out, *in.SeLinuxOptions)
+		easyjson1dbef17bEncodeGithubComKubewardenK8sObjectsApiCoreV110(out, *in.SELinuxOptions)
 	}
 	if in.SeccompProfile != nil {
 		const prefix string = ",\"seccompProfile\":"
@@ -1216,6 +1216,37 @@ func easyjson1dbef17bDecodeGithubComKubewardenK8sObjectsApiCoreV16(in *jlexer.Le
 			continue
 		}
 		switch key {
+		case "claims":
+			if in.IsNull() {
+				in.Skip()
+				out.Claims = nil
+			} else {
+				in.Delim('[')
+				if out.Claims == nil {
+					if !in.IsDelim(']') {
+						out.Claims = make([]*ResourceClaim, 0, 8)
+					} else {
+						out.Claims = []*ResourceClaim{}
+					}
+				} else {
+					out.Claims = (out.Claims)[:0]
+				}
+				for !in.IsDelim(']') {
+					var v22 *ResourceClaim
+					if in.IsNull() {
+						in.Skip()
+						v22 = nil
+					} else {
+						if v22 == nil {
+							v22 = new(ResourceClaim)
+						}
+						easyjson1dbef17bDecodeGithubComKubewardenK8sObjectsApiCoreV113(in, v22)
+					}
+					out.Claims = append(out.Claims, v22)
+					in.WantComma()
+				}
+				in.Delim(']')
+			}
 		case "limits":
 			if in.IsNull() {
 				in.Skip()
@@ -1229,17 +1260,17 @@ func easyjson1dbef17bDecodeGithubComKubewardenK8sObjectsApiCoreV16(in *jlexer.Le
 				for !in.IsDelim('}') {
 					key := string(in.String())
 					in.WantColon()
-					var v22 *resource.Quantity
+					var v23 *resource.Quantity
 					if in.IsNull() {
 						in.Skip()
-						v22 = nil
+						v23 = nil
 					} else {
-						if v22 == nil {
-							v22 = new(resource.Quantity)
+						if v23 == nil {
+							v23 = new(resource.Quantity)
 						}
-						*v22 = resource.Quantity(in.String())
+						*v23 = resource.Quantity(in.String())
 					}
-					(out.Limits)[key] = v22
+					(out.Limits)[key] = v23
 					in.WantComma()
 				}
 				in.Delim('}')
@@ -1257,17 +1288,17 @@ func easyjson1dbef17bDecodeGithubComKubewardenK8sObjectsApiCoreV16(in *jlexer.Le
 				for !in.IsDelim('}') {
 					key := string(in.String())
 					in.WantColon()
-					var v23 *resource.Quantity
+					var v24 *resource.Quantity
 					if in.IsNull() {
 						in.Skip()
-						v23 = nil
+						v24 = nil
 					} else {
-						if v23 == nil {
-							v23 = new(resource.Quantity)
+						if v24 == nil {
+							v24 = new(resource.Quantity)
 						}
-						*v23 = resource.Quantity(in.String())
+						*v24 = resource.Quantity(in.String())
 					}
-					(out.Requests)[key] = v23
+					(out.Requests)[key] = v24
 					in.WantComma()
 				}
 				in.Delim('}')
@@ -1286,25 +1317,48 @@ func easyjson1dbef17bEncodeGithubComKubewardenK8sObjectsApiCoreV16(out *jwriter.
 	out.RawByte('{')
 	first := true
 	_ = first
-	if len(in.Limits) != 0 {
-		const prefix string = ",\"limits\":"
+	if len(in.Claims) != 0 {
+		const prefix string = ",\"claims\":"
 		first = false
 		out.RawString(prefix[1:])
 		{
+			out.RawByte('[')
+			for v25, v26 := range in.Claims {
+				if v25 > 0 {
+					out.RawByte(',')
+				}
+				if v26 == nil {
+					out.RawString("null")
+				} else {
+					easyjson1dbef17bEncodeGithubComKubewardenK8sObjectsApiCoreV113(out, *v26)
+				}
+			}
+			out.RawByte(']')
+		}
+	}
+	if len(in.Limits) != 0 {
+		const prefix string = ",\"limits\":"
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
+		{
 			out.RawByte('{')
-			v24First := true
-			for v24Name, v24Value := range in.Limits {
-				if v24First {
-					v24First = false
+			v27First := true
+			for v27Name, v27Value := range in.Limits {
+				if v27First {
+					v27First = false
 				} else {
 					out.RawByte(',')
 				}
-				out.String(string(v24Name))
+				out.String(string(v27Name))
 				out.RawByte(':')
-				if v24Value == nil {
+				if v27Value == nil {
 					out.RawString("null")
 				} else {
-					out.String(string(*v24Value))
+					out.String(string(*v27Value))
 				}
 			}
 			out.RawByte('}')
@@ -1320,22 +1374,76 @@ func easyjson1dbef17bEncodeGithubComKubewardenK8sObjectsApiCoreV16(out *jwriter.
 		}
 		{
 			out.RawByte('{')
-			v25First := true
-			for v25Name, v25Value := range in.Requests {
-				if v25First {
-					v25First = false
+			v28First := true
+			for v28Name, v28Value := range in.Requests {
+				if v28First {
+					v28First = false
 				} else {
 					out.RawByte(',')
 				}
-				out.String(string(v25Name))
+				out.String(string(v28Name))
 				out.RawByte(':')
-				if v25Value == nil {
+				if v28Value == nil {
 					out.RawString("null")
 				} else {
-					out.String(string(*v25Value))
+					out.String(string(*v28Value))
 				}
 			}
 			out.RawByte('}')
+		}
+	}
+	out.RawByte('}')
+}
+func easyjson1dbef17bDecodeGithubComKubewardenK8sObjectsApiCoreV113(in *jlexer.Lexer, out *ResourceClaim) {
+	isTopLevel := in.IsStart()
+	if in.IsNull() {
+		if isTopLevel {
+			in.Consumed()
+		}
+		in.Skip()
+		return
+	}
+	in.Delim('{')
+	for !in.IsDelim('}') {
+		key := in.UnsafeFieldName(false)
+		in.WantColon()
+		if in.IsNull() {
+			in.Skip()
+			in.WantComma()
+			continue
+		}
+		switch key {
+		case "name":
+			if in.IsNull() {
+				in.Skip()
+				out.Name = nil
+			} else {
+				if out.Name == nil {
+					out.Name = new(string)
+				}
+				*out.Name = string(in.String())
+			}
+		default:
+			in.SkipRecursive()
+		}
+		in.WantComma()
+	}
+	in.Delim('}')
+	if isTopLevel {
+		in.Consumed()
+	}
+}
+func easyjson1dbef17bEncodeGithubComKubewardenK8sObjectsApiCoreV113(out *jwriter.Writer, in ResourceClaim) {
+	out.RawByte('{')
+	first := true
+	_ = first
+	{
+		const prefix string = ",\"name\":"
+		out.RawString(prefix[1:])
+		if in.Name == nil {
+			out.RawString("null")
+		} else {
+			out.String(string(*in.Name))
 		}
 	}
 	out.RawByte('}')
@@ -1449,19 +1557,19 @@ func easyjson1dbef17bDecodeGithubComKubewardenK8sObjectsApiCoreV14(in *jlexer.Le
 				if out.Exec == nil {
 					out.Exec = new(ExecAction)
 				}
-				easyjson1dbef17bDecodeGithubComKubewardenK8sObjectsApiCoreV113(in, out.Exec)
+				easyjson1dbef17bDecodeGithubComKubewardenK8sObjectsApiCoreV114(in, out.Exec)
 			}
 		case "failureThreshold":
 			out.FailureThreshold = int32(in.Int32())
 		case "grpc":
 			if in.IsNull() {
 				in.Skip()
-				out.Grpc = nil
+				out.GRPC = nil
 			} else {
-				if out.Grpc == nil {
-					out.Grpc = new(GRPCAction)
+				if out.GRPC == nil {
+					out.GRPC = new(GRPCAction)
 				}
-				easyjson1dbef17bDecodeGithubComKubewardenK8sObjectsApiCoreV114(in, out.Grpc)
+				easyjson1dbef17bDecodeGithubComKubewardenK8sObjectsApiCoreV115(in, out.GRPC)
 			}
 		case "httpGet":
 			if in.IsNull() {
@@ -1471,7 +1579,7 @@ func easyjson1dbef17bDecodeGithubComKubewardenK8sObjectsApiCoreV14(in *jlexer.Le
 				if out.HTTPGet == nil {
 					out.HTTPGet = new(HTTPGetAction)
 				}
-				easyjson1dbef17bDecodeGithubComKubewardenK8sObjectsApiCoreV115(in, out.HTTPGet)
+				easyjson1dbef17bDecodeGithubComKubewardenK8sObjectsApiCoreV116(in, out.HTTPGet)
 			}
 		case "initialDelaySeconds":
 			out.InitialDelaySeconds = int32(in.Int32())
@@ -1487,7 +1595,7 @@ func easyjson1dbef17bDecodeGithubComKubewardenK8sObjectsApiCoreV14(in *jlexer.Le
 				if out.TCPSocket == nil {
 					out.TCPSocket = new(TCPSocketAction)
 				}
-				easyjson1dbef17bDecodeGithubComKubewardenK8sObjectsApiCoreV116(in, out.TCPSocket)
+				easyjson1dbef17bDecodeGithubComKubewardenK8sObjectsApiCoreV117(in, out.TCPSocket)
 			}
 		case "terminationGracePeriodSeconds":
 			out.TerminationGracePeriodSeconds = int64(in.Int64())
@@ -1511,7 +1619,7 @@ func easyjson1dbef17bEncodeGithubComKubewardenK8sObjectsApiCoreV14(out *jwriter.
 		const prefix string = ",\"exec\":"
 		first = false
 		out.RawString(prefix[1:])
-		easyjson1dbef17bEncodeGithubComKubewardenK8sObjectsApiCoreV113(out, *in.Exec)
+		easyjson1dbef17bEncodeGithubComKubewardenK8sObjectsApiCoreV114(out, *in.Exec)
 	}
 	if in.FailureThreshold != 0 {
 		const prefix string = ",\"failureThreshold\":"
@@ -1523,7 +1631,7 @@ func easyjson1dbef17bEncodeGithubComKubewardenK8sObjectsApiCoreV14(out *jwriter.
 		}
 		out.Int32(int32(in.FailureThreshold))
 	}
-	if in.Grpc != nil {
+	if in.GRPC != nil {
 		const prefix string = ",\"grpc\":"
 		if first {
 			first = false
@@ -1531,7 +1639,7 @@ func easyjson1dbef17bEncodeGithubComKubewardenK8sObjectsApiCoreV14(out *jwriter.
 		} else {
 			out.RawString(prefix)
 		}
-		easyjson1dbef17bEncodeGithubComKubewardenK8sObjectsApiCoreV114(out, *in.Grpc)
+		easyjson1dbef17bEncodeGithubComKubewardenK8sObjectsApiCoreV115(out, *in.GRPC)
 	}
 	if in.HTTPGet != nil {
 		const prefix string = ",\"httpGet\":"
@@ -1541,7 +1649,7 @@ func easyjson1dbef17bEncodeGithubComKubewardenK8sObjectsApiCoreV14(out *jwriter.
 		} else {
 			out.RawString(prefix)
 		}
-		easyjson1dbef17bEncodeGithubComKubewardenK8sObjectsApiCoreV115(out, *in.HTTPGet)
+		easyjson1dbef17bEncodeGithubComKubewardenK8sObjectsApiCoreV116(out, *in.HTTPGet)
 	}
 	if in.InitialDelaySeconds != 0 {
 		const prefix string = ",\"initialDelaySeconds\":"
@@ -1581,7 +1689,7 @@ func easyjson1dbef17bEncodeGithubComKubewardenK8sObjectsApiCoreV14(out *jwriter.
 		} else {
 			out.RawString(prefix)
 		}
-		easyjson1dbef17bEncodeGithubComKubewardenK8sObjectsApiCoreV116(out, *in.TCPSocket)
+		easyjson1dbef17bEncodeGithubComKubewardenK8sObjectsApiCoreV117(out, *in.TCPSocket)
 	}
 	if in.TerminationGracePeriodSeconds != 0 {
 		const prefix string = ",\"terminationGracePeriodSeconds\":"
@@ -1605,7 +1713,7 @@ func easyjson1dbef17bEncodeGithubComKubewardenK8sObjectsApiCoreV14(out *jwriter.
 	}
 	out.RawByte('}')
 }
-func easyjson1dbef17bDecodeGithubComKubewardenK8sObjectsApiCoreV116(in *jlexer.Lexer, out *TCPSocketAction) {
+func easyjson1dbef17bDecodeGithubComKubewardenK8sObjectsApiCoreV117(in *jlexer.Lexer, out *TCPSocketAction) {
 	isTopLevel := in.IsStart()
 	if in.IsNull() {
 		if isTopLevel {
@@ -1646,7 +1754,7 @@ func easyjson1dbef17bDecodeGithubComKubewardenK8sObjectsApiCoreV116(in *jlexer.L
 		in.Consumed()
 	}
 }
-func easyjson1dbef17bEncodeGithubComKubewardenK8sObjectsApiCoreV116(out *jwriter.Writer, in TCPSocketAction) {
+func easyjson1dbef17bEncodeGithubComKubewardenK8sObjectsApiCoreV117(out *jwriter.Writer, in TCPSocketAction) {
 	out.RawByte('{')
 	first := true
 	_ = first
@@ -1672,7 +1780,7 @@ func easyjson1dbef17bEncodeGithubComKubewardenK8sObjectsApiCoreV116(out *jwriter
 	}
 	out.RawByte('}')
 }
-func easyjson1dbef17bDecodeGithubComKubewardenK8sObjectsApiCoreV115(in *jlexer.Lexer, out *HTTPGetAction) {
+func easyjson1dbef17bDecodeGithubComKubewardenK8sObjectsApiCoreV116(in *jlexer.Lexer, out *HTTPGetAction) {
 	isTopLevel := in.IsStart()
 	if in.IsNull() {
 		if isTopLevel {
@@ -1709,17 +1817,17 @@ func easyjson1dbef17bDecodeGithubComKubewardenK8sObjectsApiCoreV115(in *jlexer.L
 					out.HTTPHeaders = (out.HTTPHeaders)[:0]
 				}
 				for !in.IsDelim(']') {
-					var v26 *HTTPHeader
+					var v29 *HTTPHeader
 					if in.IsNull() {
 						in.Skip()
-						v26 = nil
+						v29 = nil
 					} else {
-						if v26 == nil {
-							v26 = new(HTTPHeader)
+						if v29 == nil {
+							v29 = new(HTTPHeader)
 						}
-						easyjson1dbef17bDecodeGithubComKubewardenK8sObjectsApiCoreV117(in, v26)
+						easyjson1dbef17bDecodeGithubComKubewardenK8sObjectsApiCoreV118(in, v29)
 					}
-					out.HTTPHeaders = append(out.HTTPHeaders, v26)
+					out.HTTPHeaders = append(out.HTTPHeaders, v29)
 					in.WantComma()
 				}
 				in.Delim(']')
@@ -1748,7 +1856,7 @@ func easyjson1dbef17bDecodeGithubComKubewardenK8sObjectsApiCoreV115(in *jlexer.L
 		in.Consumed()
 	}
 }
-func easyjson1dbef17bEncodeGithubComKubewardenK8sObjectsApiCoreV115(out *jwriter.Writer, in HTTPGetAction) {
+func easyjson1dbef17bEncodeGithubComKubewardenK8sObjectsApiCoreV116(out *jwriter.Writer, in HTTPGetAction) {
 	out.RawByte('{')
 	first := true
 	_ = first
@@ -1768,14 +1876,14 @@ func easyjson1dbef17bEncodeGithubComKubewardenK8sObjectsApiCoreV115(out *jwriter
 		}
 		{
 			out.RawByte('[')
-			for v27, v28 := range in.HTTPHeaders {
-				if v27 > 0 {
+			for v30, v31 := range in.HTTPHeaders {
+				if v30 > 0 {
 					out.RawByte(',')
 				}
-				if v28 == nil {
+				if v31 == nil {
 					out.RawString("null")
 				} else {
-					easyjson1dbef17bEncodeGithubComKubewardenK8sObjectsApiCoreV117(out, *v28)
+					easyjson1dbef17bEncodeGithubComKubewardenK8sObjectsApiCoreV118(out, *v31)
 				}
 			}
 			out.RawByte(']')
@@ -1812,7 +1920,7 @@ func easyjson1dbef17bEncodeGithubComKubewardenK8sObjectsApiCoreV115(out *jwriter
 	}
 	out.RawByte('}')
 }
-func easyjson1dbef17bDecodeGithubComKubewardenK8sObjectsApiCoreV117(in *jlexer.Lexer, out *HTTPHeader) {
+func easyjson1dbef17bDecodeGithubComKubewardenK8sObjectsApiCoreV118(in *jlexer.Lexer, out *HTTPHeader) {
 	isTopLevel := in.IsStart()
 	if in.IsNull() {
 		if isTopLevel {
@@ -1861,7 +1969,7 @@ func easyjson1dbef17bDecodeGithubComKubewardenK8sObjectsApiCoreV117(in *jlexer.L
 		in.Consumed()
 	}
 }
-func easyjson1dbef17bEncodeGithubComKubewardenK8sObjectsApiCoreV117(out *jwriter.Writer, in HTTPHeader) {
+func easyjson1dbef17bEncodeGithubComKubewardenK8sObjectsApiCoreV118(out *jwriter.Writer, in HTTPHeader) {
 	out.RawByte('{')
 	first := true
 	_ = first
@@ -1885,7 +1993,7 @@ func easyjson1dbef17bEncodeGithubComKubewardenK8sObjectsApiCoreV117(out *jwriter
 	}
 	out.RawByte('}')
 }
-func easyjson1dbef17bDecodeGithubComKubewardenK8sObjectsApiCoreV114(in *jlexer.Lexer, out *GRPCAction) {
+func easyjson1dbef17bDecodeGithubComKubewardenK8sObjectsApiCoreV115(in *jlexer.Lexer, out *GRPCAction) {
 	isTopLevel := in.IsStart()
 	if in.IsNull() {
 		if isTopLevel {
@@ -1926,7 +2034,7 @@ func easyjson1dbef17bDecodeGithubComKubewardenK8sObjectsApiCoreV114(in *jlexer.L
 		in.Consumed()
 	}
 }
-func easyjson1dbef17bEncodeGithubComKubewardenK8sObjectsApiCoreV114(out *jwriter.Writer, in GRPCAction) {
+func easyjson1dbef17bEncodeGithubComKubewardenK8sObjectsApiCoreV115(out *jwriter.Writer, in GRPCAction) {
 	out.RawByte('{')
 	first := true
 	_ = first
@@ -1946,7 +2054,7 @@ func easyjson1dbef17bEncodeGithubComKubewardenK8sObjectsApiCoreV114(out *jwriter
 	}
 	out.RawByte('}')
 }
-func easyjson1dbef17bDecodeGithubComKubewardenK8sObjectsApiCoreV113(in *jlexer.Lexer, out *ExecAction) {
+func easyjson1dbef17bDecodeGithubComKubewardenK8sObjectsApiCoreV114(in *jlexer.Lexer, out *ExecAction) {
 	isTopLevel := in.IsStart()
 	if in.IsNull() {
 		if isTopLevel {
@@ -1981,9 +2089,9 @@ func easyjson1dbef17bDecodeGithubComKubewardenK8sObjectsApiCoreV113(in *jlexer.L
 					out.Command = (out.Command)[:0]
 				}
 				for !in.IsDelim(']') {
-					var v29 string
-					v29 = string(in.String())
-					out.Command = append(out.Command, v29)
+					var v32 string
+					v32 = string(in.String())
+					out.Command = append(out.Command, v32)
 					in.WantComma()
 				}
 				in.Delim(']')
@@ -1998,7 +2106,7 @@ func easyjson1dbef17bDecodeGithubComKubewardenK8sObjectsApiCoreV113(in *jlexer.L
 		in.Consumed()
 	}
 }
-func easyjson1dbef17bEncodeGithubComKubewardenK8sObjectsApiCoreV113(out *jwriter.Writer, in ExecAction) {
+func easyjson1dbef17bEncodeGithubComKubewardenK8sObjectsApiCoreV114(out *jwriter.Writer, in ExecAction) {
 	out.RawByte('{')
 	first := true
 	_ = first
@@ -2008,11 +2116,11 @@ func easyjson1dbef17bEncodeGithubComKubewardenK8sObjectsApiCoreV113(out *jwriter
 		out.RawString(prefix[1:])
 		{
 			out.RawByte('[')
-			for v30, v31 := range in.Command {
-				if v30 > 0 {
+			for v33, v34 := range in.Command {
+				if v33 > 0 {
 					out.RawByte(',')
 				}
-				out.String(string(v31))
+				out.String(string(v34))
 			}
 			out.RawByte(']')
 		}
@@ -2046,7 +2154,7 @@ func easyjson1dbef17bDecodeGithubComKubewardenK8sObjectsApiCoreV13(in *jlexer.Le
 				if out.PostStart == nil {
 					out.PostStart = new(LifecycleHandler)
 				}
-				easyjson1dbef17bDecodeGithubComKubewardenK8sObjectsApiCoreV118(in, out.PostStart)
+				easyjson1dbef17bDecodeGithubComKubewardenK8sObjectsApiCoreV119(in, out.PostStart)
 			}
 		case "preStop":
 			if in.IsNull() {
@@ -2056,7 +2164,7 @@ func easyjson1dbef17bDecodeGithubComKubewardenK8sObjectsApiCoreV13(in *jlexer.Le
 				if out.PreStop == nil {
 					out.PreStop = new(LifecycleHandler)
 				}
-				easyjson1dbef17bDecodeGithubComKubewardenK8sObjectsApiCoreV118(in, out.PreStop)
+				easyjson1dbef17bDecodeGithubComKubewardenK8sObjectsApiCoreV119(in, out.PreStop)
 			}
 		default:
 			in.SkipRecursive()
@@ -2076,7 +2184,7 @@ func easyjson1dbef17bEncodeGithubComKubewardenK8sObjectsApiCoreV13(out *jwriter.
 		const prefix string = ",\"postStart\":"
 		first = false
 		out.RawString(prefix[1:])
-		easyjson1dbef17bEncodeGithubComKubewardenK8sObjectsApiCoreV118(out, *in.PostStart)
+		easyjson1dbef17bEncodeGithubComKubewardenK8sObjectsApiCoreV119(out, *in.PostStart)
 	}
 	if in.PreStop != nil {
 		const prefix string = ",\"preStop\":"
@@ -2086,11 +2194,11 @@ func easyjson1dbef17bEncodeGithubComKubewardenK8sObjectsApiCoreV13(out *jwriter.
 		} else {
 			out.RawString(prefix)
 		}
-		easyjson1dbef17bEncodeGithubComKubewardenK8sObjectsApiCoreV118(out, *in.PreStop)
+		easyjson1dbef17bEncodeGithubComKubewardenK8sObjectsApiCoreV119(out, *in.PreStop)
 	}
 	out.RawByte('}')
 }
-func easyjson1dbef17bDecodeGithubComKubewardenK8sObjectsApiCoreV118(in *jlexer.Lexer, out *LifecycleHandler) {
+func easyjson1dbef17bDecodeGithubComKubewardenK8sObjectsApiCoreV119(in *jlexer.Lexer, out *LifecycleHandler) {
 	isTopLevel := in.IsStart()
 	if in.IsNull() {
 		if isTopLevel {
@@ -2117,7 +2225,7 @@ func easyjson1dbef17bDecodeGithubComKubewardenK8sObjectsApiCoreV118(in *jlexer.L
 				if out.Exec == nil {
 					out.Exec = new(ExecAction)
 				}
-				easyjson1dbef17bDecodeGithubComKubewardenK8sObjectsApiCoreV113(in, out.Exec)
+				easyjson1dbef17bDecodeGithubComKubewardenK8sObjectsApiCoreV114(in, out.Exec)
 			}
 		case "httpGet":
 			if in.IsNull() {
@@ -2127,7 +2235,7 @@ func easyjson1dbef17bDecodeGithubComKubewardenK8sObjectsApiCoreV118(in *jlexer.L
 				if out.HTTPGet == nil {
 					out.HTTPGet = new(HTTPGetAction)
 				}
-				easyjson1dbef17bDecodeGithubComKubewardenK8sObjectsApiCoreV115(in, out.HTTPGet)
+				easyjson1dbef17bDecodeGithubComKubewardenK8sObjectsApiCoreV116(in, out.HTTPGet)
 			}
 		case "tcpSocket":
 			if in.IsNull() {
@@ -2137,7 +2245,7 @@ func easyjson1dbef17bDecodeGithubComKubewardenK8sObjectsApiCoreV118(in *jlexer.L
 				if out.TCPSocket == nil {
 					out.TCPSocket = new(TCPSocketAction)
 				}
-				easyjson1dbef17bDecodeGithubComKubewardenK8sObjectsApiCoreV116(in, out.TCPSocket)
+				easyjson1dbef17bDecodeGithubComKubewardenK8sObjectsApiCoreV117(in, out.TCPSocket)
 			}
 		default:
 			in.SkipRecursive()
@@ -2149,7 +2257,7 @@ func easyjson1dbef17bDecodeGithubComKubewardenK8sObjectsApiCoreV118(in *jlexer.L
 		in.Consumed()
 	}
 }
-func easyjson1dbef17bEncodeGithubComKubewardenK8sObjectsApiCoreV118(out *jwriter.Writer, in LifecycleHandler) {
+func easyjson1dbef17bEncodeGithubComKubewardenK8sObjectsApiCoreV119(out *jwriter.Writer, in LifecycleHandler) {
 	out.RawByte('{')
 	first := true
 	_ = first
@@ -2157,7 +2265,7 @@ func easyjson1dbef17bEncodeGithubComKubewardenK8sObjectsApiCoreV118(out *jwriter
 		const prefix string = ",\"exec\":"
 		first = false
 		out.RawString(prefix[1:])
-		easyjson1dbef17bEncodeGithubComKubewardenK8sObjectsApiCoreV113(out, *in.Exec)
+		easyjson1dbef17bEncodeGithubComKubewardenK8sObjectsApiCoreV114(out, *in.Exec)
 	}
 	if in.HTTPGet != nil {
 		const prefix string = ",\"httpGet\":"
@@ -2167,7 +2275,7 @@ func easyjson1dbef17bEncodeGithubComKubewardenK8sObjectsApiCoreV118(out *jwriter
 		} else {
 			out.RawString(prefix)
 		}
-		easyjson1dbef17bEncodeGithubComKubewardenK8sObjectsApiCoreV115(out, *in.HTTPGet)
+		easyjson1dbef17bEncodeGithubComKubewardenK8sObjectsApiCoreV116(out, *in.HTTPGet)
 	}
 	if in.TCPSocket != nil {
 		const prefix string = ",\"tcpSocket\":"
@@ -2177,7 +2285,7 @@ func easyjson1dbef17bEncodeGithubComKubewardenK8sObjectsApiCoreV118(out *jwriter
 		} else {
 			out.RawString(prefix)
 		}
-		easyjson1dbef17bEncodeGithubComKubewardenK8sObjectsApiCoreV116(out, *in.TCPSocket)
+		easyjson1dbef17bEncodeGithubComKubewardenK8sObjectsApiCoreV117(out, *in.TCPSocket)
 	}
 	out.RawByte('}')
 }
@@ -2220,7 +2328,7 @@ func easyjson1dbef17bDecodeGithubComKubewardenK8sObjectsApiCoreV12(in *jlexer.Le
 				if out.SecretRef == nil {
 					out.SecretRef = new(SecretEnvSource)
 				}
-				easyjson1dbef17bDecodeGithubComKubewardenK8sObjectsApiCoreV119(in, out.SecretRef)
+				easyjson1dbef17bDecodeGithubComKubewardenK8sObjectsApiCoreV120(in, out.SecretRef)
 			}
 		default:
 			in.SkipRecursive()
@@ -2260,11 +2368,11 @@ func easyjson1dbef17bEncodeGithubComKubewardenK8sObjectsApiCoreV12(out *jwriter.
 		} else {
 			out.RawString(prefix)
 		}
-		easyjson1dbef17bEncodeGithubComKubewardenK8sObjectsApiCoreV119(out, *in.SecretRef)
+		easyjson1dbef17bEncodeGithubComKubewardenK8sObjectsApiCoreV120(out, *in.SecretRef)
 	}
 	out.RawByte('}')
 }
-func easyjson1dbef17bDecodeGithubComKubewardenK8sObjectsApiCoreV119(in *jlexer.Lexer, out *SecretEnvSource) {
+func easyjson1dbef17bDecodeGithubComKubewardenK8sObjectsApiCoreV120(in *jlexer.Lexer, out *SecretEnvSource) {
 	isTopLevel := in.IsStart()
 	if in.IsNull() {
 		if isTopLevel {
@@ -2297,7 +2405,7 @@ func easyjson1dbef17bDecodeGithubComKubewardenK8sObjectsApiCoreV119(in *jlexer.L
 		in.Consumed()
 	}
 }
-func easyjson1dbef17bEncodeGithubComKubewardenK8sObjectsApiCoreV119(out *jwriter.Writer, in SecretEnvSource) {
+func easyjson1dbef17bEncodeGithubComKubewardenK8sObjectsApiCoreV120(out *jwriter.Writer, in SecretEnvSource) {
 	out.RawByte('{')
 	first := true
 	_ = first
@@ -2358,7 +2466,7 @@ func easyjson1dbef17bDecodeGithubComKubewardenK8sObjectsApiCoreV11(in *jlexer.Le
 				if out.ValueFrom == nil {
 					out.ValueFrom = new(EnvVarSource)
 				}
-				easyjson1dbef17bDecodeGithubComKubewardenK8sObjectsApiCoreV120(in, out.ValueFrom)
+				easyjson1dbef17bDecodeGithubComKubewardenK8sObjectsApiCoreV121(in, out.ValueFrom)
 			}
 		default:
 			in.SkipRecursive()
@@ -2391,11 +2499,11 @@ func easyjson1dbef17bEncodeGithubComKubewardenK8sObjectsApiCoreV11(out *jwriter.
 	if in.ValueFrom != nil {
 		const prefix string = ",\"valueFrom\":"
 		out.RawString(prefix)
-		easyjson1dbef17bEncodeGithubComKubewardenK8sObjectsApiCoreV120(out, *in.ValueFrom)
+		easyjson1dbef17bEncodeGithubComKubewardenK8sObjectsApiCoreV121(out, *in.ValueFrom)
 	}
 	out.RawByte('}')
 }
-func easyjson1dbef17bDecodeGithubComKubewardenK8sObjectsApiCoreV120(in *jlexer.Lexer, out *EnvVarSource) {
+func easyjson1dbef17bDecodeGithubComKubewardenK8sObjectsApiCoreV121(in *jlexer.Lexer, out *EnvVarSource) {
 	isTopLevel := in.IsStart()
 	if in.IsNull() {
 		if isTopLevel {
@@ -2432,7 +2540,7 @@ func easyjson1dbef17bDecodeGithubComKubewardenK8sObjectsApiCoreV120(in *jlexer.L
 				if out.FieldRef == nil {
 					out.FieldRef = new(ObjectFieldSelector)
 				}
-				easyjson1dbef17bDecodeGithubComKubewardenK8sObjectsApiCoreV121(in, out.FieldRef)
+				easyjson1dbef17bDecodeGithubComKubewardenK8sObjectsApiCoreV122(in, out.FieldRef)
 			}
 		case "resourceFieldRef":
 			if in.IsNull() {
@@ -2442,7 +2550,7 @@ func easyjson1dbef17bDecodeGithubComKubewardenK8sObjectsApiCoreV120(in *jlexer.L
 				if out.ResourceFieldRef == nil {
 					out.ResourceFieldRef = new(ResourceFieldSelector)
 				}
-				easyjson1dbef17bDecodeGithubComKubewardenK8sObjectsApiCoreV122(in, out.ResourceFieldRef)
+				easyjson1dbef17bDecodeGithubComKubewardenK8sObjectsApiCoreV123(in, out.ResourceFieldRef)
 			}
 		case "secretKeyRef":
 			if in.IsNull() {
@@ -2452,7 +2560,7 @@ func easyjson1dbef17bDecodeGithubComKubewardenK8sObjectsApiCoreV120(in *jlexer.L
 				if out.SecretKeyRef == nil {
 					out.SecretKeyRef = new(SecretKeySelector)
 				}
-				easyjson1dbef17bDecodeGithubComKubewardenK8sObjectsApiCoreV123(in, out.SecretKeyRef)
+				easyjson1dbef17bDecodeGithubComKubewardenK8sObjectsApiCoreV124(in, out.SecretKeyRef)
 			}
 		default:
 			in.SkipRecursive()
@@ -2464,7 +2572,7 @@ func easyjson1dbef17bDecodeGithubComKubewardenK8sObjectsApiCoreV120(in *jlexer.L
 		in.Consumed()
 	}
 }
-func easyjson1dbef17bEncodeGithubComKubewardenK8sObjectsApiCoreV120(out *jwriter.Writer, in EnvVarSource) {
+func easyjson1dbef17bEncodeGithubComKubewardenK8sObjectsApiCoreV121(out *jwriter.Writer, in EnvVarSource) {
 	out.RawByte('{')
 	first := true
 	_ = first
@@ -2482,7 +2590,7 @@ func easyjson1dbef17bEncodeGithubComKubewardenK8sObjectsApiCoreV120(out *jwriter
 		} else {
 			out.RawString(prefix)
 		}
-		easyjson1dbef17bEncodeGithubComKubewardenK8sObjectsApiCoreV121(out, *in.FieldRef)
+		easyjson1dbef17bEncodeGithubComKubewardenK8sObjectsApiCoreV122(out, *in.FieldRef)
 	}
 	if in.ResourceFieldRef != nil {
 		const prefix string = ",\"resourceFieldRef\":"
@@ -2492,7 +2600,7 @@ func easyjson1dbef17bEncodeGithubComKubewardenK8sObjectsApiCoreV120(out *jwriter
 		} else {
 			out.RawString(prefix)
 		}
-		easyjson1dbef17bEncodeGithubComKubewardenK8sObjectsApiCoreV122(out, *in.ResourceFieldRef)
+		easyjson1dbef17bEncodeGithubComKubewardenK8sObjectsApiCoreV123(out, *in.ResourceFieldRef)
 	}
 	if in.SecretKeyRef != nil {
 		const prefix string = ",\"secretKeyRef\":"
@@ -2502,11 +2610,11 @@ func easyjson1dbef17bEncodeGithubComKubewardenK8sObjectsApiCoreV120(out *jwriter
 		} else {
 			out.RawString(prefix)
 		}
-		easyjson1dbef17bEncodeGithubComKubewardenK8sObjectsApiCoreV123(out, *in.SecretKeyRef)
+		easyjson1dbef17bEncodeGithubComKubewardenK8sObjectsApiCoreV124(out, *in.SecretKeyRef)
 	}
 	out.RawByte('}')
 }
-func easyjson1dbef17bDecodeGithubComKubewardenK8sObjectsApiCoreV123(in *jlexer.Lexer, out *SecretKeySelector) {
+func easyjson1dbef17bDecodeGithubComKubewardenK8sObjectsApiCoreV124(in *jlexer.Lexer, out *SecretKeySelector) {
 	isTopLevel := in.IsStart()
 	if in.IsNull() {
 		if isTopLevel {
@@ -2549,7 +2657,7 @@ func easyjson1dbef17bDecodeGithubComKubewardenK8sObjectsApiCoreV123(in *jlexer.L
 		in.Consumed()
 	}
 }
-func easyjson1dbef17bEncodeGithubComKubewardenK8sObjectsApiCoreV123(out *jwriter.Writer, in SecretKeySelector) {
+func easyjson1dbef17bEncodeGithubComKubewardenK8sObjectsApiCoreV124(out *jwriter.Writer, in SecretKeySelector) {
 	out.RawByte('{')
 	first := true
 	_ = first
@@ -2574,7 +2682,7 @@ func easyjson1dbef17bEncodeGithubComKubewardenK8sObjectsApiCoreV123(out *jwriter
 	}
 	out.RawByte('}')
 }
-func easyjson1dbef17bDecodeGithubComKubewardenK8sObjectsApiCoreV122(in *jlexer.Lexer, out *ResourceFieldSelector) {
+func easyjson1dbef17bDecodeGithubComKubewardenK8sObjectsApiCoreV123(in *jlexer.Lexer, out *ResourceFieldSelector) {
 	isTopLevel := in.IsStart()
 	if in.IsNull() {
 		if isTopLevel {
@@ -2625,7 +2733,7 @@ func easyjson1dbef17bDecodeGithubComKubewardenK8sObjectsApiCoreV122(in *jlexer.L
 		in.Consumed()
 	}
 }
-func easyjson1dbef17bEncodeGithubComKubewardenK8sObjectsApiCoreV122(out *jwriter.Writer, in ResourceFieldSelector) {
+func easyjson1dbef17bEncodeGithubComKubewardenK8sObjectsApiCoreV123(out *jwriter.Writer, in ResourceFieldSelector) {
 	out.RawByte('{')
 	first := true
 	_ = first
@@ -2661,7 +2769,7 @@ func easyjson1dbef17bEncodeGithubComKubewardenK8sObjectsApiCoreV122(out *jwriter
 	}
 	out.RawByte('}')
 }
-func easyjson1dbef17bDecodeGithubComKubewardenK8sObjectsApiCoreV121(in *jlexer.Lexer, out *ObjectFieldSelector) {
+func easyjson1dbef17bDecodeGithubComKubewardenK8sObjectsApiCoreV122(in *jlexer.Lexer, out *ObjectFieldSelector) {
 	isTopLevel := in.IsStart()
 	if in.IsNull() {
 		if isTopLevel {
@@ -2702,7 +2810,7 @@ func easyjson1dbef17bDecodeGithubComKubewardenK8sObjectsApiCoreV121(in *jlexer.L
 		in.Consumed()
 	}
 }
-func easyjson1dbef17bEncodeGithubComKubewardenK8sObjectsApiCoreV121(out *jwriter.Writer, in ObjectFieldSelector) {
+func easyjson1dbef17bEncodeGithubComKubewardenK8sObjectsApiCoreV122(out *jwriter.Writer, in ObjectFieldSelector) {
 	out.RawByte('{')
 	first := true
 	_ = first

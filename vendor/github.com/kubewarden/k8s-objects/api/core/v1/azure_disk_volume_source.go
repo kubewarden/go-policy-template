@@ -22,7 +22,7 @@ type AzureDiskVolumeSource struct {
 	DiskURI *string `json:"diskURI"`
 
 	// fsType is Filesystem type to mount. Must be a filesystem type supported by the host operating system. Ex. "ext4", "xfs", "ntfs". Implicitly inferred to be "ext4" if unspecified.
-	FsType string `json:"fsType,omitempty"`
+	FSType string `json:"fsType,omitempty"`
 
 	// kind expected values are Shared: multiple blob disks per storage account  Dedicated: single blob disk per storage account  Managed: azure managed data disk (only in managed availability set). defaults to shared
 	Kind string `json:"kind,omitempty"`

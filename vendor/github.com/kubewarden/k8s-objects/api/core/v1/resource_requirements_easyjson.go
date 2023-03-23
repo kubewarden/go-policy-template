@@ -37,6 +37,37 @@ func easyjson28f1750dDecodeGithubComKubewardenK8sObjectsApiCoreV1(in *jlexer.Lex
 			continue
 		}
 		switch key {
+		case "claims":
+			if in.IsNull() {
+				in.Skip()
+				out.Claims = nil
+			} else {
+				in.Delim('[')
+				if out.Claims == nil {
+					if !in.IsDelim(']') {
+						out.Claims = make([]*ResourceClaim, 0, 8)
+					} else {
+						out.Claims = []*ResourceClaim{}
+					}
+				} else {
+					out.Claims = (out.Claims)[:0]
+				}
+				for !in.IsDelim(']') {
+					var v1 *ResourceClaim
+					if in.IsNull() {
+						in.Skip()
+						v1 = nil
+					} else {
+						if v1 == nil {
+							v1 = new(ResourceClaim)
+						}
+						(*v1).UnmarshalEasyJSON(in)
+					}
+					out.Claims = append(out.Claims, v1)
+					in.WantComma()
+				}
+				in.Delim(']')
+			}
 		case "limits":
 			if in.IsNull() {
 				in.Skip()
@@ -50,17 +81,17 @@ func easyjson28f1750dDecodeGithubComKubewardenK8sObjectsApiCoreV1(in *jlexer.Lex
 				for !in.IsDelim('}') {
 					key := string(in.String())
 					in.WantColon()
-					var v1 *resource.Quantity
+					var v2 *resource.Quantity
 					if in.IsNull() {
 						in.Skip()
-						v1 = nil
+						v2 = nil
 					} else {
-						if v1 == nil {
-							v1 = new(resource.Quantity)
+						if v2 == nil {
+							v2 = new(resource.Quantity)
 						}
-						*v1 = resource.Quantity(in.String())
+						*v2 = resource.Quantity(in.String())
 					}
-					(out.Limits)[key] = v1
+					(out.Limits)[key] = v2
 					in.WantComma()
 				}
 				in.Delim('}')
@@ -78,17 +109,17 @@ func easyjson28f1750dDecodeGithubComKubewardenK8sObjectsApiCoreV1(in *jlexer.Lex
 				for !in.IsDelim('}') {
 					key := string(in.String())
 					in.WantColon()
-					var v2 *resource.Quantity
+					var v3 *resource.Quantity
 					if in.IsNull() {
 						in.Skip()
-						v2 = nil
+						v3 = nil
 					} else {
-						if v2 == nil {
-							v2 = new(resource.Quantity)
+						if v3 == nil {
+							v3 = new(resource.Quantity)
 						}
-						*v2 = resource.Quantity(in.String())
+						*v3 = resource.Quantity(in.String())
 					}
-					(out.Requests)[key] = v2
+					(out.Requests)[key] = v3
 					in.WantComma()
 				}
 				in.Delim('}')
@@ -107,25 +138,48 @@ func easyjson28f1750dEncodeGithubComKubewardenK8sObjectsApiCoreV1(out *jwriter.W
 	out.RawByte('{')
 	first := true
 	_ = first
-	if len(in.Limits) != 0 {
-		const prefix string = ",\"limits\":"
+	if len(in.Claims) != 0 {
+		const prefix string = ",\"claims\":"
 		first = false
 		out.RawString(prefix[1:])
 		{
+			out.RawByte('[')
+			for v4, v5 := range in.Claims {
+				if v4 > 0 {
+					out.RawByte(',')
+				}
+				if v5 == nil {
+					out.RawString("null")
+				} else {
+					(*v5).MarshalEasyJSON(out)
+				}
+			}
+			out.RawByte(']')
+		}
+	}
+	if len(in.Limits) != 0 {
+		const prefix string = ",\"limits\":"
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
+		{
 			out.RawByte('{')
-			v3First := true
-			for v3Name, v3Value := range in.Limits {
-				if v3First {
-					v3First = false
+			v6First := true
+			for v6Name, v6Value := range in.Limits {
+				if v6First {
+					v6First = false
 				} else {
 					out.RawByte(',')
 				}
-				out.String(string(v3Name))
+				out.String(string(v6Name))
 				out.RawByte(':')
-				if v3Value == nil {
+				if v6Value == nil {
 					out.RawString("null")
 				} else {
-					out.String(string(*v3Value))
+					out.String(string(*v6Value))
 				}
 			}
 			out.RawByte('}')
@@ -141,19 +195,19 @@ func easyjson28f1750dEncodeGithubComKubewardenK8sObjectsApiCoreV1(out *jwriter.W
 		}
 		{
 			out.RawByte('{')
-			v4First := true
-			for v4Name, v4Value := range in.Requests {
-				if v4First {
-					v4First = false
+			v7First := true
+			for v7Name, v7Value := range in.Requests {
+				if v7First {
+					v7First = false
 				} else {
 					out.RawByte(',')
 				}
-				out.String(string(v4Name))
+				out.String(string(v7Name))
 				out.RawByte(':')
-				if v4Value == nil {
+				if v7Value == nil {
 					out.RawString("null")
 				} else {
-					out.String(string(*v4Value))
+					out.String(string(*v7Value))
 				}
 			}
 			out.RawByte('}')

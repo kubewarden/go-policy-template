@@ -617,12 +617,12 @@ func easyjson94b78b83DecodeGithubComKubewardenK8sObjectsApiCoreV11(in *jlexer.Le
 		case "osImage":
 			if in.IsNull() {
 				in.Skip()
-				out.OsImage = nil
+				out.OSImage = nil
 			} else {
-				if out.OsImage == nil {
-					out.OsImage = new(string)
+				if out.OSImage == nil {
+					out.OSImage = new(string)
 				}
-				*out.OsImage = string(in.String())
+				*out.OSImage = string(in.String())
 			}
 		case "systemUUID":
 			if in.IsNull() {
@@ -723,10 +723,10 @@ func easyjson94b78b83EncodeGithubComKubewardenK8sObjectsApiCoreV11(out *jwriter.
 	{
 		const prefix string = ",\"osImage\":"
 		out.RawString(prefix)
-		if in.OsImage == nil {
+		if in.OSImage == nil {
 			out.RawString("null")
 		} else {
-			out.String(string(*in.OsImage))
+			out.String(string(*in.OSImage))
 		}
 	}
 	{

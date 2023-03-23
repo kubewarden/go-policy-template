@@ -37,7 +37,7 @@ func easyjson6549b042DecodeGithubComKubewardenK8sObjectsApiCoreV1(in *jlexer.Lex
 		}
 		switch key {
 		case "fsType":
-			out.FsType = string(in.String())
+			out.FSType = string(in.String())
 		case "readOnly":
 			out.ReadOnly = bool(in.Bool())
 		case "volumeID":
@@ -64,11 +64,11 @@ func easyjson6549b042EncodeGithubComKubewardenK8sObjectsApiCoreV1(out *jwriter.W
 	out.RawByte('{')
 	first := true
 	_ = first
-	if in.FsType != "" {
+	if in.FSType != "" {
 		const prefix string = ",\"fsType\":"
 		first = false
 		out.RawString(prefix[1:])
-		out.String(string(in.FsType))
+		out.String(string(in.FSType))
 	}
 	if in.ReadOnly {
 		const prefix string = ",\"readOnly\":"

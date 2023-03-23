@@ -47,6 +47,29 @@ func easyjson8674d8afDecodeGithubComKubewardenK8sObjectsApiCoreV1(in *jlexer.Lex
 				}
 				(*out.LabelSelector).UnmarshalEasyJSON(in)
 			}
+		case "matchLabelKeys":
+			if in.IsNull() {
+				in.Skip()
+				out.MatchLabelKeys = nil
+			} else {
+				in.Delim('[')
+				if out.MatchLabelKeys == nil {
+					if !in.IsDelim(']') {
+						out.MatchLabelKeys = make([]string, 0, 4)
+					} else {
+						out.MatchLabelKeys = []string{}
+					}
+				} else {
+					out.MatchLabelKeys = (out.MatchLabelKeys)[:0]
+				}
+				for !in.IsDelim(']') {
+					var v1 string
+					v1 = string(in.String())
+					out.MatchLabelKeys = append(out.MatchLabelKeys, v1)
+					in.WantComma()
+				}
+				in.Delim(']')
+			}
 		case "maxSkew":
 			if in.IsNull() {
 				in.Skip()
@@ -59,6 +82,10 @@ func easyjson8674d8afDecodeGithubComKubewardenK8sObjectsApiCoreV1(in *jlexer.Lex
 			}
 		case "minDomains":
 			out.MinDomains = int32(in.Int32())
+		case "nodeAffinityPolicy":
+			out.NodeAffinityPolicy = string(in.String())
+		case "nodeTaintsPolicy":
+			out.NodeTaintsPolicy = string(in.String())
 		case "topologyKey":
 			if in.IsNull() {
 				in.Skip()
@@ -99,6 +126,25 @@ func easyjson8674d8afEncodeGithubComKubewardenK8sObjectsApiCoreV1(out *jwriter.W
 		out.RawString(prefix[1:])
 		(*in.LabelSelector).MarshalEasyJSON(out)
 	}
+	if len(in.MatchLabelKeys) != 0 {
+		const prefix string = ",\"matchLabelKeys\":"
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
+		{
+			out.RawByte('[')
+			for v2, v3 := range in.MatchLabelKeys {
+				if v2 > 0 {
+					out.RawByte(',')
+				}
+				out.String(string(v3))
+			}
+			out.RawByte(']')
+		}
+	}
 	{
 		const prefix string = ",\"maxSkew\":"
 		if first {
@@ -117,6 +163,16 @@ func easyjson8674d8afEncodeGithubComKubewardenK8sObjectsApiCoreV1(out *jwriter.W
 		const prefix string = ",\"minDomains\":"
 		out.RawString(prefix)
 		out.Int32(int32(in.MinDomains))
+	}
+	if in.NodeAffinityPolicy != "" {
+		const prefix string = ",\"nodeAffinityPolicy\":"
+		out.RawString(prefix)
+		out.String(string(in.NodeAffinityPolicy))
+	}
+	if in.NodeTaintsPolicy != "" {
+		const prefix string = ",\"nodeTaintsPolicy\":"
+		out.RawString(prefix)
+		out.String(string(in.NodeTaintsPolicy))
 	}
 	{
 		const prefix string = ",\"topologyKey\":"

@@ -37,9 +37,9 @@ func easyjson6769e492DecodeGithubComKubewardenK8sObjectsApiCoreV1(in *jlexer.Lex
 		}
 		switch key {
 		case "fsGroup":
-			out.FsGroup = int64(in.Int64())
+			out.FSGroup = int64(in.Int64())
 		case "fsGroupChangePolicy":
-			out.FsGroupChangePolicy = string(in.String())
+			out.FSGroupChangePolicy = string(in.String())
 		case "runAsGroup":
 			out.RunAsGroup = int64(in.Int64())
 		case "runAsNonRoot":
@@ -49,12 +49,12 @@ func easyjson6769e492DecodeGithubComKubewardenK8sObjectsApiCoreV1(in *jlexer.Lex
 		case "seLinuxOptions":
 			if in.IsNull() {
 				in.Skip()
-				out.SeLinuxOptions = nil
+				out.SELinuxOptions = nil
 			} else {
-				if out.SeLinuxOptions == nil {
-					out.SeLinuxOptions = new(SELinuxOptions)
+				if out.SELinuxOptions == nil {
+					out.SELinuxOptions = new(SELinuxOptions)
 				}
-				easyjson6769e492DecodeGithubComKubewardenK8sObjectsApiCoreV11(in, out.SeLinuxOptions)
+				easyjson6769e492DecodeGithubComKubewardenK8sObjectsApiCoreV11(in, out.SELinuxOptions)
 			}
 		case "seccompProfile":
 			if in.IsNull() {
@@ -144,13 +144,13 @@ func easyjson6769e492EncodeGithubComKubewardenK8sObjectsApiCoreV1(out *jwriter.W
 	out.RawByte('{')
 	first := true
 	_ = first
-	if in.FsGroup != 0 {
+	if in.FSGroup != 0 {
 		const prefix string = ",\"fsGroup\":"
 		first = false
 		out.RawString(prefix[1:])
-		out.Int64(int64(in.FsGroup))
+		out.Int64(int64(in.FSGroup))
 	}
-	if in.FsGroupChangePolicy != "" {
+	if in.FSGroupChangePolicy != "" {
 		const prefix string = ",\"fsGroupChangePolicy\":"
 		if first {
 			first = false
@@ -158,7 +158,7 @@ func easyjson6769e492EncodeGithubComKubewardenK8sObjectsApiCoreV1(out *jwriter.W
 		} else {
 			out.RawString(prefix)
 		}
-		out.String(string(in.FsGroupChangePolicy))
+		out.String(string(in.FSGroupChangePolicy))
 	}
 	if in.RunAsGroup != 0 {
 		const prefix string = ",\"runAsGroup\":"
@@ -190,7 +190,7 @@ func easyjson6769e492EncodeGithubComKubewardenK8sObjectsApiCoreV1(out *jwriter.W
 		}
 		out.Int64(int64(in.RunAsUser))
 	}
-	if in.SeLinuxOptions != nil {
+	if in.SELinuxOptions != nil {
 		const prefix string = ",\"seLinuxOptions\":"
 		if first {
 			first = false
@@ -198,7 +198,7 @@ func easyjson6769e492EncodeGithubComKubewardenK8sObjectsApiCoreV1(out *jwriter.W
 		} else {
 			out.RawString(prefix)
 		}
-		easyjson6769e492EncodeGithubComKubewardenK8sObjectsApiCoreV11(out, *in.SeLinuxOptions)
+		easyjson6769e492EncodeGithubComKubewardenK8sObjectsApiCoreV11(out, *in.SELinuxOptions)
 	}
 	if in.SeccompProfile != nil {
 		const prefix string = ",\"seccompProfile\":"

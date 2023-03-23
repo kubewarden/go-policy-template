@@ -20,7 +20,7 @@ type PodStatus struct {
 	// The list has one entry per container in the manifest. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#pod-and-container-status
 	ContainerStatuses []*ContainerStatus `json:"containerStatuses,omitempty"`
 
-	// Status for any ephemeral containers that have run in this pod. This field is beta-level and available on clusters that haven't disabled the EphemeralContainers feature gate.
+	// Status for any ephemeral containers that have run in this pod.
 	EphemeralContainerStatuses []*ContainerStatus `json:"ephemeralContainerStatuses,omitempty"`
 
 	// IP address of the host to which the pod is assigned. Empty if not yet scheduled.

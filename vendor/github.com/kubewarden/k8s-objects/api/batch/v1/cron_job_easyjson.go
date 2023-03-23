@@ -515,6 +515,16 @@ func easyjsonA56f4d58DecodeGithubComKubewardenK8sObjectsApiBatchV14(in *jlexer.L
 			out.ManualSelector = bool(in.Bool())
 		case "parallelism":
 			out.Parallelism = int32(in.Int32())
+		case "podFailurePolicy":
+			if in.IsNull() {
+				in.Skip()
+				out.PodFailurePolicy = nil
+			} else {
+				if out.PodFailurePolicy == nil {
+					out.PodFailurePolicy = new(PodFailurePolicy)
+				}
+				easyjsonA56f4d58DecodeGithubComKubewardenK8sObjectsApiBatchV15(in, out.PodFailurePolicy)
+			}
 		case "selector":
 			if in.IsNull() {
 				in.Skip()
@@ -609,6 +619,16 @@ func easyjsonA56f4d58EncodeGithubComKubewardenK8sObjectsApiBatchV14(out *jwriter
 		}
 		out.Int32(int32(in.Parallelism))
 	}
+	if in.PodFailurePolicy != nil {
+		const prefix string = ",\"podFailurePolicy\":"
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
+		easyjsonA56f4d58EncodeGithubComKubewardenK8sObjectsApiBatchV15(out, *in.PodFailurePolicy)
+	}
 	if in.Selector != nil {
 		const prefix string = ",\"selector\":"
 		if first {
@@ -647,6 +667,391 @@ func easyjsonA56f4d58EncodeGithubComKubewardenK8sObjectsApiBatchV14(out *jwriter
 		const prefix string = ",\"ttlSecondsAfterFinished\":"
 		out.RawString(prefix)
 		out.Int32(int32(in.TTLSecondsAfterFinished))
+	}
+	out.RawByte('}')
+}
+func easyjsonA56f4d58DecodeGithubComKubewardenK8sObjectsApiBatchV15(in *jlexer.Lexer, out *PodFailurePolicy) {
+	isTopLevel := in.IsStart()
+	if in.IsNull() {
+		if isTopLevel {
+			in.Consumed()
+		}
+		in.Skip()
+		return
+	}
+	in.Delim('{')
+	for !in.IsDelim('}') {
+		key := in.UnsafeFieldName(false)
+		in.WantColon()
+		if in.IsNull() {
+			in.Skip()
+			in.WantComma()
+			continue
+		}
+		switch key {
+		case "rules":
+			if in.IsNull() {
+				in.Skip()
+				out.Rules = nil
+			} else {
+				in.Delim('[')
+				if out.Rules == nil {
+					if !in.IsDelim(']') {
+						out.Rules = make([]*PodFailurePolicyRule, 0, 8)
+					} else {
+						out.Rules = []*PodFailurePolicyRule{}
+					}
+				} else {
+					out.Rules = (out.Rules)[:0]
+				}
+				for !in.IsDelim(']') {
+					var v4 *PodFailurePolicyRule
+					if in.IsNull() {
+						in.Skip()
+						v4 = nil
+					} else {
+						if v4 == nil {
+							v4 = new(PodFailurePolicyRule)
+						}
+						easyjsonA56f4d58DecodeGithubComKubewardenK8sObjectsApiBatchV16(in, v4)
+					}
+					out.Rules = append(out.Rules, v4)
+					in.WantComma()
+				}
+				in.Delim(']')
+			}
+		default:
+			in.SkipRecursive()
+		}
+		in.WantComma()
+	}
+	in.Delim('}')
+	if isTopLevel {
+		in.Consumed()
+	}
+}
+func easyjsonA56f4d58EncodeGithubComKubewardenK8sObjectsApiBatchV15(out *jwriter.Writer, in PodFailurePolicy) {
+	out.RawByte('{')
+	first := true
+	_ = first
+	{
+		const prefix string = ",\"rules\":"
+		out.RawString(prefix[1:])
+		if in.Rules == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
+			out.RawString("null")
+		} else {
+			out.RawByte('[')
+			for v5, v6 := range in.Rules {
+				if v5 > 0 {
+					out.RawByte(',')
+				}
+				if v6 == nil {
+					out.RawString("null")
+				} else {
+					easyjsonA56f4d58EncodeGithubComKubewardenK8sObjectsApiBatchV16(out, *v6)
+				}
+			}
+			out.RawByte(']')
+		}
+	}
+	out.RawByte('}')
+}
+func easyjsonA56f4d58DecodeGithubComKubewardenK8sObjectsApiBatchV16(in *jlexer.Lexer, out *PodFailurePolicyRule) {
+	isTopLevel := in.IsStart()
+	if in.IsNull() {
+		if isTopLevel {
+			in.Consumed()
+		}
+		in.Skip()
+		return
+	}
+	in.Delim('{')
+	for !in.IsDelim('}') {
+		key := in.UnsafeFieldName(false)
+		in.WantColon()
+		if in.IsNull() {
+			in.Skip()
+			in.WantComma()
+			continue
+		}
+		switch key {
+		case "action":
+			if in.IsNull() {
+				in.Skip()
+				out.Action = nil
+			} else {
+				if out.Action == nil {
+					out.Action = new(string)
+				}
+				*out.Action = string(in.String())
+			}
+		case "onExitCodes":
+			if in.IsNull() {
+				in.Skip()
+				out.OnExitCodes = nil
+			} else {
+				if out.OnExitCodes == nil {
+					out.OnExitCodes = new(PodFailurePolicyOnExitCodesRequirement)
+				}
+				easyjsonA56f4d58DecodeGithubComKubewardenK8sObjectsApiBatchV17(in, out.OnExitCodes)
+			}
+		case "onPodConditions":
+			if in.IsNull() {
+				in.Skip()
+				out.OnPodConditions = nil
+			} else {
+				in.Delim('[')
+				if out.OnPodConditions == nil {
+					if !in.IsDelim(']') {
+						out.OnPodConditions = make([]*PodFailurePolicyOnPodConditionsPattern, 0, 8)
+					} else {
+						out.OnPodConditions = []*PodFailurePolicyOnPodConditionsPattern{}
+					}
+				} else {
+					out.OnPodConditions = (out.OnPodConditions)[:0]
+				}
+				for !in.IsDelim(']') {
+					var v7 *PodFailurePolicyOnPodConditionsPattern
+					if in.IsNull() {
+						in.Skip()
+						v7 = nil
+					} else {
+						if v7 == nil {
+							v7 = new(PodFailurePolicyOnPodConditionsPattern)
+						}
+						easyjsonA56f4d58DecodeGithubComKubewardenK8sObjectsApiBatchV18(in, v7)
+					}
+					out.OnPodConditions = append(out.OnPodConditions, v7)
+					in.WantComma()
+				}
+				in.Delim(']')
+			}
+		default:
+			in.SkipRecursive()
+		}
+		in.WantComma()
+	}
+	in.Delim('}')
+	if isTopLevel {
+		in.Consumed()
+	}
+}
+func easyjsonA56f4d58EncodeGithubComKubewardenK8sObjectsApiBatchV16(out *jwriter.Writer, in PodFailurePolicyRule) {
+	out.RawByte('{')
+	first := true
+	_ = first
+	{
+		const prefix string = ",\"action\":"
+		out.RawString(prefix[1:])
+		if in.Action == nil {
+			out.RawString("null")
+		} else {
+			out.String(string(*in.Action))
+		}
+	}
+	if in.OnExitCodes != nil {
+		const prefix string = ",\"onExitCodes\":"
+		out.RawString(prefix)
+		easyjsonA56f4d58EncodeGithubComKubewardenK8sObjectsApiBatchV17(out, *in.OnExitCodes)
+	}
+	{
+		const prefix string = ",\"onPodConditions\":"
+		out.RawString(prefix)
+		if in.OnPodConditions == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
+			out.RawString("null")
+		} else {
+			out.RawByte('[')
+			for v8, v9 := range in.OnPodConditions {
+				if v8 > 0 {
+					out.RawByte(',')
+				}
+				if v9 == nil {
+					out.RawString("null")
+				} else {
+					easyjsonA56f4d58EncodeGithubComKubewardenK8sObjectsApiBatchV18(out, *v9)
+				}
+			}
+			out.RawByte(']')
+		}
+	}
+	out.RawByte('}')
+}
+func easyjsonA56f4d58DecodeGithubComKubewardenK8sObjectsApiBatchV18(in *jlexer.Lexer, out *PodFailurePolicyOnPodConditionsPattern) {
+	isTopLevel := in.IsStart()
+	if in.IsNull() {
+		if isTopLevel {
+			in.Consumed()
+		}
+		in.Skip()
+		return
+	}
+	in.Delim('{')
+	for !in.IsDelim('}') {
+		key := in.UnsafeFieldName(false)
+		in.WantColon()
+		if in.IsNull() {
+			in.Skip()
+			in.WantComma()
+			continue
+		}
+		switch key {
+		case "status":
+			if in.IsNull() {
+				in.Skip()
+				out.Status = nil
+			} else {
+				if out.Status == nil {
+					out.Status = new(string)
+				}
+				*out.Status = string(in.String())
+			}
+		case "type":
+			if in.IsNull() {
+				in.Skip()
+				out.Type = nil
+			} else {
+				if out.Type == nil {
+					out.Type = new(string)
+				}
+				*out.Type = string(in.String())
+			}
+		default:
+			in.SkipRecursive()
+		}
+		in.WantComma()
+	}
+	in.Delim('}')
+	if isTopLevel {
+		in.Consumed()
+	}
+}
+func easyjsonA56f4d58EncodeGithubComKubewardenK8sObjectsApiBatchV18(out *jwriter.Writer, in PodFailurePolicyOnPodConditionsPattern) {
+	out.RawByte('{')
+	first := true
+	_ = first
+	{
+		const prefix string = ",\"status\":"
+		out.RawString(prefix[1:])
+		if in.Status == nil {
+			out.RawString("null")
+		} else {
+			out.String(string(*in.Status))
+		}
+	}
+	{
+		const prefix string = ",\"type\":"
+		out.RawString(prefix)
+		if in.Type == nil {
+			out.RawString("null")
+		} else {
+			out.String(string(*in.Type))
+		}
+	}
+	out.RawByte('}')
+}
+func easyjsonA56f4d58DecodeGithubComKubewardenK8sObjectsApiBatchV17(in *jlexer.Lexer, out *PodFailurePolicyOnExitCodesRequirement) {
+	isTopLevel := in.IsStart()
+	if in.IsNull() {
+		if isTopLevel {
+			in.Consumed()
+		}
+		in.Skip()
+		return
+	}
+	in.Delim('{')
+	for !in.IsDelim('}') {
+		key := in.UnsafeFieldName(false)
+		in.WantColon()
+		if in.IsNull() {
+			in.Skip()
+			in.WantComma()
+			continue
+		}
+		switch key {
+		case "containerName":
+			out.ContainerName = string(in.String())
+		case "operator":
+			if in.IsNull() {
+				in.Skip()
+				out.Operator = nil
+			} else {
+				if out.Operator == nil {
+					out.Operator = new(string)
+				}
+				*out.Operator = string(in.String())
+			}
+		case "values":
+			if in.IsNull() {
+				in.Skip()
+				out.Values = nil
+			} else {
+				in.Delim('[')
+				if out.Values == nil {
+					if !in.IsDelim(']') {
+						out.Values = make([]int32, 0, 16)
+					} else {
+						out.Values = []int32{}
+					}
+				} else {
+					out.Values = (out.Values)[:0]
+				}
+				for !in.IsDelim(']') {
+					var v10 int32
+					v10 = int32(in.Int32())
+					out.Values = append(out.Values, v10)
+					in.WantComma()
+				}
+				in.Delim(']')
+			}
+		default:
+			in.SkipRecursive()
+		}
+		in.WantComma()
+	}
+	in.Delim('}')
+	if isTopLevel {
+		in.Consumed()
+	}
+}
+func easyjsonA56f4d58EncodeGithubComKubewardenK8sObjectsApiBatchV17(out *jwriter.Writer, in PodFailurePolicyOnExitCodesRequirement) {
+	out.RawByte('{')
+	first := true
+	_ = first
+	if in.ContainerName != "" {
+		const prefix string = ",\"containerName\":"
+		first = false
+		out.RawString(prefix[1:])
+		out.String(string(in.ContainerName))
+	}
+	{
+		const prefix string = ",\"operator\":"
+		if first {
+			first = false
+			out.RawString(prefix[1:])
+		} else {
+			out.RawString(prefix)
+		}
+		if in.Operator == nil {
+			out.RawString("null")
+		} else {
+			out.String(string(*in.Operator))
+		}
+	}
+	{
+		const prefix string = ",\"values\":"
+		out.RawString(prefix)
+		if in.Values == nil && (out.Flags&jwriter.NilSliceAsEmpty) == 0 {
+			out.RawString("null")
+		} else {
+			out.RawByte('[')
+			for v11, v12 := range in.Values {
+				if v11 > 0 {
+					out.RawByte(',')
+				}
+				out.Int32(int32(v12))
+			}
+			out.RawByte(']')
+		}
 	}
 	out.RawByte('}')
 }
