@@ -1,36 +1,49 @@
----
-###
-### Use `make artifacthub-pkg.yml` to auto-generate this file
-### See docs.kubewarden.io for publishing to ArtifactHub
-###
+# Kubewarden Artifacthub Package config
+#
+# Use this config to submit the policy to https://artifacthub.io.
+#
+# This config can be saved to its default location with:
+#   kwctl scaffold artifacthub > artifacthub-pkg.yml 
 version: 0.0.1
 name: policy-name
 displayName: Policy Name
-createdAt: '2022-07-19T16:42:59+02:00'
-description: DESCRIPTION OF YOUR POLICY
+createdAt: 2023-03-21T15:45:26.965260843Z
+description: Short description
 license: Apache-2.0
-homeURL: POLICY HOMEPAGE URL
+homeURL: https://github.com/yourorg/policy-name
 containersImages:
 - name: policy
-  image: "<registry>/<policy-name>:0.0.1"
-install: |
-  The policy can be obtained using [`kwctl`](https://github.com/kubewarden/kwctl/):
-
-  ```console
-  kwctl pull <registry>/<policy-name>:0.0.1
-  ```
+  image: ghcr.io/yourorg/policies/policy-name:v0.0.1
 keywords:
-- this is freeform
+- pod
+- cool policy
+- kubewarden
 links:
 - name: policy
-  url: https://github.com/yourorg/policy-name/releases/download/0.0.1/policy.wasm
+  url: https://github.com/yourorg/policy-name/releases/download/v0.0.1/policy.wasm
 - name: source
-  url: POLICY HOMEPAGE URL
+  url: https://github.com/yourorg/policy-name
+install: |
+  The policy can be obtained using [`kwctl`](https://github.com/kubewarden/kwctl):
+  ```console
+  kwctl pull ghcr.io/yourorg/policies/policy-name:v0.0.1
+  ```
+maintainers:
+- name: Author name
+  email: author-email@example.com
 provider:
   name: kubewarden
 recommendations:
 - url: https://artifacthub.io/packages/helm/kubewarden/kubewarden-controller
 annotations:
-  kubewarden/resources: Pod # comma separated list
-  kubewarden/mutation: false
-  kubewarden/contextAware: false
+  kubewarden/mutation: 'false'
+  kubewarden/resources: Pod
+  kubewarden/rules: |
+    - apiGroups:
+      - ''
+      apiVersions:
+      - v1
+      resources:
+      - pods
+      operations:
+      - CREATE

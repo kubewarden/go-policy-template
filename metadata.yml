@@ -15,7 +15,7 @@ annotations:
   # kubewarden specific:
   io.kubewarden.policy.title: policy-name
   io.kubewarden.policy.description: Short description
-  io.kubewarden.policy.author: policy-author
+  io.kubewarden.policy.author: "Author name <author-email@example.com>"
   io.kubewarden.policy.url: https://github.com/yourorg/policy-name
   io.kubewarden.policy.source: https://github.com/yourorg/policy-name
   io.kubewarden.policy.license: Apache-2.0
