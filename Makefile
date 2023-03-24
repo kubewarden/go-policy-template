@@ -1,9 +1,7 @@
 SOURCE_FILES := $(shell find . -type f -name '*.go')
+# It's necessary to call cut because kwctl command does not handle version
+# starting with v.
 VERSION ?= $(shell git describe | cut -c2-)
-ifeq ($(VERSION),)
-# there's no git tag yet, let's use "0.0.1" as version for artifacthub-pkg.yml metadata
-VERSION := "0.0.1"
-endif
 
 
 policy.wasm: $(SOURCE_FILES) go.mod go.sum types_easyjson.go
