@@ -9,7 +9,7 @@ policy.wasm: $(SOURCE_FILES) go.mod go.sum types_easyjson.go
 		--rm \
 		-e GOFLAGS="-buildvcs=false" \
 		-v ${PWD}:/src \
-		-w /src tinygo/tinygo:0.26.0 \
+		-w /src tinygo/tinygo:0.27.0 \
 		tinygo build -o policy.wasm -target=wasi -no-debug .
 
 artifacthub-pkg.yml: metadata.yml go.mod
@@ -30,7 +30,7 @@ types_easyjson.go: types.go
 		--rm \
 		-v ${PWD}:/src \
 		-w /src \
-		golang:1.17-alpine ./hack/generate-easyjson.sh
+		golang:1.20-alpine ./hack/generate-easyjson.sh
 
 .PHONY: test
 test: types_easyjson.go
