@@ -10,13 +10,14 @@ github.com/go-openapi/strfmt
 # github.com/josharian/intern v1.0.0
 ## explicit; go 1.5
 github.com/josharian/intern
-# github.com/kubewarden/k8s-objects v1.26.0-kw1
+# github.com/kubewarden/k8s-objects v1.26.0-kw2
 ## explicit; go 1.17
 github.com/kubewarden/k8s-objects/api/apps/v1
 github.com/kubewarden/k8s-objects/api/batch/v1
 github.com/kubewarden/k8s-objects/api/core/v1
 github.com/kubewarden/k8s-objects/apimachinery/pkg/api/resource
 github.com/kubewarden/k8s-objects/apimachinery/pkg/apis/meta/v1
+github.com/kubewarden/k8s-objects/apimachinery/pkg/runtime/schema
 github.com/kubewarden/k8s-objects/apimachinery/pkg/util/intstr
 # github.com/kubewarden/policy-sdk-go v0.3.0
 ## explicit; go 1.20
