@@ -12,6 +12,8 @@ github.com/kubewarden/k8s-objects v1.26.0-kw2 h1:m0zIlifROK3vAy5zR90qRXdCPWQGJUu
 github.com/kubewarden/k8s-objects v1.26.0-kw2/go.mod h1:IuIHLG1JtxjC1JnY7SyEEA9MukCh/FACcwpzaBjgdLQ=
 github.com/kubewarden/policy-sdk-go v0.3.0 h1:5WqhrC3eJP+gRti14d4vCyXCITeM95X4hob6QA96eX8=
 github.com/kubewarden/policy-sdk-go v0.3.0/go.mod h1:zJLxhZkoFVKOlHJ3mlbG8qTCvVbkZprZ7odVwVsunUo=
+github.com/kubewarden/policy-sdk-go v0.4.0 h1:qxYHarQ3fHD90QErZEjXRzErEOXLQVtTYKmtyv0rtMQ=
+github.com/kubewarden/policy-sdk-go v0.4.0/go.mod h1:pY1FrcuGdhnzzN31wNieAimI4+7rYWbtkP+tYGna0Ug=
 github.com/kubewarden/strfmt v0.1.2 h1:S0YUVkPeyUMikz8QssbMzfd1MC5K8ZqxLI2zfF8euMs=
 github.com/kubewarden/strfmt v0.1.2/go.mod h1:sqLlis8qlm4A4pnZsRyRjNxyH86fiM+7Ee7bO+uJk94=
 github.com/mailru/easyjson v0.7.7 h1:UGYAvKxe3sBsEDzO8ZeWOSlIQfWFlxbzLZe7hwFURr0=
