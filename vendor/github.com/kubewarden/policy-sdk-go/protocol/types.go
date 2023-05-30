@@ -48,10 +48,10 @@ type KubernetesAdmissionRequest struct {
 	Uid string `json:"uid"`
 
 	// Kind is the fully-qualified type of object being submitted (for example, v1.Pod or autoscaling.v1.Scale)
-	Kind GroupVersionKind `json:"groupVersionKind"`
+	Kind GroupVersionKind `json:"kind"`
 
 	// Resource is the fully-qualified resource being requested (for example, v1.pods)
-	Resource GroupVersionResource `json:"groupVersionResource"`
+	Resource GroupVersionResource `json:"resource"`
 
 	// SubResource is the subresource being requested, if any (for example, "status" or "scale")
 	SubResource string `json:"subResource"`

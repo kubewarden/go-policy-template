@@ -419,9 +419,9 @@ func easyjson6601e8cdDecodeGithubComKubewardenPolicySdkGoProtocol4(in *jlexer.Le
 		switch key {
 		case "uid":
 			out.Uid = string(in.String())
-		case "groupVersionKind":
+		case "kind":
 			(out.Kind).UnmarshalEasyJSON(in)
-		case "groupVersionResource":
+		case "resource":
 			(out.Resource).UnmarshalEasyJSON(in)
 		case "subResource":
 			out.SubResource = string(in.String())
@@ -467,12 +467,12 @@ func easyjson6601e8cdEncodeGithubComKubewardenPolicySdkGoProtocol4(out *jwriter.
 		out.String(string(in.Uid))
 	}
 	{
-		const prefix string = ",\"groupVersionKind\":"
+		const prefix string = ",\"kind\":"
 		out.RawString(prefix)
 		(in.Kind).MarshalEasyJSON(out)
 	}
 	{
-		const prefix string = ",\"groupVersionResource\":"
+		const prefix string = ",\"resource\":"
 		out.RawString(prefix)
 		(in.Resource).MarshalEasyJSON(out)
 	}

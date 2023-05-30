@@ -7,7 +7,7 @@ replace github.com/go-openapi/strfmt => github.com/kubewarden/strfmt v0.1.2
 require (
 	github.com/francoispqt/onelog v0.0.0-20190306043706-8c2bb31b10a4
 	github.com/kubewarden/k8s-objects v1.26.0-kw2
-	github.com/kubewarden/policy-sdk-go v0.4.0
+	github.com/kubewarden/policy-sdk-go v0.4.1
 	github.com/mailru/easyjson v0.7.7
 	github.com/wapc/wapc-guest-tinygo v0.3.3
 )
