@@ -75,8 +75,6 @@ type PersistentVolumeSpec struct {
 	NodeAffinity *VolumeNodeAffinity `json:"nodeAffinity,omitempty"`
 
 	// persistentVolumeReclaimPolicy defines what happens to a persistent volume when released from its claim. Valid options are Retain (default for manually created PersistentVolumes), Delete (default for dynamically provisioned PersistentVolumes), and Recycle (deprecated). Recycle must be supported by the volume plugin underlying this PersistentVolume. More info: https://kubernetes.io/docs/concepts/storage/persistent-volumes#reclaiming
-	//
-	//
 	PersistentVolumeReclaimPolicy string `json:"persistentVolumeReclaimPolicy,omitempty"`
 
 	// photonPersistentDisk represents a PhotonController persistent disk attached and mounted on kubelets host machine

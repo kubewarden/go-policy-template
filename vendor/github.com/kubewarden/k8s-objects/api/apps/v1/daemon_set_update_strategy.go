@@ -14,7 +14,5 @@ type DaemonSetUpdateStrategy struct {
 	RollingUpdate *RollingUpdateDaemonSet `json:"rollingUpdate,omitempty"`
 
 	// Type of daemon set update. Can be "RollingUpdate" or "OnDelete". Default is RollingUpdate.
-	//
-	//
 	Type string `json:"type,omitempty"`
 }

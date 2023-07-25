@@ -4,13 +4,13 @@
 package sdk
 
 import (
+	"encoding/json"
 	"errors"
 
 	appsv1 "github.com/kubewarden/k8s-objects/api/apps/v1"
 	batchv1 "github.com/kubewarden/k8s-objects/api/batch/v1"
 	corev1 "github.com/kubewarden/k8s-objects/api/core/v1"
 	"github.com/kubewarden/policy-sdk-go/protocol"
-	"github.com/mailru/easyjson"
 )
 
 // Message is the optional string used to build validation responses
@@ -36,7 +36,7 @@ func AcceptRequest() ([]byte, error) {
 		Accepted: true,
 	}
 
-	return easyjson.Marshal(response)
+	return json.Marshal(response)
 }
 
 // RejectRequest can be used inside of the `validate` function to reject the
@@ -56,18 +56,18 @@ func RejectRequest(message Message, code Code) ([]byte, error) {
 		response.Code = &c
 	}
 
-	return easyjson.Marshal(response)
+	return json.Marshal(response)
 }
 
 // Accept the request and mutate the final object to match the
 // one provided via the `newObject` param
-func MutateRequest(newObject easyjson.Marshaler) ([]byte, error) {
+func MutateRequest(newObject interface{}) ([]byte, error) {
 	response := protocol.ValidationResponse{
 		Accepted:      true,
 		MutatedObject: newObject,
 	}
 
-	return easyjson.Marshal(response)
+	return json.Marshal(response)
 }
 
 // Update the pod spec from the resource defined in the original object and
@@ -78,56 +78,56 @@ func MutatePodSpecFromRequest(validationRequest protocol.ValidationRequest, podS
 	switch validationRequest.Request.Kind.Kind {
 	case "apps.v1.Deployment":
 		deployment := appsv1.Deployment{}
-		if err := easyjson.Unmarshal(validationRequest.Request.Object, &deployment); err != nil {
+		if err := json.Unmarshal(validationRequest.Request.Object, &deployment); err != nil {
 			return nil, err
 		}
 		deployment.Spec.Template.Spec = &podSepc
 		return MutateRequest(deployment)
 	case "apps.v1.ReplicaSet":
 		replicaset := appsv1.ReplicaSet{}
-		if err := easyjson.Unmarshal(validationRequest.Request.Object, &replicaset); err != nil {
+		if err := json.Unmarshal(validationRequest.Request.Object, &replicaset); err != nil {
 			return nil, err
 		}
 		replicaset.Spec.Template.Spec = &podSepc
 		return MutateRequest(replicaset)
 	case "apps.v1.StatefulSet":
 		statefulset := appsv1.StatefulSet{}
-		if err := easyjson.Unmarshal(validationRequest.Request.Object, &statefulset); err != nil {
+		if err := json.Unmarshal(validationRequest.Request.Object, &statefulset); err != nil {
 			return nil, err
 		}
 		statefulset.Spec.Template.Spec = &podSepc
 		return MutateRequest(statefulset)
 	case "apps.v1.DaemonSet":
 		daemonset := appsv1.DaemonSet{}
-		if err := easyjson.Unmarshal(validationRequest.Request.Object, &daemonset); err != nil {
+		if err := json.Unmarshal(validationRequest.Request.Object, &daemonset); err != nil {
 			return nil, err
 		}
 		daemonset.Spec.Template.Spec = &podSepc
 		return MutateRequest(daemonset)
 	case "v1.ReplicationController":
 		replicationController := corev1.ReplicationController{}
-		if err := easyjson.Unmarshal(validationRequest.Request.Object, &replicationController); err != nil {
+		if err := json.Unmarshal(validationRequest.Request.Object, &replicationController); err != nil {
 			return nil, err
 		}
 		replicationController.Spec.Template.Spec = &podSepc
 		return MutateRequest(replicationController)
 	case "batch.v1.CronJob":
 		cronjob := batchv1.CronJob{}
-		if err := easyjson.Unmarshal(validationRequest.Request.Object, &cronjob); err != nil {
+		if err := json.Unmarshal(validationRequest.Request.Object, &cronjob); err != nil {
 			return nil, err
 		}
 		cronjob.Spec.JobTemplate.Spec.Template.Spec = &podSepc
 		return MutateRequest(cronjob)
 	case "batch.v1.Job":
 		job := batchv1.Job{}
-		if err := easyjson.Unmarshal(validationRequest.Request.Object, &job); err != nil {
+		if err := json.Unmarshal(validationRequest.Request.Object, &job); err != nil {
 			return nil, err
 		}
 		job.Spec.Template.Spec = &podSepc
 		return MutateRequest(job)
 	case "v1.Pod":
 		pod := corev1.Pod{}
-		if err := easyjson.Unmarshal(validationRequest.Request.Object, &pod); err != nil {
+		if err := json.Unmarshal(validationRequest.Request.Object, &pod); err != nil {
 			return nil, err
 		}
 		pod.Spec = &podSepc
@@ -143,7 +143,7 @@ func AcceptSettings() ([]byte, error) {
 	response := protocol.SettingsValidationResponse{
 		Valid: true,
 	}
-	return easyjson.Marshal(response)
+	return json.Marshal(response)
 }
 
 // RejectSettings can be used inside of the `validate_settings` function to
@@ -158,7 +158,7 @@ func RejectSettings(message Message) ([]byte, error) {
 		msg := string(message)
 		response.Message = &msg
 	}
-	return easyjson.Marshal(response)
+	return json.Marshal(response)
 }
 
 // Extract PodSpec from high level objects. This method can be used to evaluate
@@ -173,49 +173,49 @@ func ExtractPodSpecFromObject(object protocol.ValidationRequest) (corev1.PodSpec
 	switch object.Request.Kind.Kind {
 	case "apps.v1.Deployment":
 		deployment := appsv1.Deployment{}
-		if err := easyjson.Unmarshal(object.Request.Object, &deployment); err != nil {
+		if err := json.Unmarshal(object.Request.Object, &deployment); err != nil {
 			return corev1.PodSpec{}, err
 		}
 		return *deployment.Spec.Template.Spec, nil
 	case "apps.v1.ReplicaSet":
 		replicaset := appsv1.ReplicaSet{}
-		if err := easyjson.Unmarshal(object.Request.Object, &replicaset); err != nil {
+		if err := json.Unmarshal(object.Request.Object, &replicaset); err != nil {
 			return corev1.PodSpec{}, err
 		}
 		return *replicaset.Spec.Template.Spec, nil
 	case "apps.v1.StatefulSet":
 		statefulset := appsv1.StatefulSet{}
-		if err := easyjson.Unmarshal(object.Request.Object, &statefulset); err != nil {
+		if err := json.Unmarshal(object.Request.Object, &statefulset); err != nil {
 			return corev1.PodSpec{}, err
 		}
 		return *statefulset.Spec.Template.Spec, nil
 	case "apps.v1.DaemonSet":
 		daemonset := appsv1.DaemonSet{}
-		if err := easyjson.Unmarshal(object.Request.Object, &daemonset); err != nil {
+		if err := json.Unmarshal(object.Request.Object, &daemonset); err != nil {
 			return corev1.PodSpec{}, err
 		}
 		return *daemonset.Spec.Template.Spec, nil
 	case "v1.ReplicationController":
 		replicationController := corev1.ReplicationController{}
-		if err := easyjson.Unmarshal(object.Request.Object, &replicationController); err != nil {
+		if err := json.Unmarshal(object.Request.Object, &replicationController); err != nil {
 			return corev1.PodSpec{}, err
 		}
 		return *replicationController.Spec.Template.Spec, nil
 	case "batch.v1.CronJob":
 		cronjob := batchv1.CronJob{}
-		if err := easyjson.Unmarshal(object.Request.Object, &cronjob); err != nil {
+		if err := json.Unmarshal(object.Request.Object, &cronjob); err != nil {
 			return corev1.PodSpec{}, err
 		}
 		return *cronjob.Spec.JobTemplate.Spec.Template.Spec, nil
 	case "batch.v1.Job":
 		job := batchv1.Job{}
-		if err := easyjson.Unmarshal(object.Request.Object, &job); err != nil {
+		if err := json.Unmarshal(object.Request.Object, &job); err != nil {
 			return corev1.PodSpec{}, err
 		}
 		return *job.Spec.Template.Spec, nil
 	case "v1.Pod":
 		pod := corev1.Pod{}
-		if err := easyjson.Unmarshal(object.Request.Object, &pod); err != nil {
+		if err := json.Unmarshal(object.Request.Object, &pod); err != nil {
 			return corev1.PodSpec{}, err
 		}
 		return *pod.Spec, nil

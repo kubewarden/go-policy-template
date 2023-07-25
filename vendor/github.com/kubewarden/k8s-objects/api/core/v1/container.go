@@ -26,8 +26,6 @@ type Container struct {
 	Image string `json:"image,omitempty"`
 
 	// Image pull policy. One of Always, Never, IfNotPresent. Defaults to Always if :latest tag is specified, or IfNotPresent otherwise. Cannot be updated. More info: https://kubernetes.io/docs/concepts/containers/images#updating-images
-	//
-	//
 	ImagePullPolicy string `json:"imagePullPolicy,omitempty"`
 
 	// Actions that the management system should take in response to container lifecycle events. Cannot be updated.
@@ -45,6 +43,9 @@ type Container struct {
 
 	// Periodic probe of container service readiness. Container will be removed from service endpoints if the probe fails. Cannot be updated. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#container-probes
 	ReadinessProbe *Probe `json:"readinessProbe,omitempty"`
+
+	// Resources resize policy for the container.
+	ResizePolicy []*ContainerResizePolicy `json:"resizePolicy,omitempty"`
 
 	// Compute Resources required by this container. Cannot be updated. More info: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
 	Resources *ResourceRequirements `json:"resources,omitempty"`
@@ -65,8 +66,6 @@ type Container struct {
 	TerminationMessagePath string `json:"terminationMessagePath,omitempty"`
 
 	// Indicate how the termination message should be populated. File will use the contents of terminationMessagePath to populate the container status message on both success and failure. FallbackToLogsOnError will use the last chunk of container log output if the termination message file is empty and the container exited with an error. The log output is limited to 2048 bytes or 80 lines, whichever is smaller. Defaults to File. Cannot be updated.
-	//
-	//
 	TerminationMessagePolicy string `json:"terminationMessagePolicy,omitempty"`
 
 	// Whether this container should allocate a TTY for itself, also requires 'stdin' to be true. Default is false.

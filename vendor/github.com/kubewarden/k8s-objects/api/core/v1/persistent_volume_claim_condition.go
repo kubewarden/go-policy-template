@@ -9,7 +9,7 @@ import (
 	apimachinery_pkg_apis_meta_v1 "github.com/kubewarden/k8s-objects/apimachinery/pkg/apis/meta/v1"
 )
 
-// PersistentVolumeClaimCondition PersistentVolumeClaimCondition contails details about state of pvc
+// PersistentVolumeClaimCondition PersistentVolumeClaimCondition contains details about state of pvc
 //
 // swagger:model PersistentVolumeClaimCondition
 type PersistentVolumeClaimCondition struct {

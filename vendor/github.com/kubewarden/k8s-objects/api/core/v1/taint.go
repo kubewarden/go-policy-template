@@ -15,8 +15,6 @@ import (
 type Taint struct {
 
 	// Required. The effect of the taint on pods that do not tolerate the taint. Valid effects are NoSchedule, PreferNoSchedule and NoExecute.
-	//
-	//
 	// Required: true
 	Effect *string `json:"effect"`
 

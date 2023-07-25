@@ -6,7 +6,7 @@ package v1
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	"github.com/mailru/easyjson"
+	jsonext "encoding/json"
 )
 
 // WatchEvent Event represents a single event to a watched resource.
@@ -20,7 +20,7 @@ type WatchEvent struct {
 	//  * If Type is Error: *Status is recommended; other types may make sense
 	//    depending on context.
 	// Required: true
-	Object easyjson.RawMessage `json:"object"`
+	Object jsonext.RawMessage `json:"object"`
 
 	// type
 	// Required: true

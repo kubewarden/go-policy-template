@@ -24,11 +24,11 @@ type OwnerReference struct {
 	// Required: true
 	Kind *string `json:"kind"`
 
-	// Name of the referent. More info: http://kubernetes.io/docs/user-guide/identifiers#names
+	// Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names#names
 	// Required: true
 	Name *string `json:"name"`
 
-	// UID of the referent. More info: http://kubernetes.io/docs/user-guide/identifiers#uids
+	// UID of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names#uids
 	// Required: true
 	UID *string `json:"uid"`
 }

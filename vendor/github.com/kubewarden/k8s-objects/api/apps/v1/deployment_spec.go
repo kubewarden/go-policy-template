@@ -37,7 +37,7 @@ type DeploymentSpec struct {
 	// The deployment strategy to use to replace existing pods with new ones.
 	Strategy *DeploymentStrategy `json:"strategy,omitempty"`
 
-	// Template describes the pods that will be created.
+	// Template describes the pods that will be created. The only allowed template.spec.restartPolicy value is "Always".
 	// Required: true
 	Template *api_core_v1.PodTemplateSpec `json:"template"`
 }
