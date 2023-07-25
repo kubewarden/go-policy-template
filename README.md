@@ -58,8 +58,6 @@ policy:
 * [Kubernetes Go types](https://github.com/kubewarden/k8s-objects) for TinyGo:
   the official Kubernetes Go Types cannot be used with TinyGo. This module provides all the
   Kubernetes Types in a TinyGo-friendly way.
-* [easyjson](https://github.com/mailru/easyjson/): this provides a way to
-  marshal and unmarshal Go types without using reflection.
 * Parsing JSON: queries against JSON documents can be written using the
   [gjson](https://github.com/tidwall/gjson) library. The library features a
   powerful query language that allows quick navigation of JSON documents and
