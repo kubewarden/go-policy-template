@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"strings"
 
@@ -8,13 +9,12 @@ import (
 	corev1 "github.com/kubewarden/k8s-objects/api/core/v1"
 	kubewarden "github.com/kubewarden/policy-sdk-go"
 	kubewarden_protocol "github.com/kubewarden/policy-sdk-go/protocol"
-	"github.com/mailru/easyjson"
 )
 
 func validate(payload []byte) ([]byte, error) {
 	// Create a ValidationRequest instance from the incoming payload
 	validationRequest := kubewarden_protocol.ValidationRequest{}
-	err := easyjson.Unmarshal(payload, &validationRequest)
+	err := json.Unmarshal(payload, &validationRequest)
 	if err != nil {
 		return kubewarden.RejectRequest(
 			kubewarden.Message(err.Error()),
@@ -35,7 +35,7 @@ func validate(payload []byte) ([]byte, error) {
 	// Try to create a Pod instance using the RAW JSON we got from the
 	// ValidationRequest.
 	pod := &corev1.Pod{}
-	if err := easyjson.Unmarshal([]byte(podJSON), pod); err != nil {
+	if err := json.Unmarshal([]byte(podJSON), pod); err != nil {
 		return kubewarden.RejectRequest(
 			kubewarden.Message(
 				fmt.Sprintf("Cannot decode Pod object: %s", err.Error())),

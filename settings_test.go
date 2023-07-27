@@ -1,14 +1,14 @@
 package main
 
 import (
-	"github.com/mailru/easyjson"
+	"encoding/json"
 	"testing"
 )
 
 func TestParsingSettingsWithNoValueProvided(t *testing.T) {
 	rawSettings := []byte(`{}`)
 	settings := &Settings{}
-	if err := easyjson.Unmarshal(rawSettings, settings); err != nil {
+	if err := json.Unmarshal(rawSettings, settings); err != nil {
 		t.Errorf("Unexpected error %+v", err)
 	}
 

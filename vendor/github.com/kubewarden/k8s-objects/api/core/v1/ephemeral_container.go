@@ -28,8 +28,6 @@ type EphemeralContainer struct {
 	Image string `json:"image,omitempty"`
 
 	// Image pull policy. One of Always, Never, IfNotPresent. Defaults to Always if :latest tag is specified, or IfNotPresent otherwise. Cannot be updated. More info: https://kubernetes.io/docs/concepts/containers/images#updating-images
-	//
-	//
 	ImagePullPolicy string `json:"imagePullPolicy,omitempty"`
 
 	// Lifecycle is not allowed for ephemeral containers.
@@ -47,6 +45,9 @@ type EphemeralContainer struct {
 
 	// Probes are not allowed for ephemeral containers.
 	ReadinessProbe *Probe `json:"readinessProbe,omitempty"`
+
+	// Resources resize policy for the container.
+	ResizePolicy []*ContainerResizePolicy `json:"resizePolicy,omitempty"`
 
 	// Resources are not allowed for ephemeral containers. Ephemeral containers use spare resources already allocated to the pod.
 	Resources *ResourceRequirements `json:"resources,omitempty"`
@@ -72,8 +73,6 @@ type EphemeralContainer struct {
 	TerminationMessagePath string `json:"terminationMessagePath,omitempty"`
 
 	// Indicate how the termination message should be populated. File will use the contents of terminationMessagePath to populate the container status message on both success and failure. FallbackToLogsOnError will use the last chunk of container log output if the termination message file is empty and the container exited with an error. The log output is limited to 2048 bytes or 80 lines, whichever is smaller. Defaults to File. Cannot be updated.
-	//
-	//
 	TerminationMessagePolicy string `json:"terminationMessagePolicy,omitempty"`
 
 	// Whether this container should allocate a TTY for itself, also requires 'stdin' to be true. Default is false.

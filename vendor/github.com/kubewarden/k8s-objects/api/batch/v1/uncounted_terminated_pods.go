@@ -10,9 +10,9 @@ package v1
 // swagger:model UncountedTerminatedPods
 type UncountedTerminatedPods struct {
 
-	// Failed holds UIDs of failed Pods.
+	// failed holds UIDs of failed Pods.
 	Failed []string `json:"failed,omitempty"`
 
-	// Succeeded holds UIDs of succeeded Pods.
+	// succeeded holds UIDs of succeeded Pods.
 	Succeeded []string `json:"succeeded,omitempty"`
 }

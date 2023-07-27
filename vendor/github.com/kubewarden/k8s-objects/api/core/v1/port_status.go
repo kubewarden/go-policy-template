@@ -21,8 +21,6 @@ type PortStatus struct {
 	Port *int32 `json:"port"`
 
 	// Protocol is the protocol of the service port of which status is recorded here The supported values are: "TCP", "UDP", "SCTP"
-	//
-	//
 	// Required: true
 	Protocol *string `json:"protocol"`
 }

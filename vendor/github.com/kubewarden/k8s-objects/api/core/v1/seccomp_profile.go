@@ -16,8 +16,6 @@ type SeccompProfile struct {
 	// type indicates which kind of seccomp profile will be applied. Valid options are:
 	//
 	// Localhost - a profile defined in a file on the node should be used. RuntimeDefault - the container runtime default profile should be used. Unconfined - no profile should be applied.
-	//
-	//
 	// Required: true
 	Type *string `json:"type"`
 }

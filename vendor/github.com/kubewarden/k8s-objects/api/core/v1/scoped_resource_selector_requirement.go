@@ -11,14 +11,10 @@ package v1
 type ScopedResourceSelectorRequirement struct {
 
 	// Represents a scope's relationship to a set of values. Valid operators are In, NotIn, Exists, DoesNotExist.
-	//
-	//
 	// Required: true
 	Operator *string `json:"operator"`
 
 	// The name of the scope that the selector applies to.
-	//
-	//
 	// Required: true
 	ScopeName *string `json:"scopeName"`
 

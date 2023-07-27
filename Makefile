@@ -4,12 +4,12 @@ SOURCE_FILES := $(shell find . -type f -name '*.go')
 VERSION ?= $(shell git describe | cut -c2-)
 
 
-policy.wasm: $(SOURCE_FILES) go.mod go.sum types_easyjson.go
+policy.wasm: $(SOURCE_FILES) go.mod go.sum
 	docker run \
 		--rm \
 		-e GOFLAGS="-buildvcs=false" \
 		-v ${PWD}:/src \
-		-w /src tinygo/tinygo:0.27.0 \
+		-w /src tinygo/tinygo:0.28.1 \
 		tinygo build -o policy.wasm -target=wasi -no-debug .
 
 artifacthub-pkg.yml: metadata.yml go.mod
@@ -24,16 +24,8 @@ artifacthub-pkg.yml: metadata.yml go.mod
 annotated-policy.wasm: policy.wasm metadata.yml artifacthub-pkg.yml
 	kwctl annotate -m metadata.yml -u README.md -o annotated-policy.wasm policy.wasm
 
-.PHONY: generate-easyjson
-types_easyjson.go: types.go
-	docker run \
-		--rm \
-		-v ${PWD}:/src \
-		-w /src \
-		golang:1.20-alpine ./hack/generate-easyjson.sh
-
 .PHONY: test
-test: types_easyjson.go
+test:
 	go test -v
 
 .PHONY: e2e-tests

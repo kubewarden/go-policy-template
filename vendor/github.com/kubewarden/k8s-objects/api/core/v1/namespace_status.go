@@ -14,7 +14,5 @@ type NamespaceStatus struct {
 	Conditions []*NamespaceCondition `json:"conditions,omitempty"`
 
 	// Phase is the current lifecycle phase of the namespace. More info: https://kubernetes.io/docs/tasks/administer-cluster/namespaces/
-	//
-	//
 	Phase string `json:"phase,omitempty"`
 }

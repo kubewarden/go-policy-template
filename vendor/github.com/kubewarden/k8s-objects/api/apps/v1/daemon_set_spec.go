@@ -25,7 +25,7 @@ type DaemonSetSpec struct {
 	// Required: true
 	Selector *apimachinery_pkg_apis_meta_v1.LabelSelector `json:"selector"`
 
-	// An object that describes the pod that will be created. The DaemonSet will create exactly one copy of this pod on every node that matches the template's node selector (or on every node if no node selector is specified). More info: https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller#pod-template
+	// An object that describes the pod that will be created. The DaemonSet will create exactly one copy of this pod on every node that matches the template's node selector (or on every node if no node selector is specified). The only allowed template.spec.restartPolicy value is "Always". More info: https://kubernetes.io/docs/concepts/workloads/controllers/replicationcontroller#pod-template
 	// Required: true
 	Template *api_core_v1.PodTemplateSpec `json:"template"`
 

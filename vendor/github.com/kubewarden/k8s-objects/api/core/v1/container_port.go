@@ -24,7 +24,5 @@ type ContainerPort struct {
 	Name string `json:"name,omitempty"`
 
 	// Protocol for port. Must be UDP, TCP, or SCTP. Defaults to "TCP".
-	//
-	//
 	Protocol string `json:"protocol,omitempty"`
 }

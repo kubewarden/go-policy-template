@@ -3,10 +3,8 @@
 package strfmt
 
 import (
+	"encoding/json"
 	"time"
-
-	jlexer "github.com/mailru/easyjson/jlexer"
-	jwriter "github.com/mailru/easyjson/jwriter"
 )
 
 type Base64 []byte
@@ -49,30 +47,17 @@ var (
 
 // MarshalJSON returns the DateTime as JSON
 func (t DateTime) MarshalJSON() ([]byte, error) {
-	w := jwriter.Writer{}
-
-	timeForMarshal := NormalizeTimeForMarshal(time.Time(t))
-
-	if timeForMarshal.IsZero() {
-		w.RawString(jsonNull)
-	} else {
-		tstr, err := timeForMarshal.MarshalJSON()
-		w.Raw(tstr, err)
-	}
-
-	return w.Buffer.BuildBytes(), w.Error
+	return json.Marshal(NormalizeTimeForMarshal(time.Time(t)).Format(MarshalFormat))
 }
 
-// UnmarshalJSON supports json.Unmarshaler interface
+// UnmarshalJSON sets the DateTime from JSON
 func (t *DateTime) UnmarshalJSON(data []byte) error {
-	r := jlexer.Lexer{Data: data}
-
 	if string(data) == jsonNull {
 		return nil
 	}
 
-	var tstr string = string(r.String())
-	if err := r.Error(); err != nil {
+	var tstr string
+	if err := json.Unmarshal(data, &tstr); err != nil {
 		return err
 	}
 	tt, err := ParseDateTime(tstr)

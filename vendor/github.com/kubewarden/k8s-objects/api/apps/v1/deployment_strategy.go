@@ -14,7 +14,5 @@ type DeploymentStrategy struct {
 	RollingUpdate *RollingUpdateDeployment `json:"rollingUpdate,omitempty"`
 
 	// Type of deployment. Can be "Recreate" or "RollingUpdate". Default is RollingUpdate.
-	//
-	//
 	Type string `json:"type,omitempty"`
 }

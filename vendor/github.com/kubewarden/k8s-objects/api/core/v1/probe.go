@@ -16,7 +16,7 @@ type Probe struct {
 	// Minimum consecutive failures for the probe to be considered failed after having succeeded. Defaults to 3. Minimum value is 1.
 	FailureThreshold int32 `json:"failureThreshold,omitempty"`
 
-	// GRPC specifies an action involving a GRPC port. This is a beta field and requires enabling GRPCContainerProbe feature gate.
+	// GRPC specifies an action involving a GRPC port.
 	GRPC *GRPCAction `json:"grpc,omitempty"`
 
 	// HTTPGet specifies the http request to perform.

@@ -27,8 +27,6 @@ type PersistentVolumeClaimStatus struct {
 	Conditions []*PersistentVolumeClaimCondition `json:"conditions,omitempty"`
 
 	// phase represents the current phase of PersistentVolumeClaim.
-	//
-	//
 	Phase string `json:"phase,omitempty"`
 
 	// resizeStatus stores status of resize operation. ResizeStatus is not set by default but when expansion is complete resizeStatus is set to empty string by resize controller or kubelet. This is an alpha field and requires enabling RecoverVolumeExpansionFailure feature.

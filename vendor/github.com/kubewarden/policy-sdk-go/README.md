@@ -17,11 +17,6 @@ using [TinyGo](https://github.com/tinygo-org/tinygo).
 TinyGo doesn't have full support of the Go Standard Library. However, this
 shouldn't pose a limit to policy authors.
 
-The biggest drawback of TinyGo is the limited (as of TinyGo v0.23) support
-of Go Reflection. Because of that the `encoding/json` package from the Standard
-Library is **not usable**. The code will compile just fine, but at **runtime**
-a panic will be occur.
-
 # Validation
 
 This SDK provides helper methods to accept and reject validation requests.
@@ -66,25 +61,32 @@ data.ForEach(func(key, value gjson.Result) bool {
 })
 ```
 
-This *"jq-like"* approach can be pretty handy when the policy has to look
+This _"jq-like"_ approach can be pretty handy when the policy has to look
 deep inside of a Kubernetes object. This is especially helpful when dealing with
 inner objects that are optional.
 
-### Use native Go types
+## Use native Go types
 
 The majority of policies target a specific type of Kubernetes resource, like
 Pod, Ingress, Service and similar. Because of that, another possible approach
 is to unmarshal the incoming object into a native Go type.
 
-Because of the current TinyGo limitations, both the usage of the `encoding/json`
-package and the usage of the official Kubernetes Go types defined
-under the `k8s.io` pacakges (e.g. `k8s.io/api/core/v1`) is not possible.
+TinyGo doesn't yet support the full Go Standard Library, plus it has limited
+support of Go reflection.
+Because of that, it is not possible to import the official Kubernetes Go library
+from upstream (e.g.: `k8s.io/api/core/v1`).
+Importing these official Kubernetes types will result in a compilation failure.
 
-To circumvent these issues, Kubewarden relies on [easyjson](https://github.com/mailru/easyjson/)
-to marshal and unmarshal Kubernetes (and Kubewarden) types.
 Moreover, Kubewarden provides TinyGo friendly Go types for all the Kubernetes
 types inside of the [`github.com/kubewarden/k8s-objects`](https://github.com/kubewarden/k8s-objects)
 package.
+
+Using this SDK requires **TinyGo 0.28.1 or later.**
+
+> **Warning**
+> Using an older version of TinyGo will result in runtime errors due to the limited support for Go reflection.
+
+### Example 
 
 This snippet shows how to implement a `validation` function that uses the
 "native Go types" approach:
@@ -92,7 +94,7 @@ This snippet shows how to implement a `validation` function that uses the
 ```go
 // Create a ValidationRequest instance from the incoming payload
 validationRequest := kubewarden_protocol.ValidationRequest{}
-err := easyjson.Unmarshal(payload, &validationRequest)
+err := json.Unmarshal(payload, &validationRequest)
 if err != nil {
 	return kubewarden.RejectRequest(
 		kubewarden.Message(err.Error()),
@@ -107,7 +109,7 @@ ingressJSON := validationRequest.Request.Object
 // This policy works only against Ingress objects, if the creation fails
 // we reject the request and provide a meaningful error.
 ingress := &networkingv1.Ingress{}
-if err := easyjson.Unmarshal([]byte(ingressJSON), ingress); err != nil {
+if err := json.Unmarshal([]byte(ingressJSON), ingress); err != nil {
 	return kubewarden.RejectRequest(
 		kubewarden.Message(
 		fmt.Sprintf("Cannot decode Ingress object: %s", err.Error())),
@@ -133,19 +135,20 @@ the helper methods provided by this SDK.
 The following example defines a mutating policy that always changes the name of
 Ingress objects:
 
-```go 
+```go
 import (
+    "encoding/json"
 	"fmt"
 
 	networkingv1 "github.com/kubewarden/k8s-objects/api/networking/v1"
 	kubewarden "github.com/kubewarden/policy-sdk-go"
-	"github.com/mailru/easyjson"
+
 )
 
 func validate(payload []byte) ([]byte, error) {
   // Create a ValidationRequest instance from the incoming payload
   validationRequest := kubewarden_protocol.ValidationRequest{}
-  err := easyjson.Unmarshal(payload, &validationRequest)
+  err := json.Unmarshal(payload, &validationRequest)
   if err != nil {
     return kubewarden.RejectRequest(
       kubewarden.Message(err.Error()),
@@ -160,7 +163,7 @@ func validate(payload []byte) ([]byte, error) {
   // This policy works only against Ingress objects, if the creation fails
   // we reject the request and provide a meaningful error.
   ingress := &networkingv1.Ingress{}
-  if err := easyjson.Unmarshal([]byte(ingressJSON), ingress); err != nil {
+  if err := json.Unmarshal([]byte(ingressJSON), ingress); err != nil {
     return kubewarden.RejectRequest(
       kubewarden.Message(
       fmt.Sprintf("Cannot decode Ingress object: %s", err.Error())),
@@ -184,10 +187,10 @@ This Go module provides logging capabilities that integrate with the
 
 This logging solution has been chosen because:
 
-  * It works also with WebAssembly binaries. Other popular logging solutions
-    cannot even be built to WebAssembly.
-  * It provides [good performance](https://github.com/francoispqt/onelog#benchmarks)
-  * It supports structured logging.
+- It works also with WebAssembly binaries. Other popular logging solutions
+  cannot even be built to WebAssembly.
+- It provides [good performance](https://github.com/francoispqt/onelog#benchmarks)
+- It supports structured logging.
 
 ## Usage
 
@@ -273,14 +276,14 @@ useful to write ad-hoc tests that can handle different kind of responses coming
 from the host.
 
 The `Host` type described above relies on an internal `waPC` client that
-interacts with the host. At test time, the client is an instance of 
+interacts with the host. At test time, the client is an instance of
 `MockWapcClient`.
 
 Developers can create `MockWapcClient` instances using these two helper methods:
 
-* `NewSuccessfulMockWapcClient`: the client never fails, and always return the
+- `NewSuccessfulMockWapcClient`: the client never fails, and always return the
   response payload provided by the user.
-* `NewFailingMockWapcClient`: the client always fails with the error
+- `NewFailingMockWapcClient`: the client always fails with the error
   provided by the user.
 
 # Project template

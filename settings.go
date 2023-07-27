@@ -1,14 +1,17 @@
 package main
 
 import (
+	"encoding/json"
+	"fmt"
+
 	kubewarden "github.com/kubewarden/policy-sdk-go"
 	kubewarden_protocol "github.com/kubewarden/policy-sdk-go/protocol"
-	"github.com/mailru/easyjson"
-
-	"fmt"
 )
 
-// The Settings class is defined inside of the `types.go` file
+// Settings is the structure that describes the policy settings.
+type Settings struct {
+	DeniedNames []string `json:"denied_names"`
+}
 
 // No special checks have to be done
 func (s *Settings) Valid() (bool, error) {
@@ -27,7 +30,7 @@ func (s *Settings) IsNameDenied(name string) bool {
 
 func NewSettingsFromValidationReq(validationReq *kubewarden_protocol.ValidationRequest) (Settings, error) {
 	settings := Settings{}
-	err := easyjson.Unmarshal(validationReq.Settings, &settings)
+	err := json.Unmarshal(validationReq.Settings, &settings)
 	return settings, err
 }
 
@@ -35,7 +38,7 @@ func validateSettings(payload []byte) ([]byte, error) {
 	logger.Info("validating settings")
 
 	settings := Settings{}
-	err := easyjson.Unmarshal(payload, &settings)
+	err := json.Unmarshal(payload, &settings)
 	if err != nil {
 		return kubewarden.RejectSettings(kubewarden.Message(fmt.Sprintf("Provided settings are not valid: %v", err)))
 	}

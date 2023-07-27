@@ -35,22 +35,25 @@ policy.
 ## Implementation details
 
 > **DISCLAIMER:** WebAssembly is a constantly evolving topic. This document
-> describes the status of the Go ecosystem at April 2021.
+> describes the status of the Go ecosystem at July 2023.
 
 Currently the official Go compiler cannot produce WebAssembly binaries
 that can be run **outside** of the browser. Because of that, Kubewarden Go
 policies can be built only with the [TinyGo](https://tinygo.org/) compiler.
 
-TinyGo doesn't yet support all the Go features (see [here](https://tinygo.org/lang-support/)
-to see the current project status). Currently its biggest limitation
-is the lack of a fully supported `reflect` package. Among other things, that
-leads to the inability to use the `encoding/json` package against structures
-and user defined types.
-
 Kubewarden policies need to process JSON data like the policy settings and
 the actual request received by Kubernetes.
+TinyGo doesn't yet support the full Go Standard Library, plus it has limited
+support of Go reflection.
+Because of that, it is not possible to import the official Kubernetes Go library
+from upstream (e.g.: `k8s.io/api/core/v1`).
+Importing these official Kubernetes types will result in a compilation failure.
+
 However it's still possible to write a Kubewarden policy by using some 3rd party
 libraries.
+
+> **Warning**
+> Using an older version of TinyGo will result in runtime errors due to the limited support for Go reflection.
 
 This is a list of libraries that can be useful when writing a Kubewarden
 policy:
@@ -58,8 +61,6 @@ policy:
 * [Kubernetes Go types](https://github.com/kubewarden/k8s-objects) for TinyGo:
   the official Kubernetes Go Types cannot be used with TinyGo. This module provides all the
   Kubernetes Types in a TinyGo-friendly way.
-* [easyjson](https://github.com/mailru/easyjson/): this provides a way to
-  marshal and unmarshal Go types without using reflection.
 * Parsing JSON: queries against JSON documents can be written using the
   [gjson](https://github.com/tidwall/gjson) library. The library features a
   powerful query language that allows quick navigation of JSON documents and

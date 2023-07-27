@@ -1,13 +1,13 @@
 package main
 
 import (
+	"encoding/json"
 	"testing"
 
 	corev1 "github.com/kubewarden/k8s-objects/api/core/v1"
 	metav1 "github.com/kubewarden/k8s-objects/apimachinery/pkg/apis/meta/v1"
 	kubewarden_protocol "github.com/kubewarden/policy-sdk-go/protocol"
 	kubewarden_testing "github.com/kubewarden/policy-sdk-go/testing"
-	"github.com/mailru/easyjson"
 )
 
 func TestEmptySettingsLeadsToApproval(t *testing.T) {
@@ -30,7 +30,7 @@ func TestEmptySettingsLeadsToApproval(t *testing.T) {
 	}
 
 	var response kubewarden_protocol.ValidationResponse
-	if err := easyjson.Unmarshal(responsePayload, &response); err != nil {
+	if err := json.Unmarshal(responsePayload, &response); err != nil {
 		t.Errorf("Unexpected error: %+v", err)
 	}
 
@@ -61,7 +61,7 @@ func TestApproval(t *testing.T) {
 	}
 
 	var response kubewarden_protocol.ValidationResponse
-	if err := easyjson.Unmarshal(responsePayload, &response); err != nil {
+	if err := json.Unmarshal(responsePayload, &response); err != nil {
 		t.Errorf("Unexpected error: %+v", err)
 	}
 
@@ -88,7 +88,7 @@ func TestApproveFixture(t *testing.T) {
 	}
 
 	var response kubewarden_protocol.ValidationResponse
-	if err := easyjson.Unmarshal(responsePayload, &response); err != nil {
+	if err := json.Unmarshal(responsePayload, &response); err != nil {
 		t.Errorf("Unexpected error: %+v", err)
 	}
 
@@ -120,7 +120,7 @@ func TestRejectionBecauseNameIsDenied(t *testing.T) {
 	}
 
 	var response kubewarden_protocol.ValidationResponse
-	if err := easyjson.Unmarshal(responsePayload, &response); err != nil {
+	if err := json.Unmarshal(responsePayload, &response); err != nil {
 		t.Errorf("Unexpected error: %+v", err)
 	}
 
