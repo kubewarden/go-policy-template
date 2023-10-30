@@ -7,7 +7,7 @@ github.com/francoispqt/onelog
 # github.com/go-openapi/strfmt v0.21.3 => github.com/kubewarden/strfmt v0.1.3
 ## explicit; go 1.20
 github.com/go-openapi/strfmt
-# github.com/kubewarden/k8s-objects v1.27.0-kw3
+# github.com/kubewarden/k8s-objects v1.27.0-kw4
 ## explicit; go 1.20
 github.com/kubewarden/k8s-objects/api/apps/v1
 github.com/kubewarden/k8s-objects/api/batch/v1
