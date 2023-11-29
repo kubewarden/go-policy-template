@@ -13,7 +13,7 @@ func TestParsingSettingsWithNoValueProvided(t *testing.T) {
 	}
 
 	if len(settings.DeniedNames) != 0 {
-		t.Errorf("Expecpted DeniedNames to be empty")
+		t.Errorf("Expected DeniedNames to be empty")
 	}
 
 	valid, err := settings.Valid()
