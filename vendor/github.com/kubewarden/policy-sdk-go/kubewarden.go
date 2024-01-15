@@ -76,56 +76,56 @@ func MutateRequest(newObject interface{}) ([]byte, error) {
 // * `pod_spec` - new PodSpec to be set in the response
 func MutatePodSpecFromRequest(validationRequest protocol.ValidationRequest, podSepc corev1.PodSpec) ([]byte, error) {
 	switch validationRequest.Request.Kind.Kind {
-	case "apps.v1.Deployment":
+	case "Deployment":
 		deployment := appsv1.Deployment{}
 		if err := json.Unmarshal(validationRequest.Request.Object, &deployment); err != nil {
 			return nil, err
 		}
 		deployment.Spec.Template.Spec = &podSepc
 		return MutateRequest(deployment)
-	case "apps.v1.ReplicaSet":
+	case "ReplicaSet":
 		replicaset := appsv1.ReplicaSet{}
 		if err := json.Unmarshal(validationRequest.Request.Object, &replicaset); err != nil {
 			return nil, err
 		}
 		replicaset.Spec.Template.Spec = &podSepc
 		return MutateRequest(replicaset)
-	case "apps.v1.StatefulSet":
+	case "StatefulSet":
 		statefulset := appsv1.StatefulSet{}
 		if err := json.Unmarshal(validationRequest.Request.Object, &statefulset); err != nil {
 			return nil, err
 		}
 		statefulset.Spec.Template.Spec = &podSepc
 		return MutateRequest(statefulset)
-	case "apps.v1.DaemonSet":
+	case "DaemonSet":
 		daemonset := appsv1.DaemonSet{}
 		if err := json.Unmarshal(validationRequest.Request.Object, &daemonset); err != nil {
 			return nil, err
 		}
 		daemonset.Spec.Template.Spec = &podSepc
 		return MutateRequest(daemonset)
-	case "v1.ReplicationController":
+	case "ReplicationController":
 		replicationController := corev1.ReplicationController{}
 		if err := json.Unmarshal(validationRequest.Request.Object, &replicationController); err != nil {
 			return nil, err
 		}
 		replicationController.Spec.Template.Spec = &podSepc
 		return MutateRequest(replicationController)
-	case "batch.v1.CronJob":
+	case "CronJob":
 		cronjob := batchv1.CronJob{}
 		if err := json.Unmarshal(validationRequest.Request.Object, &cronjob); err != nil {
 			return nil, err
 		}
 		cronjob.Spec.JobTemplate.Spec.Template.Spec = &podSepc
 		return MutateRequest(cronjob)
-	case "batch.v1.Job":
+	case "Job":
 		job := batchv1.Job{}
 		if err := json.Unmarshal(validationRequest.Request.Object, &job); err != nil {
 			return nil, err
 		}
 		job.Spec.Template.Spec = &podSepc
 		return MutateRequest(job)
-	case "v1.Pod":
+	case "Pod":
 		pod := corev1.Pod{}
 		if err := json.Unmarshal(validationRequest.Request.Object, &pod); err != nil {
 			return nil, err
@@ -171,49 +171,49 @@ func RejectSettings(message Message) ([]byte, error) {
 // * `object`: the request to validate
 func ExtractPodSpecFromObject(object protocol.ValidationRequest) (corev1.PodSpec, error) {
 	switch object.Request.Kind.Kind {
-	case "apps.v1.Deployment":
+	case "Deployment":
 		deployment := appsv1.Deployment{}
 		if err := json.Unmarshal(object.Request.Object, &deployment); err != nil {
 			return corev1.PodSpec{}, err
 		}
 		return *deployment.Spec.Template.Spec, nil
-	case "apps.v1.ReplicaSet":
+	case "ReplicaSet":
 		replicaset := appsv1.ReplicaSet{}
 		if err := json.Unmarshal(object.Request.Object, &replicaset); err != nil {
 			return corev1.PodSpec{}, err
 		}
 		return *replicaset.Spec.Template.Spec, nil
-	case "apps.v1.StatefulSet":
+	case "StatefulSet":
 		statefulset := appsv1.StatefulSet{}
 		if err := json.Unmarshal(object.Request.Object, &statefulset); err != nil {
 			return corev1.PodSpec{}, err
 		}
 		return *statefulset.Spec.Template.Spec, nil
-	case "apps.v1.DaemonSet":
+	case "DaemonSet":
 		daemonset := appsv1.DaemonSet{}
 		if err := json.Unmarshal(object.Request.Object, &daemonset); err != nil {
 			return corev1.PodSpec{}, err
 		}
 		return *daemonset.Spec.Template.Spec, nil
-	case "v1.ReplicationController":
+	case "ReplicationController":
 		replicationController := corev1.ReplicationController{}
 		if err := json.Unmarshal(object.Request.Object, &replicationController); err != nil {
 			return corev1.PodSpec{}, err
 		}
 		return *replicationController.Spec.Template.Spec, nil
-	case "batch.v1.CronJob":
+	case "CronJob":
 		cronjob := batchv1.CronJob{}
 		if err := json.Unmarshal(object.Request.Object, &cronjob); err != nil {
 			return corev1.PodSpec{}, err
 		}
 		return *cronjob.Spec.JobTemplate.Spec.Template.Spec, nil
-	case "batch.v1.Job":
+	case "Job":
 		job := batchv1.Job{}
 		if err := json.Unmarshal(object.Request.Object, &job); err != nil {
 			return corev1.PodSpec{}, err
 		}
 		return *job.Spec.Template.Spec, nil
-	case "v1.Pod":
+	case "Pod":
 		pod := corev1.Pod{}
 		if err := json.Unmarshal(object.Request.Object, &pod); err != nil {
 			return corev1.PodSpec{}, err
