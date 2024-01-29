@@ -10,7 +10,7 @@ package v1
 // swagger:model HTTPHeader
 type HTTPHeader struct {
 
-	// The header field name
+	// The header field name. This will be canonicalized upon output, so case-variant names will be understood as the same header.
 	// Required: true
 	Name *string `json:"name"`
 
