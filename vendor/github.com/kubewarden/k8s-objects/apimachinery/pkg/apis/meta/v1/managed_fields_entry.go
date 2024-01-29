@@ -34,5 +34,5 @@ type ManagedFieldsEntry struct {
 
 	// Time is the timestamp of when the ManagedFields entry was added. The timestamp will also be updated if a field is added, the manager changes any of the owned fields value or removes a field. The timestamp does not update when a field is removed from the entry because another manager took it over.
 	// Format: date-time
-	Time Time `json:"time,omitempty"`
+	Time *Time `json:"time,omitempty"`
 }

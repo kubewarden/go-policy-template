@@ -52,6 +52,9 @@ type EphemeralContainer struct {
 	// Resources are not allowed for ephemeral containers. Ephemeral containers use spare resources already allocated to the pod.
 	Resources *ResourceRequirements `json:"resources,omitempty"`
 
+	// Restart policy for the container to manage the restart behavior of each container within a pod. This may only be set for init containers. You cannot set this field on ephemeral containers.
+	RestartPolicy string `json:"restartPolicy,omitempty"`
+
 	// Optional: SecurityContext defines the security options the ephemeral container should be run with. If set, the fields of SecurityContext override the equivalent fields of PodSecurityContext.
 	SecurityContext *SecurityContext `json:"securityContext,omitempty"`
 

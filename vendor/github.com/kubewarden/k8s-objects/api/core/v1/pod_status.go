@@ -23,8 +23,11 @@ type PodStatus struct {
 	// Status for any ephemeral containers that have run in this pod.
 	EphemeralContainerStatuses []*ContainerStatus `json:"ephemeralContainerStatuses,omitempty"`
 
-	// IP address of the host to which the pod is assigned. Empty if not yet scheduled.
+	// hostIP holds the IP address of the host to which the pod is assigned. Empty if the pod has not started yet. A pod can be assigned to a node that has a problem in kubelet which in turns mean that HostIP will not be updated even if there is a node is assigned to pod
 	HostIP string `json:"hostIP,omitempty"`
+
+	// hostIPs holds the IP addresses allocated to the host. If this field is specified, the first entry must match the hostIP field. This list is empty if the pod has not started yet. A pod can be assigned to a node that has a problem in kubelet which in turns means that HostIPs will not be updated even if there is a node is assigned to this pod.
+	HostIPs []*HostIP `json:"hostIPs,omitempty"`
 
 	// The list has one entry per init container in the manifest. The most recent successful init container will have ready = true, the most recently started container will have startTime set. More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#pod-and-container-status
 	InitContainerStatuses []*ContainerStatus `json:"initContainerStatuses,omitempty"`
@@ -42,7 +45,7 @@ type PodStatus struct {
 	// More info: https://kubernetes.io/docs/concepts/workloads/pods/pod-lifecycle#pod-phase
 	Phase string `json:"phase,omitempty"`
 
-	// IP address allocated to the pod. Routable at least within the cluster. Empty if not yet allocated.
+	// podIP address allocated to the pod. Routable at least within the cluster. Empty if not yet allocated.
 	PodIP string `json:"podIP,omitempty"`
 
 	// podIPs holds the IP addresses allocated to the pod. If this field is specified, the 0th entry must match the podIP field. Pods may be allocated at most 1 value for each of IPv4 and IPv6. This list is empty if no IPs have been allocated yet.
@@ -56,6 +59,9 @@ type PodStatus struct {
 
 	// Status of resources resize desired for pod's containers. It is empty if no resources resize is pending. Any changes to container resources will automatically set this to "Proposed"
 	Resize string `json:"resize,omitempty"`
+
+	// Status of resource claims.
+	ResourceClaimStatuses []*PodResourceClaimStatus `json:"resourceClaimStatuses,omitempty"`
 
 	// RFC 3339 date and time at which the object was acknowledged by the Kubelet. This is before the Kubelet pulled the container image(s) for the pod.
 	StartTime *apimachinery_pkg_apis_meta_v1.Time `json:"startTime,omitempty"`
