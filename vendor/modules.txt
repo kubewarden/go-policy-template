@@ -16,7 +16,7 @@ github.com/kubewarden/k8s-objects/apimachinery/pkg/api/resource
 github.com/kubewarden/k8s-objects/apimachinery/pkg/apis/meta/v1
 github.com/kubewarden/k8s-objects/apimachinery/pkg/runtime/schema
 github.com/kubewarden/k8s-objects/apimachinery/pkg/util/intstr
-# github.com/kubewarden/policy-sdk-go v0.7.0
+# github.com/kubewarden/policy-sdk-go v0.8.0
 ## explicit; go 1.21
 github.com/kubewarden/policy-sdk-go
 github.com/kubewarden/policy-sdk-go/constants
