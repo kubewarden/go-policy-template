@@ -1,3 +1,5 @@
+[![Stable](https://img.shields.io/badge/status-stable-brightgreen?style=for-the-badge)](https://github.com/kubewarden/community/blob/main/REPOSITORIES.md#stable)
+
 # go-policy-template
 
 This is a template repository you can use to scaffold a Kubewarden policy written using Go language.
