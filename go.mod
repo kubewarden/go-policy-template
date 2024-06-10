@@ -1,13 +1,13 @@
 module github.com/kubewarden/go-policy-template
 
-go 1.21
+go 1.22
 
-toolchain go1.22.3
+toolchain go1.22.4
 
 require (
 	github.com/francoispqt/onelog v0.0.0-20190306043706-8c2bb31b10a4
 	github.com/kubewarden/k8s-objects v1.29.0-kw1
-	github.com/kubewarden/policy-sdk-go v0.8.0
+	github.com/kubewarden/policy-sdk-go v0.9.0
 	github.com/wapc/wapc-guest-tinygo v0.3.3
 )
 
