@@ -1,3 +1,4 @@
+[![Stable](https://img.shields.io/badge/status-stable-brightgreen?style=for-the-badge)](https://github.com/kubewarden/community/blob/main/REPOSITORIES.md#stable)
 [![GoDoc](https://godoc.org/github.com/kubewarden/policy-sdk-go?status.svg)](https://godoc.org/github.com/kubewarden/policy-sdk-go)
 
 > Don't forget to take a look at [Kubewarden's official documentation](https://docs.kubewarden.io).

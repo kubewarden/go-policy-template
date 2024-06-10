@@ -1,0 +1,8 @@
+with-expecter: true
+mock-build-tags: "!wasi && !wasip1"
+dir: "{{.InterfaceDir}}/mocks"
+outpkg: mocks
+packages:
+  github.com/kubewarden/policy-sdk-go/pkg/capabilities:
+    interfaces:
+      WapcClient:
