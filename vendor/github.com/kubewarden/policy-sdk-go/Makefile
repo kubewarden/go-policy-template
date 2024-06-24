@@ -15,6 +15,7 @@ lint:
 
 deps:
 	go get github.com/golangci/golangci-lint/cmd/golangci-lint
+	go install github.com/vektra/mockery/v2@v2.43.2
 
 generate-mocks:
 	mockery

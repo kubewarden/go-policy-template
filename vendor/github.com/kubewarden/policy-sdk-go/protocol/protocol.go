@@ -1,5 +1,5 @@
-//go:build !wasip1
-// +build !wasip1
+//go:build tinygo
+// +build tinygo
 
 package protocol
 
