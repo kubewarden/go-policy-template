@@ -1,5 +1,5 @@
-//go:build !wasi
-// +build !wasi
+//go:build !tinygo
+// +build !tinygo
 
 // note well: we have to use the tinygo wasi target, because the wasm one is
 // meant to be used inside of the browser
