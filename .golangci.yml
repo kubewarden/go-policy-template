@@ -248,7 +248,6 @@ linters:
     - gocyclo # computes and checks the cyclomatic complexity of functions
     - godot # checks if comments end in a period
     - goimports # in addition to fixing imports, goimports also formats your code in the same style as gofmt
-    - gomoddirectives # manages the use of 'replace', 'retract', and 'excludes' directives in go.mod
     - gomodguard # allow and block lists linter for direct Go module dependencies. This is different from depguard where there are different block types for example version constraints and module recommendations
     - goprintffuncname # checks that printf-like functions are named with f at the end
     - gosec # inspects source code for security problems
@@ -327,8 +326,18 @@ linters:
     #- tagliatelle # checks the struct tags
     #- thelper # detects golang test helpers without t.Helper() call and checks the consistency of test helpers
     #- wsl # [too strict and mostly code is not more readable] whitespace linter forces you to use empty lines
+    
 
+    ############################################################################
+    # Kubewarden linter customization
+    # The following linters are disabled because they does not make sense for
+    # the Kubewarden 
+    ############################################################################
 
+    # We use replace directives in go.mod to replace some dependencies to use
+    # our forked version.
+    # - gomoddirectives # manages the use of 'replace', 'retract', and 'excludes' directives in go.mod
+    
 issues:
   # Maximum count of issues with the same text.
   # Set to 0 to disable.
