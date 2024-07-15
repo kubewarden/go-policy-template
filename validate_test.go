@@ -30,7 +30,7 @@ func TestEmptySettingsLeadsToApproval(t *testing.T) {
 	}
 
 	var response kubewarden_protocol.ValidationResponse
-	if err := json.Unmarshal(responsePayload, &response); err != nil {
+	if err = json.Unmarshal(responsePayload, &response); err != nil {
 		t.Errorf("Unexpected error: %+v", err)
 	}
 
@@ -61,7 +61,7 @@ func TestApproval(t *testing.T) {
 	}
 
 	var response kubewarden_protocol.ValidationResponse
-	if err := json.Unmarshal(responsePayload, &response); err != nil {
+	if err = json.Unmarshal(responsePayload, &response); err != nil {
 		t.Errorf("Unexpected error: %+v", err)
 	}
 
@@ -88,7 +88,7 @@ func TestApproveFixture(t *testing.T) {
 	}
 
 	var response kubewarden_protocol.ValidationResponse
-	if err := json.Unmarshal(responsePayload, &response); err != nil {
+	if err = json.Unmarshal(responsePayload, &response); err != nil {
 		t.Errorf("Unexpected error: %+v", err)
 	}
 
@@ -120,7 +120,7 @@ func TestRejectionBecauseNameIsDenied(t *testing.T) {
 	}
 
 	var response kubewarden_protocol.ValidationResponse
-	if err := json.Unmarshal(responsePayload, &response); err != nil {
+	if err = json.Unmarshal(responsePayload, &response); err != nil {
 		t.Errorf("Unexpected error: %+v", err)
 	}
 
@@ -128,11 +128,11 @@ func TestRejectionBecauseNameIsDenied(t *testing.T) {
 		t.Error("Unexpected approval")
 	}
 
-	expected_message := "The 'test-pod' name is on the deny list"
+	expectedMessage := "The 'test-pod' name is on the deny list"
 	if response.Message == nil {
 		t.Errorf("expected response to have a message")
 	}
-	if *response.Message != expected_message {
-		t.Errorf("Got '%s' instead of '%s'", *response.Message, expected_message)
+	if *response.Message != expectedMessage {
+		t.Errorf("Got '%s' instead of '%s'", *response.Message, expectedMessage)
 	}
 }

@@ -13,7 +13,7 @@ type Settings struct {
 	DeniedNames []string `json:"denied_names"`
 }
 
-// No special checks have to be done
+// No special checks have to be done.
 func (s *Settings) Valid() (bool, error) {
 	return true, nil
 }
