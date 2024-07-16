@@ -11,6 +11,8 @@ import (
 	kubewarden_protocol "github.com/kubewarden/policy-sdk-go/protocol"
 )
 
+const httpBadRequestStatusCode = 400
+
 func validate(payload []byte) ([]byte, error) {
 	// Create a ValidationRequest instance from the incoming payload
 	validationRequest := kubewarden_protocol.ValidationRequest{}
@@ -18,7 +20,7 @@ func validate(payload []byte) ([]byte, error) {
 	if err != nil {
 		return kubewarden.RejectRequest(
 			kubewarden.Message(err.Error()),
-			kubewarden.Code(400))
+			kubewarden.Code(httpBadRequestStatusCode))
 	}
 
 	// Create a Settings instance from the ValidationRequest object
@@ -26,7 +28,7 @@ func validate(payload []byte) ([]byte, error) {
 	if err != nil {
 		return kubewarden.RejectRequest(
 			kubewarden.Message(err.Error()),
-			kubewarden.Code(400))
+			kubewarden.Code(httpBadRequestStatusCode))
 	}
 
 	// Access the **raw** JSON that describes the object
@@ -35,11 +37,11 @@ func validate(payload []byte) ([]byte, error) {
 	// Try to create a Pod instance using the RAW JSON we got from the
 	// ValidationRequest.
 	pod := &corev1.Pod{}
-	if err := json.Unmarshal([]byte(podJSON), pod); err != nil {
+	if err = json.Unmarshal([]byte(podJSON), pod); err != nil {
 		return kubewarden.RejectRequest(
 			kubewarden.Message(
 				fmt.Sprintf("Cannot decode Pod object: %s", err.Error())),
-			kubewarden.Code(400))
+			kubewarden.Code(httpBadRequestStatusCode))
 	}
 
 	logger.DebugWithFields("validating pod object", func(e onelog.Entry) {
