@@ -6,7 +6,7 @@ SOURCE_FILES := $(shell find . -type f -name '*.go')
 # starting with v.
 VERSION ?= $(shell git describe | cut -c2-)
 
-GOLANGCI_LINT_VER := v1.59.1
+GOLANGCI_LINT_VER := v1.64.6
 GOLANGCI_LINT_BIN := golangci-lint
 GOLANGCI_LINT := $(BIN_DIR)/$(GOLANGCI_LINT_BIN)
 
