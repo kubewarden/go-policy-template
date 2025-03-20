@@ -1,8 +1,8 @@
 rules:
-- apiGroups: [""]
-  apiVersions: ["v1"]
-  resources: ["pods"]
-  operations: ["CREATE"]
+  - apiGroups: [""]
+    apiVersions: ["v1"]
+    resources: ["pods"]
+    operations: ["CREATE"]
 mutating: false
 contextAware: false
 executionMode: kubewarden-wapc
@@ -19,6 +19,7 @@ annotations:
   io.kubewarden.policy.ociUrl: ghcr.io/yourorg/policies/policy-name # must match release workflow oci-target
   # kubewarden specific:
   io.kubewarden.policy.title: policy-name
+  io.kubewarden.policy.version: 0.0.1-unreleased
   io.kubewarden.policy.description: Short description
   io.kubewarden.policy.author: "Author name <author-email@example.com>"
   io.kubewarden.policy.url: https://github.com/yourorg/policy-name
