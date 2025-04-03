@@ -2,7 +2,7 @@ package constants
 
 const (
 	// ProtocolVersion is the version of the protocol used by the
-	// Kubewarden waPC host and guest to exchange information
+	// Kubewarden waPC host and guest to exchange information.
 	ProtocolVersion = "v1"
 	// These two media types are manifests media types that the
 	// oci-distribution accepts when fetching images manifests. But they

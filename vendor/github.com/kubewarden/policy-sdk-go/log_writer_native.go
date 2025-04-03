@@ -10,9 +10,10 @@ import (
 	"fmt"
 )
 
-func (k *KubewardenLogWriter) Write(p []byte) (n int, err error) {
-	n, err = k.buffer.Write(p)
+func (k *KubewardenLogWriter) Write(p []byte) (int, error) {
+	n, err := k.buffer.Write(p)
 	line, _ := k.buffer.ReadBytes('\n')
+	//nolint:forbidigo // this is a debug print
 	fmt.Printf("NATIVE: |%s|\n", string(line))
-	return
+	return n, err
 }

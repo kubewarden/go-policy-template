@@ -87,7 +87,7 @@ Using this SDK requires **TinyGo 0.28.1 or later.**
 > **Warning**
 > Using an older version of TinyGo will result in runtime errors due to the limited support for Go reflection.
 
-### Example 
+### Example
 
 This snippet shows how to implement a `validation` function that uses the
 "native Go types" approach:
@@ -280,12 +280,13 @@ The `Host` type described above relies on an internal `waPC` client that
 interacts with the host. At test time, the client is an instance of
 `MockWapcClient`.
 
-Developers can create `MockWapcClient` instances using these two helper methods:
+Developers can create `MockWapcClient` instances using the `NewMockWapcClient`
+helper method from the `capabilities` package. It is used as follows:
 
-- `NewSuccessfulMockWapcClient`: the client never fails, and always return the
-  response payload provided by the user.
-- `NewFailingMockWapcClient`: the client always fails with the error
-  provided by the user.
+```go
+mockWapcClient := &mocks.MockWapcClient{}
+mockWapcClient.On("HostCall", "kubewarden", "kubernetes", "get_resource", request).Return(wapcResponse, nil)
+```
 
 # Project template
 
