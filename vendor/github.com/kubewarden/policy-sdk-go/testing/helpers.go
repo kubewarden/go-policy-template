@@ -10,16 +10,16 @@ import (
 
 // BuildValidationRequestFromFixture creates the payload for the invocation of the `validate`
 // function.
-// * `req_fixture`: path to the json file with a recorded requst to evaluate
-// * `settings`: instance of policy settings. Must be serializable to JSON using json
-func BuildValidationRequestFromFixture(req_fixture string, settings interface{}) ([]byte, error) {
-	kubeAdmissionReqRaw, err := os.ReadFile(req_fixture)
+// * `reqFixture`: path to the json file with a recorded requst to evaluate
+// * `settings`: instance of policy settings. Must be serializable to JSON using json.
+func BuildValidationRequestFromFixture(reqFixture string, settings interface{}) ([]byte, error) {
+	kubeAdmissionReqRaw, err := os.ReadFile(reqFixture)
 	if err != nil {
 		return nil, err
 	}
 
 	kubeAdmissionReq := kubewarden_protocol.KubernetesAdmissionRequest{}
-	if err := json.Unmarshal(kubeAdmissionReqRaw, &kubeAdmissionReq); err != nil {
+	if err = json.Unmarshal(kubeAdmissionReqRaw, &kubeAdmissionReq); err != nil {
 		return nil, err
 	}
 
@@ -39,7 +39,7 @@ func BuildValidationRequestFromFixture(req_fixture string, settings interface{})
 // BuildValidationRequest creates the payload for the invocation of the `validate`
 // function.
 // * `object`: instance of the object. Must be serializable to JSON using json
-// * `settings`: instance of policy settings. Must be serializable to JSON using json
+// * `settings`: instance of policy settings. Must be serializable to JSON using json.
 func BuildValidationRequest(object, settings interface{}) ([]byte, error) {
 	objectRaw, err := json.Marshal(object)
 	if err != nil {
