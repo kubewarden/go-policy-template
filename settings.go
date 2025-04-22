@@ -13,7 +13,14 @@ type Settings struct {
 	DeniedNames []string `json:"denied_names"`
 }
 
-// No special checks have to be done.
+func NewSettingsFromValidationReq(validationReq *kubewarden_protocol.ValidationRequest) (Settings, error) {
+	settings := Settings{}
+	err := json.Unmarshal(validationReq.Settings, &settings)
+	return settings, err
+}
+
+// Valid is the structure that informs if the policy settings are valid. No
+// special checks have to be done.
 func (s *Settings) Valid() (bool, error) {
 	return true, nil
 }
@@ -26,12 +33,6 @@ func (s *Settings) IsNameDenied(name string) bool {
 	}
 
 	return false
-}
-
-func NewSettingsFromValidationReq(validationReq *kubewarden_protocol.ValidationRequest) (Settings, error) {
-	settings := Settings{}
-	err := json.Unmarshal(validationReq.Settings, &settings)
-	return settings, err
 }
 
 func validateSettings(payload []byte) ([]byte, error) {
