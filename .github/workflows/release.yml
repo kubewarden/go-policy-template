@@ -10,7 +10,7 @@ name: Release policy
 jobs:
   test:
     name: run tests and linters
-    uses: kubewarden/github-actions/.github/workflows/reusable-test-policy-go.yml@cb97cbbcea106d12503c4b329f418cc406cb414a # v4.4.4
+    uses: kubewarden/github-actions/.github/workflows/reusable-test-policy-go.yml@3455ea9c2072dcb59869705247d7c4ab7488f576 # v4.4.6
 
   release:
     needs: test
@@ -22,6 +22,6 @@ jobs:
       # Required by cosign keyless signing
       id-token: write
 
-    uses: kubewarden/github-actions/.github/workflows/reusable-release-policy-go.yml@cb97cbbcea106d12503c4b329f418cc406cb414a # v4.4.4
+    uses: kubewarden/github-actions/.github/workflows/reusable-release-policy-go.yml@3455ea9c2072dcb59869705247d7c4ab7488f576 # v4.4.6
     with:
       oci-target: ghcr.io/${{ github.repository_owner }}/policies/policy-name #FIXME
