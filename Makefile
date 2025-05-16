@@ -29,7 +29,7 @@ e2e-tests: annotated-policy.wasm
 
 golangci-lint: $(GOLANGCI_LINT) ## Install a local copy of golang ci-lint.
 $(GOLANGCI_LINT): ## Install golangci-lint.
-	GOBIN=$(BIN_DIR) go install github.com/golangci/golangci-lint/cmd/golangci-lint@$(GOLANGCI_LINT_VER)
+	GOBIN=$(BIN_DIR) go install github.com/golangci/golangci-lint/v2/cmd/golangci-lint@$(GOLANGCI_LINT_VER)
 
 .PHONY: lint
 lint: $(GOLANGCI_LINT)
