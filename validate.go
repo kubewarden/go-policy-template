@@ -19,7 +19,7 @@ func validate(payload []byte) ([]byte, error) {
 	validationRequest := kubewarden_protocol.ValidationRequest{}
 	err := json.Unmarshal(payload, &validationRequest)
 	if err != nil {
-		logger.ErrorWith("解析验证请求失败").Err("error", err).Write()
+		logger.ErrorWith("Failed to parse validation request").Err("error", err).Write()
 		return kubewarden.RejectRequest(
 			kubewarden.Message(err.Error()),
 			kubewarden.Code(httpBadRequestStatusCode))
@@ -28,7 +28,7 @@ func validate(payload []byte) ([]byte, error) {
 	// Create a Settings instance from the ValidationRequest object
 	settings, err := NewSettingsFromValidationReq(&validationRequest)
 	if err != nil {
-		logger.ErrorWith("解析策略设置失败").Err("error", err).Write()
+		logger.ErrorWith("Failed to parse policy settings").Err("error", err).Write()
 		return kubewarden.RejectRequest(
 			kubewarden.Message(err.Error()),
 			kubewarden.Code(httpBadRequestStatusCode))
@@ -37,7 +37,7 @@ func validate(payload []byte) ([]byte, error) {
 	// Access the **raw** JSON that describes the object
 	podJSON := validationRequest.Request.Object
 
-	logger.DebugWith("正在验证 Pod 标签").
+	logger.DebugWith("Validating Pod labels").
 		String("operation", validationRequest.Request.Operation).
 		String("kind", validationRequest.Request.Kind.Kind).
 		Write()
@@ -53,7 +53,7 @@ func validate(payload []byte) ([]byte, error) {
 		// NOTE 2
 		label := key.String()
 		labels.Add(label)
-		logger.InfoWith("检查标签").
+		logger.InfoWith("Checking label").
 			String("label", label).
 			String("value", value.String()).
 			Write()
@@ -61,7 +61,7 @@ func validate(payload []byte) ([]byte, error) {
 		// NOTE 3
 		validationErr = validateLabel(label, value.String(), &settings)
 		if validationErr != nil {
-			logger.WarnWith("标签验证失败").
+			logger.WarnWith("Label validation failed").
 				String("label", label).
 				String("value", value.String()).
 				Err("error", validationErr).
@@ -82,7 +82,7 @@ func validate(payload []byte) ([]byte, error) {
 	// NOTE 5
 	for requiredLabel := range settings.ConstrainedLabels {
 		if !labels.Contains(requiredLabel) {
-			logger.WarnWith("缺少必需标签").
+			logger.WarnWith("Required label is missing").
 				String("requiredLabel", requiredLabel).
 				Write()
 			return kubewarden.RejectRequest(
@@ -91,7 +91,7 @@ func validate(payload []byte) ([]byte, error) {
 		}
 	}
 
-	logger.Info("Pod 标签验证通过")
+	logger.Info("Pod labels validation passed")
 	return kubewarden.AcceptRequest()
 }
 
