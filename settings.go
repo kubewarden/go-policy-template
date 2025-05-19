@@ -44,11 +44,12 @@ func (r *RegularExpression) UnmarshalText(text []byte) error {
 
 // MarshalText satisfies the encoding.TextMarshaler interface,
 // also used by json.Marshal.
+//
+//nolint:unparam // This method must return error to satisfy the interface
 func (r *RegularExpression) MarshalText() ([]byte, error) {
 	if r.Regexp != nil {
 		return []byte(r.Regexp.String()), nil
 	}
-
 	return nil, nil
 }
 
