@@ -1,3 +1,6 @@
+# github.com/deckarep/golang-set/v2 v2.8.0
+## explicit; go 1.18
+github.com/deckarep/golang-set/v2
 # github.com/francoispqt/gojay v0.0.0-20181220093123-f2cc13a668ca
 ## explicit
 github.com/francoispqt/gojay
@@ -22,6 +25,15 @@ github.com/kubewarden/policy-sdk-go
 github.com/kubewarden/policy-sdk-go/constants
 github.com/kubewarden/policy-sdk-go/protocol
 github.com/kubewarden/policy-sdk-go/testing
+# github.com/tidwall/gjson v1.18.0
+## explicit; go 1.12
+github.com/tidwall/gjson
+# github.com/tidwall/match v1.1.1
+## explicit; go 1.15
+github.com/tidwall/match
+# github.com/tidwall/pretty v1.2.0
+## explicit; go 1.16
+github.com/tidwall/pretty
 # github.com/wapc/wapc-guest-tinygo v0.3.3
 ## explicit; go 1.16
 github.com/wapc/wapc-guest-tinygo

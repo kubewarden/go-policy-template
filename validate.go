@@ -3,12 +3,11 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"strings"
 
-	onelog "github.com/francoispqt/onelog"
-	corev1 "github.com/kubewarden/k8s-objects/api/core/v1"
+	mapset "github.com/deckarep/golang-set/v2"
 	kubewarden "github.com/kubewarden/policy-sdk-go"
 	kubewarden_protocol "github.com/kubewarden/policy-sdk-go/protocol"
+	"github.com/tidwall/gjson"
 )
 
 const httpBadRequestStatusCode = 400
@@ -20,7 +19,7 @@ func validate(payload []byte) ([]byte, error) {
 	if err != nil {
 		return kubewarden.RejectRequest(
 			kubewarden.Message(err.Error()),
-			kubewarden.Code(httpBadRequestStatusCode))
+			kubewarden.Code(400))
 	}
 
 	// Create a Settings instance from the ValidationRequest object
@@ -28,38 +27,62 @@ func validate(payload []byte) ([]byte, error) {
 	if err != nil {
 		return kubewarden.RejectRequest(
 			kubewarden.Message(err.Error()),
-			kubewarden.Code(httpBadRequestStatusCode))
+			kubewarden.Code(400))
 	}
 
 	// Access the **raw** JSON that describes the object
 	podJSON := validationRequest.Request.Object
 
-	// Try to create a Pod instance using the RAW JSON we got from the
-	// ValidationRequest.
-	pod := &corev1.Pod{}
-	if err = json.Unmarshal([]byte(podJSON), pod); err != nil {
-		return kubewarden.RejectRequest(
-			kubewarden.Message(
-				fmt.Sprintf("Cannot decode Pod object: %s", err.Error())),
-			kubewarden.Code(httpBadRequestStatusCode))
-	}
+	// NOTE 1
+	data := gjson.GetBytes(
+		podJSON,
+		"metadata.labels")
 
-	logger.DebugWithFields("validating pod object", func(e onelog.Entry) {
-		e.String("name", pod.Metadata.Name)
-		e.String("namespace", pod.Metadata.Namespace)
+	var validationErr error
+	labels := mapset.NewThreadUnsafeSet[string]()
+	data.ForEach(func(key, value gjson.Result) bool {
+		// NOTE 2
+		label := key.String()
+		labels.Add(label)
+
+		// NOTE 3
+		validationErr = validateLabel(label, value.String(), &settings)
+
+		// keep iterating if there are no errors
+		return validationErr == nil
 	})
 
-	if settings.IsNameDenied(pod.Metadata.Name) {
-		logger.InfoWithFields("rejecting pod object", func(e onelog.Entry) {
-			e.String("name", pod.Metadata.Name)
-			e.String("denied_names", strings.Join(settings.DeniedNames, ","))
-		})
-
+	// NOTE 4
+	if validationErr != nil {
 		return kubewarden.RejectRequest(
-			kubewarden.Message(
-				fmt.Sprintf("The '%s' name is on the deny list", pod.Metadata.Name)),
+			kubewarden.Message(validationErr.Error()),
 			kubewarden.NoCode)
 	}
 
+	// NOTE 5
+	for requiredLabel := range settings.ConstrainedLabels {
+		if !labels.Contains(requiredLabel) {
+			return kubewarden.RejectRequest(
+				kubewarden.Message(fmt.Sprintf("Constrained label %s not found inside of Pod", requiredLabel)),
+				kubewarden.NoCode)
+		}
+	}
+
 	return kubewarden.AcceptRequest()
+}
+
+func validateLabel(label, value string, settings *Settings) error {
+	if settings.DeniedLabels.Contains(label) {
+		return fmt.Errorf("Label %s is on the deny list", label)
+	}
+
+	regExp, found := settings.ConstrainedLabels[label]
+	if found {
+		// This is a constrained label
+		if !regExp.Match([]byte(value)) {
+			return fmt.Errorf("The value of %s doesn't pass user-defined constraint", label)
+		}
+	}
+
+	return nil
 }

@@ -30,3 +30,4 @@ annotations:
   # Category indicates policy category. See more here at docs.kubewarden.io
   io.kubewarden.policy.severity: medium # one of info, low, medium, high, critical. See docs.
   io.kubewarden.policy.category: Resource validation
+  io.kubewarden.policy.version: "0.0.1"
