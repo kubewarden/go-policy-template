@@ -78,7 +78,7 @@ func (s *Settings) Valid() (bool, error) {
 	constrainedAndDenied := constrainedLabels.Intersect(s.DeniedLabels)
 	if constrainedAndDenied.Cardinality() != 0 {
 		return false,
-			fmt.Errorf("These labels cannot be constrained and denied at the same time: %v", constrainedAndDenied)
+			fmt.Errorf("these labels cannot be constrained and denied at the same time: %v", constrainedAndDenied)
 	}
 
 	return true, nil

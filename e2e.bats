@@ -44,7 +44,7 @@
 
   [ "$status" -eq 0 ]
   [ $(expr "$output" : '.*allowed.*false') -ne 0 ]
-  [ $(expr "$output" : ".*Label owner is on the deny list.*") -ne 0 ]
+  [ $(expr "$output" : ".*label owner is on the deny list.*") -ne 0 ]
 }
 
 @test "reject because label is not satisfying a constraint" {
@@ -57,7 +57,7 @@
 
   [ "$status" -eq 0 ]
   [ $(expr "$output" : '.*allowed.*false') -ne 0 ]
-  [ $(expr "$output" : ".*The value of cc-center doesn't pass user-defined constraint.*") -ne 0 ]
+  [ $(expr "$output" : ".*the value of cc-center doesn't pass user-defined constraint.*") -ne 0 ]
 }
 
 @test "reject because constrained label is missing" {

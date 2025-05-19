@@ -107,7 +107,7 @@ func TestDetectNotValidSettingsDueToConflictingLabels(t *testing.T) {
 		t.Error("Expected settings to not be valid")
 	}
 
-	if *response.Message != "Provided settings are not valid: These labels cannot be constrained and denied at the same time: Set{cost-center}" {
+	if *response.Message != "Provided settings are not valid: these labels cannot be constrained and denied at the same time: Set{cost-center}" {
 		t.Errorf("Unexpected validation error message: %s", *response.Message)
 	}
 }
