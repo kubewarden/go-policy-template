@@ -83,7 +83,7 @@
   echo "output = ${output}"
 
   # settings validation failed
-  [ $(expr "$output" : ".*Provided settings are not valid: These labels cannot be constrained and denied at the same time: Set{cc-center}.*") -ne 0 ]
+  [ $(expr "$output" : ".*Provided settings are not valid: these labels cannot be constrained and denied at the same time: Set{cc-center}.*") -ne 0 ]
 }
 
 @test "fail settings validation because of invalid constraint" {

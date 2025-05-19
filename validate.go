@@ -10,6 +10,10 @@ import (
 	"github.com/tidwall/gjson"
 )
 
+const (
+	httpBadRequestStatusCode = 400
+)
+
 func validate(payload []byte) ([]byte, error) {
 	// Create a ValidationRequest instance from the incoming payload
 	validationRequest := kubewarden_protocol.ValidationRequest{}
@@ -18,7 +22,7 @@ func validate(payload []byte) ([]byte, error) {
 		logger.ErrorWith("解析验证请求失败").Err("error", err).Write()
 		return kubewarden.RejectRequest(
 			kubewarden.Message(err.Error()),
-			kubewarden.Code(400))
+			kubewarden.Code(httpBadRequestStatusCode))
 	}
 
 	// Create a Settings instance from the ValidationRequest object
@@ -27,14 +31,14 @@ func validate(payload []byte) ([]byte, error) {
 		logger.ErrorWith("解析策略设置失败").Err("error", err).Write()
 		return kubewarden.RejectRequest(
 			kubewarden.Message(err.Error()),
-			kubewarden.Code(400))
+			kubewarden.Code(httpBadRequestStatusCode))
 	}
 
 	// Access the **raw** JSON that describes the object
 	podJSON := validationRequest.Request.Object
 
 	logger.DebugWith("正在验证 Pod 标签").
-		String("operation", string(validationRequest.Request.Operation)).
+		String("operation", validationRequest.Request.Operation).
 		String("kind", validationRequest.Request.Kind.Kind).
 		Write()
 

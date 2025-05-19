@@ -1,12 +1,10 @@
 package main
 
 import (
-	"regexp"
+	"encoding/json"
+	"fmt"
 	"testing"
 
-	"encoding/json"
-
-	mapset "github.com/deckarep/golang-set/v2"
 	corev1 "github.com/kubewarden/k8s-objects/api/core/v1"
 	metav1 "github.com/kubewarden/k8s-objects/apimachinery/pkg/apis/meta/v1"
 	kubewarden_protocol "github.com/kubewarden/policy-sdk-go/protocol"
@@ -14,90 +12,84 @@ import (
 )
 
 func TestValidateLabel(t *testing.T) {
-	// NOTE 1
 	cases := []struct {
 		podLabels         map[string]string
-		deniedLabels      mapset.Set[string]
-		constrainedLabels map[string]*RegularExpression
+		deniedLabels      []string
+		constrainedLabels map[string]string
 		expectedIsValid   bool
 	}{
 		{
-			// ➀
 			// Pod has no labels -> should be accepted
 			podLabels:         map[string]string{},
-			deniedLabels:      mapset.NewThreadUnsafeSet[string]("owner"),
-			constrainedLabels: map[string]*RegularExpression{},
+			deniedLabels:      []string{"owner"},
+			constrainedLabels: map[string]string{},
 			expectedIsValid:   true,
 		},
 		{
-			// ➁
 			// Pod has labels, none is denied -> should be accepted
 			podLabels: map[string]string{
 				"hello": "world",
 			},
-			deniedLabels:      mapset.NewThreadUnsafeSet[string]("owner"),
-			constrainedLabels: map[string]*RegularExpression{},
+			deniedLabels:      []string{"owner"},
+			constrainedLabels: map[string]string{},
 			expectedIsValid:   true,
 		},
 		{
-			// ➂
 			// Pod has labels, one is denied -> should be rejected
 			podLabels: map[string]string{
 				"hello": "world",
 			},
-			deniedLabels:      mapset.NewThreadUnsafeSet[string]("hello"),
-			constrainedLabels: map[string]*RegularExpression{},
+			deniedLabels:      []string{"hello"},
+			constrainedLabels: map[string]string{},
 			expectedIsValid:   false,
 		},
 		{
-			// ➃
 			// Pod has labels, one has constraint that is respected -> should be accepted
 			podLabels: map[string]string{
 				"cc-center": "team-123",
 			},
-			deniedLabels: mapset.NewThreadUnsafeSet[string]("hello"),
-			constrainedLabels: map[string]*RegularExpression{
-				"cc-center": {
-					Regexp: regexp.MustCompile(`team-\d+`),
-				},
+			deniedLabels: []string{"hello"},
+			constrainedLabels: map[string]string{
+				"cc-center": "team-\\d+",
 			},
 			expectedIsValid: true,
 		},
 		{
-			// ➄
 			// Pod has labels, one has constraint that are not respected -> should be rejected
 			podLabels: map[string]string{
 				"cc-center": "team-kubewarden",
 			},
-			deniedLabels: mapset.NewThreadUnsafeSet[string]("hello"),
-			constrainedLabels: map[string]*RegularExpression{
-				"cc-center": {
-					Regexp: regexp.MustCompile(`team-\d+`),
-				},
+			deniedLabels: []string{"hello"},
+			constrainedLabels: map[string]string{
+				"cc-center": "team-\\d+",
 			},
 			expectedIsValid: false,
 		},
 		{
-			// ➅
 			// Settings have a constraint, pod doesn't have this label -> should be rejected
 			podLabels: map[string]string{
 				"owner": "team-kubewarden",
 			},
-			deniedLabels: mapset.NewThreadUnsafeSet[string]("hello"),
-			constrainedLabels: map[string]*RegularExpression{
-				"cc-center": {
-					Regexp: regexp.MustCompile(`team-\d+`),
-				},
+			deniedLabels: []string{"hello"},
+			constrainedLabels: map[string]string{
+				"cc-center": "team-\\d+",
 			},
 			expectedIsValid: false,
 		},
 	}
 
-	// NOTE 2
 	for _, testCase := range cases {
-		settings := Settings{
-			DeniedLabels:      testCase.deniedLabels,
-			ConstrainedLabels: testCase.constrainedLabels,
+		settingsJSON := fmt.Sprintf(`{
+			"denied_labels": %s,
+			"constrained_labels": %s
+		}`,
+			mustMarshal(testCase.deniedLabels),
+			mustMarshal(testCase.constrainedLabels),
+		)
+
+		settings := Settings{}
+		if err := json.Unmarshal([]byte(settingsJSON), &settings); err != nil {
+			t.Fatalf("Failed to unmarshal settings: %v", err)
 		}
 
 		pod := corev1.Pod{
@@ -108,24 +100,30 @@ func TestValidateLabel(t *testing.T) {
 			},
 		}
 
-		payload, err := kubewarden_testing.BuildValidationRequest(&pod, &settings)
-		if err != nil {
-			t.Errorf("Unexpected error: %+v", err)
+		payload, buildErr := kubewarden_testing.BuildValidationRequest(&pod, &settings)
+		if buildErr != nil {
+			t.Errorf("Unexpected error: %+v", buildErr)
 		}
 
-		responsePayload, err := validate(payload)
-		if err != nil {
-			t.Errorf("Unexpected error: %+v", err)
+		responsePayload, validateErr := validate(payload)
+		if validateErr != nil {
+			t.Errorf("Unexpected error: %+v", validateErr)
 		}
 
 		var response kubewarden_protocol.ValidationResponse
-		if err := json.Unmarshal(responsePayload, &response); err != nil {
-			t.Errorf("Unexpected error: %+v", err)
+		if unmarshalErr := json.Unmarshal(responsePayload, &response); unmarshalErr != nil {
+			t.Errorf("Unexpected error: %+v", unmarshalErr)
 		}
 
 		if testCase.expectedIsValid && !response.Accepted {
-			t.Errorf("Unexpected rejection: msg %s - code %d with pod labels: %v, denied labels: %v, constrained labels: %v",
-				*response.Message, *response.Code, testCase.podLabels, testCase.deniedLabels, testCase.constrainedLabels)
+			t.Errorf(
+				"Unexpected rejection: msg %s - code %d with pod labels: %v, denied labels: %v, constrained labels: %v",
+				*response.Message,
+				*response.Code,
+				testCase.podLabels,
+				testCase.deniedLabels,
+				testCase.constrainedLabels,
+			)
 		}
 
 		if !testCase.expectedIsValid && response.Accepted {
@@ -133,4 +131,12 @@ func TestValidateLabel(t *testing.T) {
 				testCase.podLabels, testCase.deniedLabels, testCase.constrainedLabels)
 		}
 	}
+}
+
+func mustMarshal(v interface{}) string {
+	b, err := json.Marshal(v)
+	if err != nil {
+		panic(err)
+	}
+	return string(b)
 }

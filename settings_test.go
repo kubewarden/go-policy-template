@@ -22,8 +22,8 @@ func TestParseValidSettings(t *testing.T) {
 		t.Errorf("Unexpected error %+v", err)
 	}
 
-	expected_denied_labels := []string{"foo", "bar"}
-	for _, exp := range expected_denied_labels {
+	expectedDeniedLabels := []string{"foo", "bar"}
+	for _, exp := range expectedDeniedLabels {
 		if !settings.DeniedLabels.Contains(exp) {
 			t.Errorf("Missing value %s", exp)
 		}
@@ -34,10 +34,10 @@ func TestParseValidSettings(t *testing.T) {
 		t.Error("Didn't find the expected constrained label")
 	}
 
-	expected_regexp := `cc-\d+`
-	if re.String() != expected_regexp {
+	expectedRegexp := `cc-\d+`
+	if re.String() != expectedRegexp {
 		t.Errorf("Expected regexp to be %v - got %v instead",
-			expected_regexp, re.String())
+			expectedRegexp, re.String())
 	}
 }
 
@@ -66,14 +66,14 @@ func TestDetectNotValidSettingsDueToBrokenRegexp(t *testing.T) {
     }
     `)
 
-	responsePayload, err := validateSettings(settingsJSON)
-	if err != nil {
-		t.Errorf("Unexpected error %+v", err)
+	responsePayload, validateErr := validateSettings(settingsJSON)
+	if validateErr != nil {
+		t.Errorf("Unexpected error %+v", validateErr)
 	}
 
 	var response kubewarden_protocol.SettingsValidationResponse
-	if err := json.Unmarshal(responsePayload, &response); err != nil {
-		t.Errorf("Unexpected error: %+v", err)
+	if unmarshalErr := json.Unmarshal(responsePayload, &response); unmarshalErr != nil {
+		t.Errorf("Unexpected error: %+v", unmarshalErr)
 	}
 
 	if response.Valid {
@@ -93,14 +93,14 @@ func TestDetectNotValidSettingsDueToConflictingLabels(t *testing.T) {
             "cost-center": ".*"
         }
     }`)
-	responsePayload, err := validateSettings(settingsJSON)
-	if err != nil {
-		t.Errorf("Unexpected error %+v", err)
+	responsePayload, validateErr := validateSettings(settingsJSON)
+	if validateErr != nil {
+		t.Errorf("Unexpected error %+v", validateErr)
 	}
 
 	var response kubewarden_protocol.SettingsValidationResponse
-	if err := json.Unmarshal(responsePayload, &response); err != nil {
-		t.Errorf("Unexpected error: %+v", err)
+	if unmarshalErr := json.Unmarshal(responsePayload, &response); unmarshalErr != nil {
+		t.Errorf("Unexpected error: %+v", unmarshalErr)
 	}
 
 	if response.Valid {

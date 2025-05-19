@@ -16,6 +16,17 @@ type Settings struct {
 	ConstrainedLabels map[string]*RegularExpression `json:"constrained_labels"`
 }
 
+// NewSettingsFromValidationReq creates a new Settings instance from a ValidationRequest.
+func NewSettingsFromValidationReq(validationReq *kubewarden_protocol.ValidationRequest) (Settings, error) {
+	settings := Settings{}
+	err := json.Unmarshal(validationReq.Settings, &settings)
+	if err != nil {
+		return Settings{}, err
+	}
+
+	return settings, nil
+}
+
 type RegularExpression struct {
 	*regexp.Regexp
 }
@@ -31,6 +42,8 @@ func (r *RegularExpression) UnmarshalText(text []byte) error {
 	return nil
 }
 
+// MarshalText satisfies the encoding.TextMarshaler interface,
+// also used by json.Marshal.
 func (r *RegularExpression) MarshalText() ([]byte, error) {
 	if r.Regexp != nil {
 		return []byte(r.Regexp.String()), nil
@@ -56,18 +69,7 @@ func (s *Settings) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-func NewSettingsFromValidationReq(validationReq *kubewarden_protocol.ValidationRequest) (Settings, error) {
-	settings := Settings{}
-	err := json.Unmarshal(validationReq.Settings, &settings)
-	if err != nil {
-		return Settings{}, err
-	}
-
-	return settings, nil
-}
-
-// Valid is the structure that informs if the policy settings are valid. No
-// special checks have to be done.
+// Valid is the structure that informs if the policy settings are valid.
 func (s *Settings) Valid() (bool, error) {
 	constrainedLabels := mapset.NewThreadUnsafeSet[string]()
 
