@@ -10,6 +10,8 @@ github.com/kubewarden/policy-sdk-go v0.11.0 h1:qW2UqARixH2r8KyitSistiAg0Ex0LA+HJ
 github.com/kubewarden/policy-sdk-go v0.11.0/go.mod h1:4Yg/Wpxnt7p4Ps68hBfnK8qoGURM5MJaq67Kjao2smY=
 github.com/kubewarden/policy-sdk-go v0.11.1 h1:xqGm0mYsbXb7DuEmdvYiJYZk/HPrUbsw+duAM/2pBo8=
 github.com/kubewarden/policy-sdk-go v0.11.1/go.mod h1:OXCLBldKGUXCG3DR6g9FeZiLxo0l5TBzZsf62BtBQJU=
+github.com/kubewarden/policy-sdk-go v0.12.0 h1:XOW/rIb1FbeCqzrapNsjsLnQZpPvRcimPFAM9zQgv64=
+github.com/kubewarden/policy-sdk-go v0.12.0/go.mod h1:OXCLBldKGUXCG3DR6g9FeZiLxo0l5TBzZsf62BtBQJU=
 github.com/kubewarden/strfmt v0.1.3 h1:bb+2rbotioROjCkziSt+hqnHXzOlumN94NxDKdV2kPI=
 github.com/kubewarden/strfmt v0.1.3/go.mod h1:DXoaaIYwqW1LyyRoMeyxfHUU+VUSTNFdj38juCXfRzs=
 github.com/pmezard/go-difflib v1.0.0 h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=
