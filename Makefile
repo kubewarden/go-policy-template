@@ -13,7 +13,7 @@ policy.wasm: $(SOURCE_FILES) go.mod go.sum
 		--rm \
 		-e GOFLAGS="-buildvcs=false" \
 		-v ${PWD}:/src \
-		-w /src tinygo/tinygo:0.33.0 \
+		-w /src tinygo/tinygo:0.39.0 \
 		tinygo build -o policy.wasm -target=wasi -no-debug .
 
 annotated-policy.wasm: policy.wasm metadata.yml
