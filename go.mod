@@ -2,7 +2,7 @@ module github.com/kubewarden/go-policy-template
 
 go 1.22
 
-toolchain go1.24.6
+toolchain go1.25.0
 
 require (
 	github.com/francoispqt/onelog v0.0.0-20190306043706-8c2bb31b10a4
