@@ -1,5 +1,8 @@
 module github.com/kubewarden/go-policy-template
 
+// TinyGo does not support Go v1.26. Therefore, let's keep go and toolchain
+// versions to 1.25 to ensure that all tinygo and the standard go command (used
+// in makefile) behavie in the same way
 go 1.25
 
 toolchain go1.25.7
