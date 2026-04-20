@@ -5,7 +5,7 @@ module github.com/kubewarden/go-policy-template
 // in makefile) behavie in the same way
 go 1.25
 
-toolchain go1.26.2
+toolchain go1.25.7
 
 require (
 	github.com/francoispqt/onelog v0.0.0-20190306043706-8c2bb31b10a4
